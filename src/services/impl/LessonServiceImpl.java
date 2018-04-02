@@ -27,6 +27,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public boolean delete(Lesson lesson) {
+        //TODO delete lesson
         return false;
     }
 
@@ -52,12 +53,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public List<Lesson> getListBy(Department department, Course course, Teacher teacher, Semester semester) {
-        return lessonDao.findAll().stream().filter(lesson ->   (department == null || lesson.getTeacher().getDepartment().equals(department)) &&
-                (course == null || lesson.getCourse().equals(course)) &&
-                (teacher == null || lesson.getTeacher().equals(teacher)) &&
-                (semester == null || lesson.getSemester().equals(semester))
-
-        ).collect(Collectors.toList());
+        return filterLessons(lessonDao.findAll(), department, course, teacher, semester);
     }
 
 
@@ -73,11 +69,14 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public List<Lesson> getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week, Day day, Integer lessonNumber) {
-        return getListBy(week, day, lessonNumber).stream().filter(lesson ->
-                    (department == null || lesson.getTeacher().getDepartment().equals(department)) &&
-                    (course == null || lesson.getCourse().equals(course)) &&
-                    (teacher == null || lesson.getTeacher().equals(teacher)) &&
-                    (semester == null || lesson.getSemester().equals(semester))
+        return filterLessons(getListBy(week, day, lessonNumber), department, course, teacher, semester);
+    }
+
+    private List<Lesson> filterLessons(List<Lesson> lessons, Department department, Course course, Teacher teacher, Semester semester){
+        return lessons.stream().filter(lesson ->   (department == null || lesson.getTeacher().getDepartment().equals(department)) &&
+                (course == null || lesson.getCourse().equals(course)) &&
+                (teacher == null || lesson.getTeacher().equals(teacher)) &&
+                (semester == null || lesson.getSemester().equals(semester))
 
         ).collect(Collectors.toList());
     }

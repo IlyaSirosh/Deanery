@@ -45,6 +45,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void print(List<Schedule> schedule) {
-        //TODO implement print schedule
+        //TODO
     }
 }
