@@ -10,7 +10,25 @@ public class Week {
     private int number;
     private Date start;
     private Date end;
-    private int semesterId;
+    private Semester semester;
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
+    }
+
+    @Override
+    public String toString() {
+        return "Week{" +
+                "weekId=" + weekId +
+                ", number=" + number +
+                ", start=" + start +
+                ", end=" + end +
+                ", semester=" + semester +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -21,9 +39,9 @@ public class Week {
 
         if (weekId != week.weekId) return false;
         if (number != week.number) return false;
-        if (semesterId != week.semesterId) return false;
         if (start != null ? !start.equals(week.start) : week.start != null) return false;
-        return end != null ? end.equals(week.end) : week.end == null;
+        if (end != null ? !end.equals(week.end) : week.end != null) return false;
+        return semester != null ? semester.equals(week.semester) : week.semester == null;
     }
 
     @Override
@@ -32,20 +50,11 @@ public class Week {
         result = 31 * result + number;
         result = 31 * result + (start != null ? start.hashCode() : 0);
         result = 31 * result + (end != null ? end.hashCode() : 0);
-        result = 31 * result + semesterId;
+        result = 31 * result + (semester != null ? semester.hashCode() : 0);
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "Week{" +
-                "weekId=" + weekId +
-                ", number=" + number +
-                ", start=" + start +
-                ", end=" + end +
-                ", semesterId=" + semesterId +
-                '}';
-    }
+
 
     public int getWeekId() {
         return weekId;
@@ -79,11 +88,5 @@ public class Week {
         this.end = end;
     }
 
-    public int getSemesterId() {
-        return semesterId;
-    }
 
-    public void setSemesterId(int semesterId) {
-        this.semesterId = semesterId;
-    }
 }

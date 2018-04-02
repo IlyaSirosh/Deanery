@@ -8,11 +8,22 @@ import java.util.List;
 public class Schedule {
     private int scheduleId;
     private DayEnum day;
-    private enum DayEnum{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
+    public static enum DayEnum{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
     private int lessonNumber;
-    private int weekId;
+    private Week week;
     private List<Class> classList;
     private List<Lesson> lessonList;
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "scheduleId=" + scheduleId +
+                ", day=" + day +
+                ", lessonNumber=" + lessonNumber +
+                ", week=" + week +
+                ", classList=" + classList +
+                ", lessonList=" + lessonList +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -23,8 +34,8 @@ public class Schedule {
 
         if (scheduleId != schedule.scheduleId) return false;
         if (lessonNumber != schedule.lessonNumber) return false;
-        if (weekId != schedule.weekId) return false;
         if (day != schedule.day) return false;
+        if (week != null ? !week.equals(schedule.week) : schedule.week != null) return false;
         if (classList != null ? !classList.equals(schedule.classList) : schedule.classList != null) return false;
         return lessonList != null ? lessonList.equals(schedule.lessonList) : schedule.lessonList == null;
     }
@@ -34,23 +45,22 @@ public class Schedule {
         int result = scheduleId;
         result = 31 * result + (day != null ? day.hashCode() : 0);
         result = 31 * result + lessonNumber;
-        result = 31 * result + weekId;
+        result = 31 * result + (week != null ? week.hashCode() : 0);
         result = 31 * result + (classList != null ? classList.hashCode() : 0);
         result = 31 * result + (lessonList != null ? lessonList.hashCode() : 0);
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "Schedule{" +
-                "scheduleId=" + scheduleId +
-                ", day=" + day +
-                ", lessonNumber=" + lessonNumber +
-                ", weekId=" + weekId +
-                ", classList=" + classList +
-                ", lessonList=" + lessonList +
-                '}';
+    public Week getWeek() {
+
+        return week;
     }
+
+    public void setWeek(Week week) {
+        this.week = week;
+    }
+
+
 
     public int getScheduleId() {
         return scheduleId;
@@ -76,13 +86,6 @@ public class Schedule {
         this.lessonNumber = lessonNumber;
     }
 
-    public int getWeekId() {
-        return weekId;
-    }
-
-    public void setWeekId(int weekId) {
-        this.weekId = weekId;
-    }
 
     public List<Class> getClassList() {
         return classList;

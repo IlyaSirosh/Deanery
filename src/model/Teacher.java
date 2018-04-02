@@ -7,7 +7,7 @@ public class Teacher {
     private int teacherId;
     private String name;
     private String role;
-    private int departmentId;
+    private Department department;
 
     @Override
     public String toString() {
@@ -15,7 +15,7 @@ public class Teacher {
                 "teacherId=" + teacherId +
                 ", name='" + name + '\'' +
                 ", role='" + role + '\'' +
-                ", departmentId=" + departmentId +
+                ", department=" + department +
                 '}';
     }
 
@@ -27,9 +27,9 @@ public class Teacher {
         Teacher teacher = (Teacher) o;
 
         if (teacherId != teacher.teacherId) return false;
-        if (departmentId != teacher.departmentId) return false;
         if (name != null ? !name.equals(teacher.name) : teacher.name != null) return false;
-        return role != null ? role.equals(teacher.role) : teacher.role == null;
+        if (role != null ? !role.equals(teacher.role) : teacher.role != null) return false;
+        return department != null ? department.equals(teacher.department) : teacher.department == null;
     }
 
     @Override
@@ -37,8 +37,17 @@ public class Teacher {
         int result = teacherId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + departmentId;
+        result = 31 * result + (department != null ? department.hashCode() : 0);
         return result;
+    }
+
+    public Department getDepartment() {
+
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public int getTeacherId() {
@@ -65,11 +74,5 @@ public class Teacher {
         this.role = role;
     }
 
-    public int getDepartmentId() {
-        return departmentId;
-    }
 
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
-    }
 }

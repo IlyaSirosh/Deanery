@@ -14,7 +14,7 @@ public class Student {
     private int credits;
     private StudentEnum enddateReason;
     private GroupStudent groupStudent;
-    private enum StudentEnum {droppes, excluded,left };
+    public static enum StudentEnum {droppes, excluded,left };
 
     @Override
     public String toString() {
