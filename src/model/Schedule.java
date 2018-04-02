@@ -11,8 +11,7 @@ public class Schedule {
     public enum DayEnum{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
     private int lessonNumber;
     private Week week;
-    private Class lessonClass;
-    private Lesson lesson;
+    private List<ScheduleUnit> lessons;
     @Override
     public String toString() {
         return "Schedule{" +
@@ -20,8 +19,7 @@ public class Schedule {
                 ", day=" + day +
                 ", lessonNumber=" + lessonNumber +
                 ", week=" + week +
-                ", class=" + lessonClass +
-                ", lesson=" + lesson +
+                ", lessons=" + lessons +
                 '}';
     }
 
@@ -36,8 +34,8 @@ public class Schedule {
         if (lessonNumber != schedule.lessonNumber) return false;
         if (day != schedule.day) return false;
         if (week != null ? !week.equals(schedule.week) : schedule.week != null) return false;
-        if (lessonClass != null ? !lessonClass.equals(schedule.lessonClass) : schedule.lessonClass != null) return false;
-        return lesson != null ? lesson.equals(schedule.lesson) : schedule.lesson == null;
+
+        return lessons != null ? lessons.equals(schedule.lessons) : schedule.lessons == null;
     }
 
     @Override
@@ -46,8 +44,7 @@ public class Schedule {
         result = 31 * result + (day != null ? day.hashCode() : 0);
         result = 31 * result + lessonNumber;
         result = 31 * result + (week != null ? week.hashCode() : 0);
-        result = 31 * result + (lessonClass != null ? lessonClass.hashCode() : 0);
-        result = 31 * result + (lesson != null ? lesson.hashCode() : 0);
+        result = 31 * result + (lessons != null ? lessons.hashCode() : 0);
         return result;
     }
 
@@ -87,19 +84,11 @@ public class Schedule {
     }
 
 
-    public Class getLessonClass() {
-        return lessonClass;
+    public List<ScheduleUnit> getLessons() {
+        return lessons;
     }
 
-    public void setLessonClass(Class lessonClass) {
-        this.lessonClass = lessonClass;
-    }
-
-    public Lesson getLesson() {
-        return lesson;
-    }
-
-    public void setLesson(Lesson lesson) {
-        this.lesson= lesson;
+    public void setLessons(List<ScheduleUnit> lessons) {
+        this.lessons= lessons;
     }
 }
