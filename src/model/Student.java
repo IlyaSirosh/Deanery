@@ -16,6 +16,7 @@ public class Student {
     private LeaveReason enddateReason;
     public enum LeaveReason {droppes, excluded,left };
 
+
     @Override
     public String toString() {
         return "Student{" +
@@ -45,6 +46,7 @@ public class Student {
         if (enddate != null ? !enddate.equals(student.enddate) : student.enddate != null) return false;
         if (enddateReason != student.enddateReason) return false;
         return (enddateReason != student.enddateReason);
+
     }
 
     @Override
@@ -65,6 +67,7 @@ public class Student {
     }
 
     public void setEnddateReason(LeaveReason enddateReason) {
+
         this.enddateReason = enddateReason;
     }
 

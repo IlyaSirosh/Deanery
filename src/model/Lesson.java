@@ -22,6 +22,7 @@ public class Lesson {
                 ", semester=" + semester +
                 ", threadName='" + threadName + '\'' +
                 ", groupNumber=" + groupNumber +
+
                 '}';
     }
 
@@ -42,6 +43,7 @@ public class Lesson {
 
 
         return (threadName != null ? !threadName.equals(lesson.threadName) : lesson.threadName != null);
+
     }
 
     @Override
@@ -53,7 +55,6 @@ public class Lesson {
         result = 31 * result + (semester != null ? semester.hashCode() : 0);
         result = 31 * result + (threadName != null ? threadName.hashCode() : 0);
         result = 31 * result + groupNumber;
-
 
         return result;
     }
@@ -114,6 +115,5 @@ public class Lesson {
     public void setGroupNumber(int groupNumber) {
         this.groupNumber = groupNumber;
     }
-
 
 }

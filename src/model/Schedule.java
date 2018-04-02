@@ -1,6 +1,8 @@
 package model;
 
+
 import model.enums.Day;
+
 
 import java.util.List;
 
@@ -68,11 +70,13 @@ public class Schedule {
         this.scheduleId = scheduleId;
     }
 
+
     public Day getDay() {
         return day;
     }
 
     public void setDay(Day day) {
+
         this.day = day;
     }
 
