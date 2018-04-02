@@ -14,7 +14,7 @@ public class Semester {
 
     @Override
     public String toString() {
-        return "Semester{" +
+        return "ISemesterDao{" +
                 "semesterId=" + semesterId +
                 ", year=" + year +
                 ", semester=" + semester +
