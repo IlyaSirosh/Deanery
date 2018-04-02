@@ -11,13 +11,6 @@ public class Week {
     private Date start;
     private Date end;
     private Semester semester;
-    public Semester getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Semester semester) {
-        this.semester = semester;
-    }
 
     @Override
     public String toString() {
@@ -86,6 +79,14 @@ public class Week {
 
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
     }
 
 

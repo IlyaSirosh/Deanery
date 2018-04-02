@@ -8,8 +8,8 @@ import java.util.List;
  * Created by PANNA on 02.04.2018.
  */
 public class GroupStudent {
-    private List<Lesson> lessonList;
-    private List<Class> classList;
+
+    private Student student;
     private int grade;
 
     @Override
@@ -20,34 +20,18 @@ public class GroupStudent {
         GroupStudent that = (GroupStudent) o;
 
         if (grade != that.grade) return false;
-        if (lessonList != null ? !lessonList.equals(that.lessonList) : that.lessonList != null) return false;
-        return classList != null ? classList.equals(that.classList) : that.classList == null;
+
+        return student != null ? student.equals(that.student) : that.student == null;
     }
 
     @Override
     public int hashCode() {
-        int result = lessonList != null ? lessonList.hashCode() : 0;
-        result = 31 * result + (classList != null ? classList.hashCode() : 0);
+        int result = student != null ? student.hashCode() : 0;
+
         result = 31 * result + grade;
         return result;
     }
 
-    public List<Lesson> getLessonList() {
-
-        return lessonList;
-    }
-
-    public void setLessonList(List<Lesson> lessonList) {
-        this.lessonList = lessonList;
-    }
-
-    public List<Class> getClassList() {
-        return classList;
-    }
-
-    public void setClassList(List<Class> classList) {
-        this.classList = classList;
-    }
 
     public int getGrade() {
         return grade;
@@ -57,11 +41,18 @@ public class GroupStudent {
         this.grade = grade;
     }
 
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
     @Override
     public String toString() {
         return "GroupStudent{" +
-                "lessonList=" + lessonList +
-                ", classList=" + classList +
+                "student=" + student +
                 ", grade=" + grade +
                 '}';
     }
