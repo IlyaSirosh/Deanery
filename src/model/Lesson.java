@@ -10,7 +10,6 @@ public class Lesson {
     private Semester semester;
     private String threadName;
     private int groupNumber;
-    private GroupExam exam;
     private List<GroupStudent> studentGroup;
     private List<Schedule> schedule;
 
@@ -24,7 +23,6 @@ public class Lesson {
                 ", semester=" + semester +
                 ", threadName='" + threadName + '\'' +
                 ", groupNumber=" + groupNumber +
-                ", groupExam=" + exam +
                 ", groupStudent=" + studentGroup +
                 '}';
     }
@@ -43,7 +41,7 @@ public class Lesson {
         if (course != null ? !course.equals(lesson.course) : lesson.course != null) return false;
         if (semester != null ? !semester.equals(lesson.semester) : lesson.semester != null) return false;
         if (threadName != null ? !threadName.equals(lesson.threadName) : lesson.threadName != null) return false;
-        if (exam != null ? !exam.equals(lesson.exam) : lesson.exam != null) return false;
+
 
         return studentGroup != null ? !studentGroup.equals(lesson.studentGroup) : lesson.studentGroup != null;
     }
@@ -57,7 +55,6 @@ public class Lesson {
         result = 31 * result + (semester != null ? semester.hashCode() : 0);
         result = 31 * result + (threadName != null ? threadName.hashCode() : 0);
         result = 31 * result + groupNumber;
-        result = 31 * result + (exam != null ? exam.hashCode() : 0);
         result = 31 * result + (studentGroup != null ? studentGroup.hashCode() : 0);
 
         return result;
@@ -120,13 +117,6 @@ public class Lesson {
         this.groupNumber = groupNumber;
     }
 
-    public GroupExam getExam() {
-        return exam;
-    }
-
-    public void setExam(GroupExam groupExam) {
-        this.exam = groupExam;
-    }
 
     public List<GroupStudent> getStudentGroup() {
         return studentGroup;

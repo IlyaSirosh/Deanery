@@ -2,35 +2,15 @@ package model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by PANNA on 02.04.2018.
  */
 public class GroupExam {
-
+    private Lesson lesson;
     private Class examClass;
     private Date date;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        GroupExam groupExam = (GroupExam) o;
-
-        if (examClass != null ? !examClass.equals(groupExam.examClass) : groupExam.examClass != null) return false;
-
-        return date != null ? date.equals(groupExam.date) : groupExam.date == null;
-    }
-
-    @Override
-    public int hashCode() {
-
-        int result =  (examClass != null ? examClass.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        return result;
-    }
-
 
 
     public Date getDate() {
@@ -49,11 +29,35 @@ public class GroupExam {
         this.examClass = examClass;
     }
 
+    public Lesson getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
+
     @Override
-    public String
-    toString() {
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GroupExam)) return false;
+        GroupExam groupExam = (GroupExam) o;
+        return Objects.equals(getLesson(), groupExam.getLesson()) &&
+                Objects.equals(getExamClass(), groupExam.getExamClass()) &&
+                Objects.equals(getDate(), groupExam.getDate());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getLesson(), getExamClass(), getDate());
+    }
+
+    @Override
+    public String toString() {
         return "GroupExam{" +
-                ", class=" + examClass +
+                "lesson=" + lesson +
+                ", examClass=" + examClass +
                 ", date=" + date +
                 '}';
     }
