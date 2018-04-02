@@ -9,7 +9,7 @@ public class AddCourseView implements View{
 
     @Override
     public void renderView() {
-
+        System.out.println("Trying to render view");
     }
 
     @Override
