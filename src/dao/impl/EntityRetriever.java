@@ -2,6 +2,7 @@ package dao.impl;
 
 import model.Course;
 import model.Department;
+import model.Student;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +24,17 @@ public class EntityRetriever {
         course.setCredits(rs.getInt("credits"));
         course.setObligatory(rs.getBoolean("obligatory"));
         return course;
+    }
+
+    public static Student retrieveStudent(ResultSet rs) throws SQLException{
+        Student student = new Student();
+        student.setStudentId(rs.getInt("student_id"));
+        student.setSurname(rs.getString("surname"));
+        student.setSpeciality(rs.getString("speciality"));
+        student.setStartdate(rs.getDate("startdate"));
+        student.setEnddate(rs.getDate("enddate"));
+        student.setEnddateReason(((Student.LeaveReason.values()[rs.getInt("enddate_reason")])));
+        return student;
     }
 
 }

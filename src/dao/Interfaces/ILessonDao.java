@@ -10,6 +10,7 @@ import java.util.List;
 public interface ILessonDao {
     public List<Lesson> findAll();
     public Lesson findById(Integer lessonId);
+
     public boolean create(Lesson lesson);
     public boolean update(Lesson infoForUpdate);
 

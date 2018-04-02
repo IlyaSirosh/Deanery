@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface IStudentDao {
     public List<Student> findAll();
+    public List<Student> findStudentByLesson(Integer lessonId);
     public Student findById(Integer studentId);
     public boolean create(Student student);
     public boolean update(Student infoForUpdate);
