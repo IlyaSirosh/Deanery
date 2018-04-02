@@ -14,7 +14,6 @@ public class Course {
     private String conclusion;
     private int credits;
     private boolean obligatory;
-    private List<Teacher> teachers;
 
     @Override
     public String toString() {
@@ -126,14 +125,6 @@ public class Course {
 
     public void setObligatory(boolean obligatory) {
         this.obligatory = obligatory;
-    }
-
-    public List<Teacher> getTeachers() {
-        return teachers;
-    }
-
-    public void setTeachers(List<Teacher> teachers) {
-        this.teachers = teachers;
     }
 
 }

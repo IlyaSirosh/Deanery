@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  * Created by PANNA on 02.04.2018.
  */
@@ -7,6 +9,7 @@ public class Department {
     private int departmentId;
     private String name;
     private int buildingNumber;
+    private List<Teacher> teachers;
 
     @Override
     public String toString() {
@@ -61,4 +64,13 @@ public class Department {
     public void setBuildingNumber(int buildingNumber) {
         this.buildingNumber = buildingNumber;
     }
+
+    public List<Teacher> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(List<Teacher> teachers) {
+        this.teachers = teachers;
+    }
+
 }
