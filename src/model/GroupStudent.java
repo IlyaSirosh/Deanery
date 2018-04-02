@@ -3,42 +3,22 @@ package model;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by PANNA on 02.04.2018.
  */
 public class GroupStudent {
-
+    private Lesson lesson;
     private Student student;
     private int grade;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        GroupStudent that = (GroupStudent) o;
-
-        if (grade != that.grade) return false;
-
-        return student != null ? student.equals(that.student) : that.student == null;
+    public Lesson getLesson() {
+        return lesson;
     }
 
-    @Override
-    public int hashCode() {
-        int result = student != null ? student.hashCode() : 0;
-
-        result = 31 * result + grade;
-        return result;
-    }
-
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
     }
 
     public Student getStudent() {
@@ -49,10 +29,35 @@ public class GroupStudent {
         this.student = student;
     }
 
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GroupStudent)) return false;
+        GroupStudent that = (GroupStudent) o;
+        return getGrade() == that.getGrade() &&
+                Objects.equals(getLesson(), that.getLesson()) &&
+                Objects.equals(getStudent(), that.getStudent());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getLesson(), getStudent(), getGrade());
+    }
+
     @Override
     public String toString() {
         return "GroupStudent{" +
-                "student=" + student +
+                "lesson=" + lesson +
+                ", student=" + student +
                 ", grade=" + grade +
                 '}';
     }
