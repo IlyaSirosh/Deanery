@@ -1,6 +1,3 @@
 package model.enums;
 
-public enum Day {
-    MONDAY, TUESDAY, WEDNESDAY,
-    THURSDAY, FRIDAY, SATURDAY, SUNDAY
-}
+public enum Day {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}

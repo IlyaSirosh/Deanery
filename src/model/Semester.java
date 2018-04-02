@@ -1,5 +1,8 @@
 package model;
 
+
+import model.enums.SemesterEnum;
+
 /**
  * Created by PANNA on 02.04.2018.
  */
@@ -7,7 +10,7 @@ public class Semester {
     private int semesterId;
     private int year;
     private SemesterEnum semester;
-    public static enum SemesterEnum{Autumn,Winter,Spring,Summer};
+
 
     @Override
     public String toString() {

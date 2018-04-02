@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  * Created by PANNA on 02.04.2018.
  */
@@ -12,6 +14,7 @@ public class Course {
     private String conclusion;
     private int credits;
     private boolean obligatory;
+
     @Override
     public String toString() {
         return "Course{" +
@@ -123,4 +126,5 @@ public class Course {
     public void setObligatory(boolean obligatory) {
         this.obligatory = obligatory;
     }
+
 }
