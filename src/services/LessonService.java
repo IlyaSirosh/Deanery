@@ -18,7 +18,7 @@ public interface LessonService {
     List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester);
     List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week);
     List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week, Day day);
-    List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week, Day day, int lessonNumber);
+    List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week, Day day, Integer lessonNumber);
 
     List<Student> getGroup(Lesson lesson);
     boolean addToGroup(Lesson lesson, Student student);
