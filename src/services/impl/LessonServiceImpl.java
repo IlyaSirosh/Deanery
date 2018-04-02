@@ -7,6 +7,7 @@ import model.enums.Day;
 import services.LessonService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LessonServiceImpl implements LessonService {
@@ -89,6 +90,12 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public List<Student> getGroup(Lesson lesson) {
         return studentDao.findStudentByLesson(lesson.getLessonId());
+    }
+
+    @Override
+    public Map<Lesson, List<Student>> getThread(Lesson lesson) {
+        //TODO get student groups
+        return null;
     }
 
     @Override
