@@ -15,6 +15,7 @@ public interface LessonService {
     List<Lesson>  getListBy(Department department);
     List<Lesson>  getListBy(Department department, Course course);
     List<Lesson>  getListBy(Department department, Course course, Teacher teacher);
+    List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester);
     List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week);
     List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week, Day day);
     List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week, Day day, int lessonNumber);
