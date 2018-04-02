@@ -64,7 +64,11 @@ public class Processor {
         return "";
     }
     String renderPage(String sourceFile, Model params){
-        return renderPage(new File(getClass().getClassLoader().getResource(getTemplateName(sourceFile)).getFile()), params.getAllParams());
+        return renderPage(new File(getClass()
+                        .getClassLoader()
+                        .getResource(getTemplateName(sourceFile))
+                        .getFile()),
+                params.getAllParams());
     }
 
     private String getTemplateName(String templateName) {
