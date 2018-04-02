@@ -8,11 +8,10 @@ import java.util.List;
 public class Schedule {
     private int scheduleId;
     private DayEnum day;
-    public static enum DayEnum{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
+    public enum DayEnum{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
     private int lessonNumber;
     private Week week;
-    private List<Class> classList;
-    private List<Lesson> lessonList;
+    private List<ScheduleUnit> lessons;
     @Override
     public String toString() {
         return "Schedule{" +
@@ -20,8 +19,7 @@ public class Schedule {
                 ", day=" + day +
                 ", lessonNumber=" + lessonNumber +
                 ", week=" + week +
-                ", classList=" + classList +
-                ", lessonList=" + lessonList +
+                ", lessons=" + lessons +
                 '}';
     }
 
@@ -36,8 +34,8 @@ public class Schedule {
         if (lessonNumber != schedule.lessonNumber) return false;
         if (day != schedule.day) return false;
         if (week != null ? !week.equals(schedule.week) : schedule.week != null) return false;
-        if (classList != null ? !classList.equals(schedule.classList) : schedule.classList != null) return false;
-        return lessonList != null ? lessonList.equals(schedule.lessonList) : schedule.lessonList == null;
+
+        return lessons != null ? lessons.equals(schedule.lessons) : schedule.lessons == null;
     }
 
     @Override
@@ -46,8 +44,7 @@ public class Schedule {
         result = 31 * result + (day != null ? day.hashCode() : 0);
         result = 31 * result + lessonNumber;
         result = 31 * result + (week != null ? week.hashCode() : 0);
-        result = 31 * result + (classList != null ? classList.hashCode() : 0);
-        result = 31 * result + (lessonList != null ? lessonList.hashCode() : 0);
+        result = 31 * result + (lessons != null ? lessons.hashCode() : 0);
         return result;
     }
 
@@ -87,19 +84,11 @@ public class Schedule {
     }
 
 
-    public List<Class> getClassList() {
-        return classList;
+    public List<ScheduleUnit> getLessons() {
+        return lessons;
     }
 
-    public void setClassList(List<Class> classList) {
-        this.classList = classList;
-    }
-
-    public List<Lesson> getLessonList() {
-        return lessonList;
-    }
-
-    public void setLessonList(List<Lesson> lessonList) {
-        this.lessonList = lessonList;
+    public void setLessons(List<ScheduleUnit> lessons) {
+        this.lessons= lessons;
     }
 }
