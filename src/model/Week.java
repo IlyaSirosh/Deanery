@@ -14,7 +14,7 @@ public class Week {
 
     @Override
     public String toString() {
-        return "Week{" +
+        return "IWeekDao{" +
                 "weekId=" + weekId +
                 ", number=" + number +
                 ", start=" + start +

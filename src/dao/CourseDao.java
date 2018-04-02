@@ -1,5 +1,6 @@
 package dao;
 
+import dao.Interfaces.ICourseDao;
 import dao.impl.EntityRetriever;
 import model.Course;
 
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Created by PANNA on 02.04.2018.
  */
-public class CourseDao {
+public class CourseDao implements ICourseDao {
 
     private static final String SELECT_ALL = "SELECT * FROM course";
     private static final String SELECT_BY_ID = "SELECT * FROM course WHERE course_id = ?";
