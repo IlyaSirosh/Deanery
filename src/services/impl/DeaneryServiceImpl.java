@@ -20,16 +20,19 @@ public class DeaneryServiceImpl implements DeaneryService {
 
     @Override
     public List<Semester> getAllSemesters() {
+        //TODO change signature of semesterDao
         return semesterDao.findAll();
     }
 
     @Override
     public boolean createSemester(Semester semester) {
+        //TODO change signature of semesterDao
         return semesterDao.create(semester);
     }
 
     @Override
     public boolean updateSemester(Semester semester) {
+        //TODO change signature of semesterDao
         return semesterDao.update(semester);
     }
 
@@ -41,6 +44,7 @@ public class DeaneryServiceImpl implements DeaneryService {
 
     @Override
     public List<Week> getAllWeeks() {
+        //TODO change signature of weekDao
         return weekDao.findAll();
     }
 
@@ -52,6 +56,7 @@ public class DeaneryServiceImpl implements DeaneryService {
 
     @Override
     public boolean createWeek(Week week) {
+        //TODO change signature of weekDao
         return weekDao.create(week);
     }
 
