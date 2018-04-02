@@ -5,9 +5,9 @@ import java.util.List;
 public class Lesson {
     private int lessonId;
     private String type;
-    private int teacherId;
-    private int courseId;
-    private int semesterId;
+    private Teacher teacher;
+    private Course course;
+    private Semester semester;
     private String threadName;
     private int groupNumber;
     private GroupExam groupExam;
@@ -20,9 +20,9 @@ public class Lesson {
         return "Lesson{" +
                 "lessonId=" + lessonId +
                 ", type='" + type + '\'' +
-                ", teacherId=" + teacherId +
-                ", courseId=" + courseId +
-                ", semesterId=" + semesterId +
+                ", teacher=" + teacher +
+                ", course=" + course +
+                ", semester=" + semester +
                 ", threadName='" + threadName + '\'' +
                 ", groupNumber=" + groupNumber +
                 ", groupExam=" + groupExam +
@@ -40,11 +40,11 @@ public class Lesson {
         Lesson lesson = (Lesson) o;
 
         if (lessonId != lesson.lessonId) return false;
-        if (teacherId != lesson.teacherId) return false;
-        if (courseId != lesson.courseId) return false;
-        if (semesterId != lesson.semesterId) return false;
         if (groupNumber != lesson.groupNumber) return false;
         if (type != null ? !type.equals(lesson.type) : lesson.type != null) return false;
+        if (teacher != null ? !teacher.equals(lesson.teacher) : lesson.teacher != null) return false;
+        if (course != null ? !course.equals(lesson.course) : lesson.course != null) return false;
+        if (semester != null ? !semester.equals(lesson.semester) : lesson.semester != null) return false;
         if (threadName != null ? !threadName.equals(lesson.threadName) : lesson.threadName != null) return false;
         if (groupExam != null ? !groupExam.equals(lesson.groupExam) : lesson.groupExam != null) return false;
         if (groupStudent != null ? !groupStudent.equals(lesson.groupStudent) : lesson.groupStudent != null)
@@ -57,9 +57,9 @@ public class Lesson {
     public int hashCode() {
         int result = lessonId;
         result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + teacherId;
-        result = 31 * result + courseId;
-        result = 31 * result + semesterId;
+        result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
+        result = 31 * result + (course != null ? course.hashCode() : 0);
+        result = 31 * result + (semester != null ? semester.hashCode() : 0);
         result = 31 * result + (threadName != null ? threadName.hashCode() : 0);
         result = 31 * result + groupNumber;
         result = 31 * result + (groupExam != null ? groupExam.hashCode() : 0);
@@ -69,8 +69,64 @@ public class Lesson {
         return result;
     }
 
-    public GroupExam getGroupExam() {
+    public int getLessonId() {
 
+        return lessonId;
+    }
+
+    public void setLessonId(int lessonId) {
+        this.lessonId = lessonId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
+    }
+
+    public String getThreadName() {
+        return threadName;
+    }
+
+    public void setThreadName(String threadName) {
+        this.threadName = threadName;
+    }
+
+    public int getGroupNumber() {
+        return groupNumber;
+    }
+
+    public void setGroupNumber(int groupNumber) {
+        this.groupNumber = groupNumber;
+    }
+
+    public GroupExam getGroupExam() {
         return groupExam;
     }
 
@@ -100,62 +156,5 @@ public class Lesson {
 
     public void setScheduleList(List<Schedule> scheduleList) {
         this.scheduleList = scheduleList;
-    }
-
-    public int getLessonId() {
-
-        return lessonId;
-    }
-
-    public void setLessonId(int lessonId) {
-        this.lessonId = lessonId;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public int getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
-    }
-
-    public int getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
-    }
-
-    public int getSemesterId() {
-        return semesterId;
-    }
-
-    public void setSemesterId(int semesterId) {
-        this.semesterId = semesterId;
-    }
-
-    public String getThreadName() {
-        return threadName;
-    }
-
-    public void setThreadName(String threadName) {
-        this.threadName = threadName;
-    }
-
-    public int getGroupNumber() {
-        return groupNumber;
-    }
-
-    public void setGroupNumber(int groupNumber) {
-        this.groupNumber = groupNumber;
     }
 }

@@ -7,7 +7,7 @@ public class Semester {
     private int semesterId;
     private int year;
     private SemesterEnum semester;
-    private enum SemesterEnum{Autumn,Winter,Spring,Summer};
+    public static enum SemesterEnum{Autumn,Winter,Spring,Summer};
 
     @Override
     public String toString() {
