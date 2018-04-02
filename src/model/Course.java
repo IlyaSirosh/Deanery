@@ -7,7 +7,11 @@ public class Course {
     private int courseId;
     private Department department;
     private String name;
-
+    private int lections;
+    private int seminars;
+    private String conclusion;
+    private int credits;
+    private boolean obligatory;
     @Override
     public String toString() {
         return "Course{" +
@@ -61,11 +65,6 @@ public class Course {
         this.department = department;
     }
 
-    private int lections;
-    private int seminars;
-    private String conclusion;
-    private int credits;
-    private boolean obligatory;
 
     public int getCourseId() {
 
