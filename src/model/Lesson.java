@@ -10,8 +10,7 @@ public class Lesson {
     private Semester semester;
     private String threadName;
     private int groupNumber;
-    private List<GroupStudent> studentGroup;
-    private List<Schedule> schedule;
+
 
     @Override
     public String toString() {
@@ -23,7 +22,6 @@ public class Lesson {
                 ", semester=" + semester +
                 ", threadName='" + threadName + '\'' +
                 ", groupNumber=" + groupNumber +
-                ", groupStudent=" + studentGroup +
                 '}';
     }
 
@@ -43,7 +41,7 @@ public class Lesson {
         if (threadName != null ? !threadName.equals(lesson.threadName) : lesson.threadName != null) return false;
 
 
-        return studentGroup != null ? !studentGroup.equals(lesson.studentGroup) : lesson.studentGroup != null;
+        return (threadName != null ? !threadName.equals(lesson.threadName) : lesson.threadName != null);
     }
 
     @Override
@@ -55,7 +53,7 @@ public class Lesson {
         result = 31 * result + (semester != null ? semester.hashCode() : 0);
         result = 31 * result + (threadName != null ? threadName.hashCode() : 0);
         result = 31 * result + groupNumber;
-        result = 31 * result + (studentGroup != null ? studentGroup.hashCode() : 0);
+
 
         return result;
     }
@@ -118,19 +116,4 @@ public class Lesson {
     }
 
 
-    public List<GroupStudent> getStudentGroup() {
-        return studentGroup;
-    }
-
-    public void setGroupStudent(List<GroupStudent> group) {
-        this.studentGroup = group;
-    }
-
-    public List<Schedule> getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(List<Schedule> schedule) {
-        this.schedule = schedule;
-    }
 }

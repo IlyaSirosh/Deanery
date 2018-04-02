@@ -1,20 +1,22 @@
 package services;
 
+import model.*;
+import model.enums.Day;
+
 import java.util.List;
 
 public interface LessonService {
 
-    boolean create(Object lesson);
-    boolean update(Object lesson);
-    boolean delete(Object lesson);
+    boolean create(Lesson lesson);
+    boolean update(Lesson lesson);
+    boolean delete(Lesson lesson);
 
-    Object get(Object lesson);
-    List<Object>  getList();
-    List<Object>  getListBy(Object department);
-    List<Object>  getListBy(Object department, Object course);
-    List<Object>  getListBy(Object department, Object course, Object teacher);
-    List<Object>  getListBy(Object department, Object course, Object teacher, Object semester, Object week);
-    List<Object>  getListBy(Object department, Object course, Object teacher, Object semester, Object week, Object day);
-    List<Object>  getListBy(Object department, Object course, Object teacher, Object semester, Object week, Object day, Object lessonNumber);
+    List<Lesson>  getList();
+    List<Lesson>  getListBy(Department department);
+    List<Lesson>  getListBy(Department department, Course course);
+    List<Lesson>  getListBy(Department department, Course course, Teacher teacher);
+    List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week);
+    List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week, Day day);
+    List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week, Day day, int lessonNumber);
 
 }

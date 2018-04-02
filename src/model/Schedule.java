@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.Day;
+
 import java.util.List;
 
 /**
@@ -7,8 +9,7 @@ import java.util.List;
  */
 public class Schedule {
     private int scheduleId;
-    private DayEnum day;
-    public enum DayEnum{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
+    private Day day;
     private int lessonNumber;
     private Week week;
     private List<ScheduleUnit> lessons;
@@ -67,11 +68,11 @@ public class Schedule {
         this.scheduleId = scheduleId;
     }
 
-    public DayEnum getDay() {
+    public Day getDay() {
         return day;
     }
 
-    public void setDay(DayEnum day) {
+    public void setDay(Day day) {
         this.day = day;
     }
 

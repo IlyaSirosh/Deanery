@@ -13,9 +13,8 @@ public class Student {
     private Date startdate;
     private Date enddate;
     private int credits;
-    private StudentEnum enddateReason;
-    private GroupStudent groupStudent;
-    public enum StudentEnum {droppes, excluded,left };
+    private LeaveReason enddateReason;
+    public enum LeaveReason {droppes, excluded,left };
 
     @Override
     public String toString() {
@@ -27,7 +26,6 @@ public class Student {
                 ", enddate=" + enddate +
                 ", credits=" + credits +
                 ", enddateReason=" + enddateReason +
-                ", groupStudent=" + groupStudent +
                 '}';
     }
 
@@ -46,7 +44,7 @@ public class Student {
         if (startdate != null ? !startdate.equals(student.startdate) : student.startdate != null) return false;
         if (enddate != null ? !enddate.equals(student.enddate) : student.enddate != null) return false;
         if (enddateReason != student.enddateReason) return false;
-        return groupStudent != null ? groupStudent.equals(student.groupStudent) : student.groupStudent == null;
+        return (enddateReason != student.enddateReason);
     }
 
     @Override
@@ -58,24 +56,15 @@ public class Student {
         result = 31 * result + (enddate != null ? enddate.hashCode() : 0);
         result = 31 * result + credits;
         result = 31 * result + (enddateReason != null ? enddateReason.hashCode() : 0);
-        result = 31 * result + (groupStudent != null ? groupStudent.hashCode() : 0);
         return result;
     }
 
-    public GroupStudent getGroupStudent() {
 
-        return groupStudent;
-    }
-
-    public void setGroupStudent(GroupStudent groupStudent) {
-        this.groupStudent = groupStudent;
-    }
-
-    public StudentEnum getEnddateReason() {
+    public LeaveReason getEnddateReason() {
         return enddateReason;
     }
 
-    public void setEnddateReason(StudentEnum enddateReason) {
+    public void setEnddateReason(LeaveReason enddateReason) {
         this.enddateReason = enddateReason;
     }
 
