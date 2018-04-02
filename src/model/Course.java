@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  * Created by PANNA on 02.04.2018.
  */
@@ -7,6 +9,12 @@ public class Course {
     private int courseId;
     private Department department;
     private String name;
+    private int lections;
+    private int seminars;
+    private String conclusion;
+    private int credits;
+    private boolean obligatory;
+    private List<Teacher> teachers;
 
     @Override
     public String toString() {
@@ -61,11 +69,6 @@ public class Course {
         this.department = department;
     }
 
-    private int lections;
-    private int seminars;
-    private String conclusion;
-    private int credits;
-    private boolean obligatory;
 
     public int getCourseId() {
 
@@ -124,4 +127,13 @@ public class Course {
     public void setObligatory(boolean obligatory) {
         this.obligatory = obligatory;
     }
+
+    public List<Teacher> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(List<Teacher> teachers) {
+        this.teachers = teachers;
+    }
+
 }

@@ -10,10 +10,9 @@ public class Lesson {
     private Semester semester;
     private String threadName;
     private int groupNumber;
-    private GroupExam groupExam;
-    private GroupStudent groupStudent;
-    private List<Class> classList;
-    private List<Schedule> scheduleList;
+    private GroupExam exam;
+    private List<GroupStudent> studentGroup;
+    private List<Schedule> schedule;
 
     @Override
     public String toString() {
@@ -25,10 +24,8 @@ public class Lesson {
                 ", semester=" + semester +
                 ", threadName='" + threadName + '\'' +
                 ", groupNumber=" + groupNumber +
-                ", groupExam=" + groupExam +
-                ", groupStudent=" + groupStudent +
-                ", classList=" + classList +
-                ", scheduleList=" + scheduleList +
+                ", groupExam=" + exam +
+                ", groupStudent=" + studentGroup +
                 '}';
     }
 
@@ -46,11 +43,9 @@ public class Lesson {
         if (course != null ? !course.equals(lesson.course) : lesson.course != null) return false;
         if (semester != null ? !semester.equals(lesson.semester) : lesson.semester != null) return false;
         if (threadName != null ? !threadName.equals(lesson.threadName) : lesson.threadName != null) return false;
-        if (groupExam != null ? !groupExam.equals(lesson.groupExam) : lesson.groupExam != null) return false;
-        if (groupStudent != null ? !groupStudent.equals(lesson.groupStudent) : lesson.groupStudent != null)
-            return false;
-        if (classList != null ? !classList.equals(lesson.classList) : lesson.classList != null) return false;
-        return scheduleList != null ? scheduleList.equals(lesson.scheduleList) : lesson.scheduleList == null;
+        if (exam != null ? !exam.equals(lesson.exam) : lesson.exam != null) return false;
+
+        return studentGroup != null ? !studentGroup.equals(lesson.studentGroup) : lesson.studentGroup != null;
     }
 
     @Override
@@ -62,10 +57,9 @@ public class Lesson {
         result = 31 * result + (semester != null ? semester.hashCode() : 0);
         result = 31 * result + (threadName != null ? threadName.hashCode() : 0);
         result = 31 * result + groupNumber;
-        result = 31 * result + (groupExam != null ? groupExam.hashCode() : 0);
-        result = 31 * result + (groupStudent != null ? groupStudent.hashCode() : 0);
-        result = 31 * result + (classList != null ? classList.hashCode() : 0);
-        result = 31 * result + (scheduleList != null ? scheduleList.hashCode() : 0);
+        result = 31 * result + (exam != null ? exam.hashCode() : 0);
+        result = 31 * result + (studentGroup != null ? studentGroup.hashCode() : 0);
+
         return result;
     }
 
@@ -126,35 +120,27 @@ public class Lesson {
         this.groupNumber = groupNumber;
     }
 
-    public GroupExam getGroupExam() {
-        return groupExam;
+    public GroupExam getExam() {
+        return exam;
     }
 
-    public void setGroupExam(GroupExam groupExam) {
-        this.groupExam = groupExam;
+    public void setExam(GroupExam groupExam) {
+        this.exam = groupExam;
     }
 
-    public GroupStudent getGroupStudent() {
-        return groupStudent;
+    public List<GroupStudent> getStudentGroup() {
+        return studentGroup;
     }
 
-    public void setGroupStudent(GroupStudent groupStudent) {
-        this.groupStudent = groupStudent;
+    public void setGroupStudent(List<GroupStudent> group) {
+        this.studentGroup = group;
     }
 
-    public List<Class> getClassList() {
-        return classList;
+    public List<Schedule> getSchedule() {
+        return schedule;
     }
 
-    public void setClassList(List<Class> classList) {
-        this.classList = classList;
-    }
-
-    public List<Schedule> getScheduleList() {
-        return scheduleList;
-    }
-
-    public void setScheduleList(List<Schedule> scheduleList) {
-        this.scheduleList = scheduleList;
+    public void setSchedule(List<Schedule> schedule) {
+        this.schedule = schedule;
     }
 }

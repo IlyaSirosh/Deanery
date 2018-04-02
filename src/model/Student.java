@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Date;
 
+
 /**
  * Created by PANNA on 02.04.2018.
  */
@@ -14,7 +15,7 @@ public class Student {
     private int credits;
     private StudentEnum enddateReason;
     private GroupStudent groupStudent;
-    public static enum StudentEnum {droppes, excluded,left };
+    public enum StudentEnum {droppes, excluded,left };
 
     @Override
     public String toString() {
@@ -29,6 +30,7 @@ public class Student {
                 ", groupStudent=" + groupStudent +
                 '}';
     }
+
 
     @Override
     public boolean equals(Object o) {

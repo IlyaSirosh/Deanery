@@ -8,11 +8,11 @@ import java.util.List;
 public class Schedule {
     private int scheduleId;
     private DayEnum day;
-    public static enum DayEnum{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
+    public enum DayEnum{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
     private int lessonNumber;
     private Week week;
-    private List<Class> classList;
-    private List<Lesson> lessonList;
+    private Class lessonClass;
+    private Lesson lesson;
     @Override
     public String toString() {
         return "Schedule{" +
@@ -20,8 +20,8 @@ public class Schedule {
                 ", day=" + day +
                 ", lessonNumber=" + lessonNumber +
                 ", week=" + week +
-                ", classList=" + classList +
-                ", lessonList=" + lessonList +
+                ", class=" + lessonClass +
+                ", lesson=" + lesson +
                 '}';
     }
 
@@ -36,8 +36,8 @@ public class Schedule {
         if (lessonNumber != schedule.lessonNumber) return false;
         if (day != schedule.day) return false;
         if (week != null ? !week.equals(schedule.week) : schedule.week != null) return false;
-        if (classList != null ? !classList.equals(schedule.classList) : schedule.classList != null) return false;
-        return lessonList != null ? lessonList.equals(schedule.lessonList) : schedule.lessonList == null;
+        if (lessonClass != null ? !lessonClass.equals(schedule.lessonClass) : schedule.lessonClass != null) return false;
+        return lesson != null ? lesson.equals(schedule.lesson) : schedule.lesson == null;
     }
 
     @Override
@@ -46,8 +46,8 @@ public class Schedule {
         result = 31 * result + (day != null ? day.hashCode() : 0);
         result = 31 * result + lessonNumber;
         result = 31 * result + (week != null ? week.hashCode() : 0);
-        result = 31 * result + (classList != null ? classList.hashCode() : 0);
-        result = 31 * result + (lessonList != null ? lessonList.hashCode() : 0);
+        result = 31 * result + (lessonClass != null ? lessonClass.hashCode() : 0);
+        result = 31 * result + (lesson != null ? lesson.hashCode() : 0);
         return result;
     }
 
@@ -87,19 +87,19 @@ public class Schedule {
     }
 
 
-    public List<Class> getClassList() {
-        return classList;
+    public Class getLessonClass() {
+        return lessonClass;
     }
 
-    public void setClassList(List<Class> classList) {
-        this.classList = classList;
+    public void setLessonClass(Class lessonClass) {
+        this.lessonClass = lessonClass;
     }
 
-    public List<Lesson> getLessonList() {
-        return lessonList;
+    public Lesson getLesson() {
+        return lesson;
     }
 
-    public void setLessonList(List<Lesson> lessonList) {
-        this.lessonList = lessonList;
+    public void setLesson(Lesson lesson) {
+        this.lesson= lesson;
     }
 }
