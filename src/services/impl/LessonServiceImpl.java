@@ -94,7 +94,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public Map<Lesson, List<Student>> getThread(Lesson lesson) {
-        //TODO get student groups
+        //TODO get student groups and get seminars of lecture
         return null;
     }
 
