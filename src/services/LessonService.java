@@ -20,8 +20,10 @@ public interface LessonService {
     List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week, Day day, int lessonNumber);
 
     List<Student> getGroup(Lesson lesson);
+    boolean addToGroup(Lesson lesson, Student student);
+    boolean deleteFromGroup(Lesson lesson, Student student);
     boolean addGroup(Lesson lesson, List<Student> group);
     boolean updateGroup(Lesson lesson, List<Student> group);
-    boolean deleteGroup(Lesson lesson, List<Student> group);
+
 
 }

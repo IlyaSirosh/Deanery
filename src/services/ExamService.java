@@ -10,11 +10,16 @@ public interface ExamService {
     List<Schedule> getScheduleByDepartment(Department department);
     List<Schedule> getScheduleByTeacher(Teacher teacher);
 
+    void print(List<Schedule> schedule);
+
+    GroupExam getGroupExam(Lesson lesson);
     boolean createGroupExam(GroupExam exam);
     boolean updateGroupExap(GroupExam exam);
     boolean deleteGroupExam(GroupExam exam);
 
     List<GroupStudent> getStudentResults(Lesson lesson);
-    boolean updateStudentResult(Lesson lesson, GroupStudent result);
-    boolean deleteStudentResult(Lesson lesson, GroupStudent result);
+    List<GroupStudent> getStudentResults(Teacher teacher);
+    List<GroupStudent> getStudentResults(Department department);
+    boolean updateStudentResult(GroupStudent result);
+    boolean deleteStudentResult(GroupStudent result);
 }
