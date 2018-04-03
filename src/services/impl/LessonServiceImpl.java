@@ -96,13 +96,13 @@ public class LessonServiceImpl implements LessonService {
 
     private List<Lesson> getListBy(Week week, Day day, Integer lessonNumber){
 
-        if(week==null && day ==null && (lessonNumber!=null || lessonNumber!=0)){
+        if(week==null && day ==null && (lessonNumber==null || lessonNumber==0)){
             return getList();
         }else if(week==null && day ==null) {
             return lessonDao.findyByLessonNumber(lessonNumber);
-        }else if(day ==null && (lessonNumber!=null || lessonNumber!=0)){
+        }else if(day ==null && (lessonNumber==null || lessonNumber==0)){
             return lessonDao.findByWeek(week.getWeekId());
-        }else if(week==null && (lessonNumber!=null || lessonNumber!=0)){
+        }else if(week==null && (lessonNumber==null || lessonNumber==0)){
             return lessonDao.findByDay(day.getValue());
         }else if(week == null){
             return lessonDao.findByDayAndLessonNumber(day.getValue(), lessonNumber);
