@@ -1,13 +1,11 @@
 package dao.impl;
 
 import dao.DepartmentDao;
-import dao.Interfaces.ICourseDao;
-import dao.Interfaces.IDepartmentDao;
-import dao.Interfaces.ISemesterDao;
-import dao.Interfaces.ITeacherDao;
+import dao.Interfaces.*;
 import dao.SemesterDao;
 import model.*;
 import model.Class;
+import model.enums.Day;
 import model.enums.SemesterEnum;
 
 import java.sql.ResultSet;
@@ -120,6 +118,19 @@ public class EntityRetriever {
         teacher.setName(rs.getString("name"));
         teacher.setRole(rs.getString("role"));
         return teacher;
+    }
+
+    public static Schedule retrieveSchedule(ResultSet rs) throws SQLException{
+        Schedule schedule = new Schedule();
+        schedule.setScheduleId(rs.getInt("schedule_id"));
+        schedule.setDay(((Day.values()[rs.getInt("day")])));
+        schedule.setLessonNumber((rs.getInt("lesson_number")));
+        IWeekDao weekDao=null;
+        Week week = new Week();
+        week.setWeekId(rs.getInt("week_id"));
+        week = weekDao.findById(week.getWeekId());
+        schedule.setWeek(week);
+        return schedule;
     }
 
 }

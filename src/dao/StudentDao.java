@@ -17,7 +17,7 @@ import java.util.List;
  */
 public  class StudentDao implements IStudentDao{
     private static final String SELECT_ALL = "SELECT * FROM student";
-    private static final String SELECT_BY_ID = "SELECT * FROM student WHERE studen_id = ?";
+    private static final String SELECT_BY_ID = "SELECT * FROM student WHERE student_id = ?";
     private static final String SELECT_BY_LESSON_ID = "SELECT * FROM student WHERE student_id IN (SELECT student_id from lesson where lesson_id=?);";
 
     private static final String CREATE = "INSERT INTO student ( surname, speciality, startdate, enddate, enddate_reason, credits)\n" +
@@ -85,7 +85,8 @@ public  class StudentDao implements IStudentDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return student;    }
+        return student;
+    }
 
     @Override
     public boolean create(Student student) {
@@ -110,13 +111,13 @@ public  class StudentDao implements IStudentDao{
         Student current = findById(infoForUpdate.getStudentId());
         try (PreparedStatement statement
                      = connection.prepareStatement(UPDATE)){
-            statement.setString(2, infoForUpdate.getSurname());
-            statement.setString(3, infoForUpdate.getSpeciality());
-            statement.setDate(4,infoForUpdate.getStartdate());
-            statement.setDate(5, infoForUpdate.getEnddate());
-            statement.setInt(6, ((Student.LeaveReason.valueOf(infoForUpdate.getEnddateReason().toString()).ordinal())));
-            statement.setInt(7, infoForUpdate.getCredits());
-
+            statement.setString(1, infoForUpdate.getSurname());
+            statement.setString(2, infoForUpdate.getSpeciality());
+            statement.setDate(3,infoForUpdate.getStartdate());
+            statement.setDate(4, infoForUpdate.getEnddate());
+            statement.setInt(5, ((Student.LeaveReason.valueOf(infoForUpdate.getEnddateReason().toString()).ordinal())));
+            statement.setInt(6, infoForUpdate.getCredits());
+            statement.setInt(7, infoForUpdate.getStudentId());
             statement.execute();
 
         } catch (SQLException e) {

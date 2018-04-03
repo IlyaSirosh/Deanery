@@ -18,4 +18,5 @@ public interface IScheduleDao {
     public List<Schedule> getByTeacher(Teacher teacher);
     public boolean create(Schedule schedule);
     public boolean update(Schedule infoForUpdate);
+    public boolean delete(Schedule schedule);
 }
