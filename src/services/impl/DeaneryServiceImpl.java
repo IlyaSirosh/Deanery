@@ -7,6 +7,7 @@ import dao.Interfaces.IWeekDao;
 import model.Semester;
 import model.Student;
 import model.Week;
+import model.Class;
 import services.DeaneryService;
 
 import java.util.List;
@@ -62,7 +63,7 @@ public class DeaneryServiceImpl implements DeaneryService {
 
     @Override
     public boolean updateWeek(Week week) {
-        return weekDao.update(weekDao);
+        return weekDao.update(week);
     }
 
     @Override
