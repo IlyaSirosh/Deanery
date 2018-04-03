@@ -23,6 +23,7 @@ public interface ILessonDao {
     Lesson getLecture(Course course);
     List<Lesson> getSeminars(Course course);
     List<Lesson> getSeminars(Lesson lesson);
+    List<Lesson> getLessons(Course course);
     boolean connectSeminarsToLecture(Lesson lecture);
 
 

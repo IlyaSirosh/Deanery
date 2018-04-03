@@ -31,7 +31,7 @@ public class LessonDao implements ILessonDao {
     private static final String SELECT_BY_COURSE_AND_TYPE = "SELECT * FROM lesson WHERE course_id=? AND type=?";
     private static final String SELECT_SEMINARS_BY_LECTURE = "SELECT * FROM lesson WHERE lecture_id=?";
     private static final String UPDATE_SEMINARS = "UPDATE lesson SET lesson_id=? WHERE course_id=? AND type=?";
-
+    private static final String SELECT_BY_COURSE = "SELECT * FROM lesson WHERE course_id=?";
    // private static final String GET_GROUP="SELECT * FROM student WHERE student_id IN (SELECT student_id FROM group_has_student WHERE group_id IN (SELECT group_id FROM lesson WHERE lesson_id =? ";
     //private static final String ADD_TO_GROUP="INSERT INTO group_has_student(group_id) SELECT ? FROM group_has_student WHERE group_id=?";
 
@@ -242,6 +242,22 @@ public class LessonDao implements ILessonDao {
             e.printStackTrace();
         }
         return seminars;
+    }
+
+    @Override
+    public List<Lesson> getLessons(Course course) {
+        List<Lesson> lessons = new ArrayList<>();
+        try (PreparedStatement statement
+                     = connection.prepareStatement(SELECT_BY_COURSE)) {
+            statement.setInt(1, course.getCourseId());
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                lessons.add(EntityRetriever.retrieveLesson(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lessons;
     }
 
     @Override
