@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 
 public class CourseServiceImpl implements CourseService {
 
-    private ICourseDao courseDao = JDBCDaoFactory.getInstance().createCourseDao();
-    private ILessonDao lessonDao = JDBCDaoFactory.getInstance().createLessonDao();
+    private static ICourseDao courseDao = JDBCDaoFactory.getInstance().createCourseDao();
+    private static ILessonDao lessonDao = JDBCDaoFactory.getInstance().createLessonDao();
 
 
     @Override
