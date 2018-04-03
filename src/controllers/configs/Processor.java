@@ -14,6 +14,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.StringWriter;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 public class Processor {
@@ -181,26 +182,22 @@ public class Processor {
     }
 
     private String evalExpression(String exp) throws EvaluatingExpression {
+        String objectToGet = (exp.indexOf('.')==-1)?exp:exp.substring(0, exp.indexOf('.'));
         try {
-            if (exp.indexOf('.') != -1) {
-                Object obj = parameters.get(exp.substring(0, exp.indexOf('.')));
-                System.out.println(obj);
-                java.lang.reflect.Method method;
-                try {
-                    String paramName = exp.substring(exp.indexOf('.') + 1);
-                    method = obj.getClass().getMethod(createGetterName(paramName));
-                    return method.invoke(obj).toString();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                return parameters.get(exp).toString();
-            }
-            return null;
+                Object obj = parameters.get(objectToGet);
+
+            if (exp.indexOf('.') == -1) return obj.toString();
+            else return continueEvaluating(obj, exp.substring(exp.indexOf('.')+1));
         }catch (Exception e){
             System.out.println("Exception while evaluating "+exp);
             throw new EvaluatingExpression();
         }
+    }
+    private String continueEvaluating(Object obj, String toEval) throws Exception {
+        String paramToEval = (toEval.indexOf('.') == -1) ? toEval : toEval.substring(0, toEval.indexOf('.'));
+        Method method = obj.getClass().getMethod(createGetterName(paramToEval));
+        if(toEval.indexOf('.') == -1) return method.invoke(obj).toString();
+        else return continueEvaluating(method.invoke(obj), toEval.substring(toEval.indexOf('.')+1));
     }
 
     private String createGetterName(String paramName){

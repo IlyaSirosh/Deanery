@@ -18,7 +18,6 @@ public class CoursesController {
 
     @RequestPath("/showCourses")
     public String renderView(Model m){
-        System.out.println(courseService.getAllCourses());
         m.addParam("courses", courseService.getAllCourses());
         return "courses";
     }
