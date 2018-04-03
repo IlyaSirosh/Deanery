@@ -184,6 +184,7 @@ public class Processor {
         try {
             if (exp.indexOf('.') != -1) {
                 Object obj = parameters.get(exp.substring(0, exp.indexOf('.')));
+                System.out.println(obj);
                 java.lang.reflect.Method method;
                 try {
                     String paramName = exp.substring(exp.indexOf('.') + 1);

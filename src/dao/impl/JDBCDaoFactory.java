@@ -16,7 +16,7 @@ public class JDBCDaoFactory extends DaoFactory {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             if(connection == null)
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "12345");
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/mydb?useSSL=false&characterSet=utf8", "root", "1234");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

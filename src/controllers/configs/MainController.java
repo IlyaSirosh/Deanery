@@ -74,7 +74,6 @@ public class MainController {
                 view.renderView();
             } else {
                 if(pane!=null) mainPage.remove(pane);
-                Object controller = linkedPaths.get(path).getDeclaringClass().newInstance();
                 Method m = linkedPaths.get(path);
                 Model model = new Model();
                 List<Object> methodParams = new LinkedList<>();
