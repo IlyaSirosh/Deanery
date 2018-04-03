@@ -171,7 +171,7 @@ public class Processor {
                 expression = expression.substring(expression.indexOf('~') + 1);
                 res += evalExpression(expression.substring(0, expression.indexOf('~')));
                 expression = expression.substring(expression.indexOf('~') + 1);
-                res += expression;
+                res += processExpression(expression);
                 return res;
             }
             return parameters.get(expression).toString();
