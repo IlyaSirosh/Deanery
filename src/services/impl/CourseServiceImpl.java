@@ -53,6 +53,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Lesson> getLessons(Course course) {
-        return lessonDao.findAll().stream().filter(lesson -> lesson.getCourse().equals(course)).collect(Collectors.toList());
+        return lessonDao.getLessons(course);
     }
 }
