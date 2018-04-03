@@ -3,6 +3,7 @@ package dao;
 import dao.Interfaces.IWeekDao;
 import dao.impl.EntityRetriever;
 import model.Course;
+import model.Student;
 import model.Week;
 
 import java.sql.Connection;
@@ -18,6 +19,8 @@ import java.util.List;
 public class WeekDao implements IWeekDao {
     private static final String SELECT_ALL = "SELECT * FROM week";
     private static final String SELECT_BY_ID = "SELECT * FROM week WHERE week_id = ?";
+    private static final String SELECT_BY_SEMESTER_ID = "SELECT * FROM week WHERE semester_id = ?";
+
     private static final String CREATE = "INSERT INTO week (number, start, end, semester_id)\n" +
             "VALUES (?,?,?,?);";
     private static final String UPDATE = "UPDATE week SET " +
@@ -61,6 +64,21 @@ public class WeekDao implements IWeekDao {
             e.printStackTrace();
         }
         return week;    }
+
+    @Override
+    public List<Week> findBySemester(Integer semesterId) {
+        List<Week> allWeeks = new ArrayList<>();
+        try (PreparedStatement statement
+                     = connection.prepareStatement(SELECT_BY_SEMESTER_ID)) {
+            statement.setInt(1, semesterId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                allWeeks.add(EntityRetriever.retrieveWeek(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allWeeks;    }
 
     @Override
     public boolean create(Week week) {

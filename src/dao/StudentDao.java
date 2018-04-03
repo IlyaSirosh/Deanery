@@ -50,11 +50,17 @@ public  class StudentDao implements IStudentDao{
         }
         return allStudents;    }
 
+
+
+
+
+
     @Override
     public List<Student> findStudentByLesson(Integer lessonId) {
         List<Student> allStudents = new ArrayList<>();
         try (PreparedStatement statement
                      = connection.prepareStatement(SELECT_BY_LESSON_ID)) {
+            statement.setInt(1, lessonId);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 allStudents.add(EntityRetriever.retrieveStudent(rs));
@@ -89,7 +95,7 @@ public  class StudentDao implements IStudentDao{
             statement.setString(2, student.getSpeciality());
             statement.setDate(3, student.getStartdate());
             statement.setDate(4, student.getEnddate());
-            statement.setInt(5, student.getEnddateReason());
+            statement.setInt(5, ((Student.LeaveReason.valueOf(student.getEnddateReason().toString()).ordinal())));
             statement.setInt(6, student.getCredits());
             statement.execute();
 
@@ -108,7 +114,7 @@ public  class StudentDao implements IStudentDao{
             statement.setString(3, infoForUpdate.getSpeciality());
             statement.setDate(4,infoForUpdate.getStartdate());
             statement.setDate(5, infoForUpdate.getEnddate());
-            statement.setInt(6, ((Student.LeaveReason.values()infoForUpdate.getEnddateReason()).ordinal()));
+            statement.setInt(6, ((Student.LeaveReason.valueOf(infoForUpdate.getEnddateReason().toString()).ordinal())));
             statement.setInt(7, infoForUpdate.getCredits());
 
             statement.execute();
