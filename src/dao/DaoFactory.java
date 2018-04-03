@@ -4,9 +4,13 @@ import dao.impl.Config;
 
 /**
  * Created by PANNA on 02.04.2018.
- */
-public abstract class DaoFactory {
-    public abstract CourseDao createCourseDao();
+            */
+    public abstract class DaoFactory {
+        public abstract CourseDao createCourseDao();
+        public abstract ClassDao createClassDao();
+        public abstract SemesterDao createSemesterDao();
+        public abstract  StudentDao createStudentDao();
+        public abstract WeekDao createWeekDao();
 
     public static DaoFactory getInstance() {
         String className = Config.getInstance().getFactoryClassName();

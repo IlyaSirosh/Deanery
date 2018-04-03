@@ -3,6 +3,7 @@ package dao;
 import dao.Interfaces.ICourseDao;
 import dao.impl.EntityRetriever;
 import model.Course;
+import model.Lesson;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,10 +20,12 @@ public class CourseDao implements ICourseDao {
     private static final String SELECT_ALL = "SELECT * FROM course";
     private static final String SELECT_BY_ID = "SELECT * FROM course WHERE course_id = ?";
     private static final String SELECT_BY_DEPARTMENT_ID = "SELECT * FROM course WHERE department_id = ?";
-
+    private static final String SELECT_BY_TEACHER_ID =" SELECT * FROM course WHERE department_id IN (SELECT department_id FROM teacher WHERE teacher_id=?) AND course_id IN (SELECT course_id FROM lesson WHERE teacher_id=?)";
+    private static final String SELECT_LESSON_BY_COURSE = "SELECT * FROM lesson WHERE course_id=?";
     private static final String CREATE = "INSERT INTO course (department_id, name, lections, seminars,conclusion, credits, obligatory)\n" +
             "VALUES (?,?,?,?,?,?,?);";
     private static final String UPDATE = "UPDATE course SET " +
+
             "department_id = ?"+
             "name = ? ," +
             "lections = ?, "+
@@ -31,6 +34,7 @@ public class CourseDao implements ICourseDao {
             "credits = ?, " +
             "obligatory = ? " +
             "WHERE course_id = ?";
+    private static final String DELETE ="DELETE FROM course WHERE course_id=?";
     private Connection connection;
 
     public CourseDao(Connection connection) {
@@ -75,6 +79,22 @@ public class CourseDao implements ICourseDao {
         }
         return allCourses;
     }
+
+    @Override
+    public List<Course> findByTeacher(Integer teacherId) {
+        List<Course> allCourses = new ArrayList<>();
+        try (PreparedStatement statement
+                     = connection.prepareStatement(SELECT_BY_TEACHER_ID)) {
+            statement.setInt(1, teacherId);
+            statement.setInt(2,teacherId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                allCourses.add(EntityRetriever.retrieveCourse(rs));
+            }        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allCourses;    }
+
     public boolean create(Course course) {
         try (PreparedStatement statement
                      = connection.prepareStatement(CREATE)) {
@@ -112,6 +132,37 @@ public class CourseDao implements ICourseDao {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean delete(Course course) {
+        Course current = findById(course.getCourseId());
+        try (PreparedStatement statement
+                     = connection.prepareStatement(DELETE)){
+            statement.setInt(1, course.getCourseId());
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public List<Lesson> getLessons(Course course) {
+        Course current = findById(course.getCourseId());
+        List<Lesson> allLessons = new ArrayList<>();
+        try (PreparedStatement statement
+                     = connection.prepareStatement(SELECT_LESSON_BY_COURSE)) {
+            statement.setInt(1, current.getCourseId());
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                allLessons.add(EntityRetriever.retrieveLesson(rs));
+            }        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allLessons;
     }
 
 }

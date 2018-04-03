@@ -1,5 +1,7 @@
 package dao.Interfaces;
 
+import model.Class;
+
 import java.util.List;
 
 /**
@@ -10,4 +12,5 @@ public interface IClassDao {
     public Class findById(Integer classId);
     public boolean create(Class infoForCreate);
     public boolean update(Class infoForUpdate);
+    public boolean delete(Class infoForDelete);
 }

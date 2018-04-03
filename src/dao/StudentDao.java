@@ -30,7 +30,12 @@ public  class StudentDao implements IStudentDao{
             "enddate_reason = ?, " +
             "credits = ? " +
             "WHERE student_id = ?";
+    private static final String DELETE = "DELETE FROM student WHERE student_id=?";
     private Connection connection;
+    public StudentDao(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public List<Student> findAll() {
         List<Student> allStudents = new ArrayList<>();
@@ -45,11 +50,17 @@ public  class StudentDao implements IStudentDao{
         }
         return allStudents;    }
 
+
+
+
+
+
     @Override
     public List<Student> findStudentByLesson(Integer lessonId) {
         List<Student> allStudents = new ArrayList<>();
         try (PreparedStatement statement
                      = connection.prepareStatement(SELECT_BY_LESSON_ID)) {
+            statement.setInt(1, lessonId);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 allStudents.add(EntityRetriever.retrieveStudent(rs));
@@ -57,8 +68,10 @@ public  class StudentDao implements IStudentDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allStudents;    }
+        return allStudents;
     }
+
+
 
     @Override
     public Student findById(Integer studentId) {
@@ -82,7 +95,7 @@ public  class StudentDao implements IStudentDao{
             statement.setString(2, student.getSpeciality());
             statement.setDate(3, student.getStartdate());
             statement.setDate(4, student.getEnddate());
-            statement.setInt(5, student.getEnddateReason());
+            statement.setInt(5, ((Student.LeaveReason.valueOf(student.getEnddateReason().toString()).ordinal())));
             statement.setInt(6, student.getCredits());
             statement.execute();
 
@@ -101,7 +114,7 @@ public  class StudentDao implements IStudentDao{
             statement.setString(3, infoForUpdate.getSpeciality());
             statement.setDate(4,infoForUpdate.getStartdate());
             statement.setDate(5, infoForUpdate.getEnddate());
-            statement.setString(6, infoForUpdate.getEnddateReason());
+            statement.setInt(6, ((Student.LeaveReason.valueOf(infoForUpdate.getEnddateReason().toString()).ordinal())));
             statement.setInt(7, infoForUpdate.getCredits());
 
             statement.execute();
@@ -111,4 +124,19 @@ public  class StudentDao implements IStudentDao{
             return false;
         }
         return true;    }
+
+    @Override
+    public boolean delete(Student student) {
+        Student current = findById(student.getStudentId());
+        try (PreparedStatement statement
+                     = connection.prepareStatement(DELETE)){
+            statement.setInt(1, student.getStudentId());
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

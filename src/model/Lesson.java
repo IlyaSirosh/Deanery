@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 public class Lesson {
     private int lessonId;
     private String type;
@@ -9,8 +7,8 @@ public class Lesson {
     private Course course;
     private Semester semester;
     private String threadName;
+    private int threadId;
     private int groupNumber;
-
 
     @Override
     public String toString() {
@@ -21,8 +19,8 @@ public class Lesson {
                 ", course=" + course +
                 ", semester=" + semester +
                 ", threadName='" + threadName + '\'' +
+                ", threadId=" + threadId +
                 ", groupNumber=" + groupNumber +
-
                 '}';
     }
 
@@ -34,16 +32,13 @@ public class Lesson {
         Lesson lesson = (Lesson) o;
 
         if (lessonId != lesson.lessonId) return false;
+        if (threadId != lesson.threadId) return false;
         if (groupNumber != lesson.groupNumber) return false;
         if (type != null ? !type.equals(lesson.type) : lesson.type != null) return false;
         if (teacher != null ? !teacher.equals(lesson.teacher) : lesson.teacher != null) return false;
         if (course != null ? !course.equals(lesson.course) : lesson.course != null) return false;
         if (semester != null ? !semester.equals(lesson.semester) : lesson.semester != null) return false;
-        if (threadName != null ? !threadName.equals(lesson.threadName) : lesson.threadName != null) return false;
-
-
-        return (threadName != null ? !threadName.equals(lesson.threadName) : lesson.threadName != null);
-
+        return threadName != null ? threadName.equals(lesson.threadName) : lesson.threadName == null;
     }
 
     @Override
@@ -54,9 +49,18 @@ public class Lesson {
         result = 31 * result + (course != null ? course.hashCode() : 0);
         result = 31 * result + (semester != null ? semester.hashCode() : 0);
         result = 31 * result + (threadName != null ? threadName.hashCode() : 0);
+        result = 31 * result + threadId;
         result = 31 * result + groupNumber;
-
         return result;
+    }
+
+    public int getThreadId() {
+
+        return threadId;
+    }
+
+    public void setThreadId(int threadId) {
+        this.threadId = threadId;
     }
 
     public int getLessonId() {
