@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.configs.MainController;
 import controllers.configs.Model;
 import controllers.decorators.Controller;
 import controllers.decorators.RequestParam;

@@ -127,10 +127,4 @@ public class Course {
         this.obligatory = obligatory;
     }
 
-    public Course() {
-    }
-
-    public Course(int courseId) {
-        this.courseId = courseId;
-    }
 }

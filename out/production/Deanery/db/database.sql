@@ -32,7 +32,7 @@ ENGINE = InnoDB;
 -- Table `mydb`.`teacher` Викладач
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`teacher` (
-  `teacher_id` INT NOT NULL AUTO_INCREMENT,
+  `teacher_id` INT NOT NULL,
   `department_id` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `role` VARCHAR(45) NOT NULL,
@@ -110,8 +110,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`lesson` (
   CONSTRAINT `fk_lesson_lecture_id`
     FOREIGN KEY (`thread_id`)
     REFERENCES `mydb`.`lesson` (`lesson_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_lesson_semester_id`
     FOREIGN KEY (`semester_id`)
     REFERENCES `mydb`.`semester` (`semester_id`)
