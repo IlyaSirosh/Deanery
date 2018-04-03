@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ScheduleServiceImpl implements ScheduleService {
 
-    private IScheduleDao scheduleDao = JDBCDaoFactory.getInstance().createScheduleDao();
+    private static IScheduleDao scheduleDao = JDBCDaoFactory.getInstance().createScheduleDao();
 
     @Override
     public List<Schedule> getAll() {

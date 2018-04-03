@@ -15,10 +15,10 @@ import java.util.List;
 
 public class DeaneryServiceImpl implements DeaneryService {
 
-    private ISemesterDao semesterDao = JDBCDaoFactory.getInstance().createSemesterDao();
-    private IWeekDao weekDao = JDBCDaoFactory.getInstance().createWeekDao();
-    private IStudentDao studentDao = JDBCDaoFactory.getInstance().createStudentDao();
-    private IClassDao classDao = JDBCDaoFactory.getInstance().createClassDao();
+    private static ISemesterDao semesterDao = JDBCDaoFactory.getInstance().createSemesterDao();
+    private static IWeekDao weekDao = JDBCDaoFactory.getInstance().createWeekDao();
+    private static IStudentDao studentDao = JDBCDaoFactory.getInstance().createStudentDao();
+    private static IClassDao classDao = JDBCDaoFactory.getInstance().createClassDao();
 
     @Override
     public List<Semester> getAllSemesters() {
