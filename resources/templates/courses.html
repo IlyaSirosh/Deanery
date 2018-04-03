@@ -108,6 +108,7 @@
 <table class="table-fill">
     <thead>
     <tr>
+<<<<<<< HEAD
         <th class="text-center">Name</th>
         <th class="text-center">Teacher</th>
         <th class="text-center">Department</th>
@@ -122,6 +123,20 @@
         <td class="text-center">Кафедра інформатики</td>
         <td class="text-center">12/10</td>
         <td class="text-center"><a>x</a></td>
+=======
+        <th class="text-center">Назва</th>
+        <th class="text-center">Кредити</th>
+        <th class="text-center">Кафедра</th>
+        <th class="text-center">Редагувати</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr pp:foreach="courses" pp:item="course" pp:index="ind">
+        <td class="text-center" pp:text="~course.name~">Управління проектами</td>
+        <td class="text-center" pp:text="~course.credits~">Проценко Володимир Семенович</td>
+        <td class="text-center" pp:text="~course.department.name~">Кафедра інформатики</td>
+        <a>Видалити</a>
+>>>>>>> Oleksii
     </tr>
     </tbody>
 </table>
