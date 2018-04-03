@@ -1,20 +1,18 @@
 package controllers.configs;
 
-import controllers.exceptions.MappingNotFoundException;
+import controllers.CoursesController;
 import controllers.RealController;
 import controllers.decorators.RequestParam;
 import controllers.decorators.RequestPath;
+import controllers.exceptions.MappingNotFoundException;
 import ui.AddCourseView;
 import ui.View;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
-import javax.swing.text.html.*;
+import javax.swing.text.html.HTMLEditorKit;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.*;
@@ -23,7 +21,7 @@ public class MainController {
     public static final MainController MAIN_CONTROLLER = new MainController();
     private JFrame mainPage;
     private JEditorPane pane;
-    private Class[] controllers = new Class[]{RealController.class};
+    private Class[] controllers = new Class[]{RealController.class, CoursesController.class};
     private View[] views = new View[]{new AddCourseView()};
     private HashMap<String, Method> linkedPaths;
     private HashMap<String, View> linkedViews;

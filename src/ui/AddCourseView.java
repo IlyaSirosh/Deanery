@@ -27,6 +27,13 @@ public class AddCourseView extends View{
         });
         f.add(textField, BorderLayout.NORTH);
         f.setVisible(true);
+<<<<<<< HEAD
+=======
+    }
+
+    @Override
+    public void handleSubmit(String path, Map<String, Object> params) {
+>>>>>>> Oleksii
 
     }
 
