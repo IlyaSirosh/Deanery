@@ -29,8 +29,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getByTeacher(Teacher teacher) {
-        //TODO find by teacher
-        return null;
+
+        return courseDao.findByTeacher(teacher.getTeacherId());
     }
 
     @Override
@@ -45,8 +45,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean delete(Course course) {
-        //TODO delete course
-        return false;
+
+        return courseDao.delete(course);
     }
 
     @Override
