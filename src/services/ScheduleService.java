@@ -16,8 +16,9 @@ public interface ScheduleService {
 
     boolean create(Schedule schedule);
     boolean update(Schedule schedule);
+    boolean delete(Schedule schedule);
 
-    void print(List<Schedule> schedule);
+    //void print(List<Schedule> schedule);
 
 
 }
