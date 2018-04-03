@@ -26,6 +26,10 @@ public class LessonDao implements ILessonDao {
     private static final String SELECT_BY_WEEK_ID_AND_LESSONNUMBER = "SELECT * FROM lesson WHERE lesson_id IN (SELECT lesson_id FROM lesson_has_schedule WHERE schedule_id IN (SELECT schedule_id FROM schedule WHERE week_id=? AND lesson_number=?));";
     private static final String SELECT_BY_DAY_AND_LESSONNUMBER= "SELECT * FROM lesson WHERE lesson_id IN (SELECT lesson_id FROM lesson_has_schedule WHERE schedule_id IN (SELECT schedule_id FROM schedule WHERE day=? AND lesson_number=?));";
     private static final String SELECT_BY_DAY_WEEK_ID_AND_LESSONNUMBER = "SELECT * FROM lesson WHERE lesson_id IN (SELECT lesson_id FROM lesson_has_schedule WHERE schedule_id IN (SELECT schedule_id FROM schedule WHERE lesson_number=? AND day=? AND week_id=?));";
+
+   // private static final String GET_GROUP="SELECT * FROM student WHERE student_id IN (SELECT student_id FROM group_has_student WHERE group_id IN (SELECT group_id FROM lesson WHERE lesson_id =? ";
+    //private static final String ADD_TO_GROUP="INSERT INTO group_has_student(group_id) SELECT ? FROM group_has_student WHERE group_id=?";
+
     private static final String CREATE = "INSERT INTO lesson (type, teacher_id, course_id, thread_name, thread_id, group_number, semester_id)\n" +
             "VALUES (?,?,?,?,?,?,?);";
     private static final String UPDATE = "UPDATE lesson SET " +
@@ -181,6 +185,31 @@ public class LessonDao implements ILessonDao {
             e.printStackTrace();
         }
         return allLessons;      }
+
+    @Override
+    public List<Student> getGroup(Lesson lesson) {
+        return null;
+    }
+
+    @Override
+    public boolean addToGroup(Lesson lesson, Student student) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteFromGroup(Lesson lesson, Student student) {
+        return false;
+    }
+
+    @Override
+    public boolean addGroup(Lesson lesson, List<Student> group) {
+        return false;
+    }
+
+    @Override
+    public boolean updateGroup(Lesson lesson, List<Student> group) {
+        return false;
+    }
 
     @Override
     public boolean create(Lesson lesson) {
