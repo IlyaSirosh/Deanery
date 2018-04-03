@@ -13,5 +13,6 @@ public interface IStudentDao {
     public Student findById(Integer studentId);
     public boolean create(Student student);
     public boolean update(Student infoForUpdate);
+    public boolean delete(Student student);
 
 }

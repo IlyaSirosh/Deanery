@@ -30,7 +30,12 @@ public  class StudentDao implements IStudentDao{
             "enddate_reason = ?, " +
             "credits = ? " +
             "WHERE student_id = ?";
+    private static final String DELETE = "DELETE FROM student WHERE student_id=?";
     private Connection connection;
+    public StudentDao(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public List<Student> findAll() {
         List<Student> allStudents = new ArrayList<>();
@@ -57,8 +62,10 @@ public  class StudentDao implements IStudentDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return allStudents;    }
+        return allStudents;
     }
+
+
 
     @Override
     public Student findById(Integer studentId) {
@@ -101,7 +108,7 @@ public  class StudentDao implements IStudentDao{
             statement.setString(3, infoForUpdate.getSpeciality());
             statement.setDate(4,infoForUpdate.getStartdate());
             statement.setDate(5, infoForUpdate.getEnddate());
-            statement.setString(6, infoForUpdate.getEnddateReason());
+            statement.setInt(6, ((Student.LeaveReason.values()infoForUpdate.getEnddateReason()).ordinal()));
             statement.setInt(7, infoForUpdate.getCredits());
 
             statement.execute();
@@ -111,4 +118,19 @@ public  class StudentDao implements IStudentDao{
             return false;
         }
         return true;    }
+
+    @Override
+    public boolean delete(Student student) {
+        Student current = findById(student.getStudentId());
+        try (PreparedStatement statement
+                     = connection.prepareStatement(DELETE)){
+            statement.setInt(1, student.getStudentId());
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
