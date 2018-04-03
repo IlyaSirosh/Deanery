@@ -6,8 +6,7 @@ import java.util.HashMap;
 
 public class ControllerStarter {
     public static void main(String[] args) throws Exception {
-        MainController mainController = new MainController();
-        mainController.linkEverything();
-        mainController.renderTemplate("/try", new HashMap(){{put("testValue", "Some value");}});
+        MainController.MAIN_CONTROLLER.linkEverything();
+        MainController.MAIN_CONTROLLER.renderTemplate("/try", new HashMap(){{put("testValue", "Some value");}});
     }
 }
