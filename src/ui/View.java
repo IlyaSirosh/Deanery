@@ -2,8 +2,10 @@ package ui;
 
 import java.util.Map;
 
-public interface View {
+public abstract class View {
 
-    void renderView();
-    void handleSubmit(String path, Map<String, Object> params);
+    public abstract void renderView();
+    public void handleSubmit(String path, Map<String, Object> params){
+
+    };
 }

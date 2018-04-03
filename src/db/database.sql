@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`course` (
   `name` VARCHAR(45) NOT NULL,
   `lections` INT NOT NULL,
   `seminars` INT NOT NULL,
-  `conclusion` TINYINT(1) NOT NULL,
+  `conclusion` VARCHAR(200) NOT NULL,
   `credits` INT NOT NULL,
   `obligatory` TINYINT NOT NULL,
   PRIMARY KEY (`course_id`, `department_id`),
@@ -212,7 +212,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`lesson_has_schedule` (
   `lesson_id` INT NOT NULL,
   `schedule_id` INT NOT NULL,
-  `class_id` INT NULL,
+  `class_id` INT NOT NULL,
   PRIMARY KEY (`lesson_id`, `schedule_id`, `class_id`),
   INDEX `fk_lesson_has_schedule_schedule1_idx` (`schedule_id` ASC),
   INDEX `fk_lesson_has_schedule_lesson1_idx` (`lesson_id` ASC),
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`lesson_has_schedule` (
   CONSTRAINT `fk_lesson_has_schedule_class_id`
     FOREIGN KEY (`class_id`)
     REFERENCES `mydb`.`class` (`class_id`)
-    ON DELETE SET NULL
+    ON DELETE RESTRICT 
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
@@ -238,7 +238,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`course_has_precondition_course` Курс-передумова: join-таблиця Курс-Курс
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`course_has_precondition_course` (
+/* CREATE TABLE IF NOT EXISTS `mydb`.`course_has_precondition_course` (
   `course_id` INT NOT NULL,
   `precondition_course_id` INT NOT NULL,
   PRIMARY KEY (`course_id`, `precondition_course_id`),
@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`course_has_precondition_course` (
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
-
+*/
 
 -- -----------------------------------------------------
 -- Table `mydb`.`group_exam` Іспит: для групи може бути визначена аудиторія та дата проведення іспиту

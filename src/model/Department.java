@@ -13,7 +13,7 @@ public class Department {
 
     @Override
     public String toString() {
-        return "Department{" +
+        return "IDepartmentDao{" +
                 "departmentId=" + departmentId +
                 ", name='" + name + '\'' +
                 ", buildingNumber=" + buildingNumber +

@@ -11,7 +11,7 @@ public class Teacher {
 
     @Override
     public String toString() {
-        return "Teacher{" +
+        return "ITeacherDao{" +
                 "teacherId=" + teacherId +
                 ", name='" + name + '\'' +
                 ", role='" + role + '\'' +
