@@ -1,9 +1,6 @@
 package services;
 
-import model.Department;
-import model.Lesson;
-import model.Schedule;
-import model.Teacher;
+import model.*;
 
 import java.util.List;
 
@@ -18,7 +15,7 @@ public interface ScheduleService {
     boolean update(Schedule schedule);
     boolean delete(Schedule schedule);
 
-    //void print(List<Schedule> schedule);
-
+    boolean createLessonSchedule(Schedule schedule, ScheduleUnit unit);
+    boolean deleteLessonSchedule(Schedule schedule, ScheduleUnit unit);
 
 }
