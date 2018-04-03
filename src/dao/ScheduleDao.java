@@ -29,6 +29,9 @@ public class ScheduleDao implements IScheduleDao {
             "week_id = ? "+
             "WHERE schedule_id = ?";
     private static final String DELETE = "DELETE FROM schedule WHERE schedule_id=?";
+    private static final String SELECT_DEPARTMENT_SCHEDULE_UNITS = "SELECT lesson_id, class_id FROM lesson_has_schedule WHERE lesson_id IN (SELECT lesson_id FROM lesson WHERE course_ID IN (SELECT course_id FROM course WHERE department_id=?))))";
+    private static final String SELECT_LESSON_SCHEDULE_UNITS = "SELECT lesson_id, class_id FROM lesson_has_schedule WHERE lesson_id=?";
+    private static final String SELECT_TEACHER_SCHEDULE_UNITS = "SELECT lesson_id, class_id FROM lesson_has_schedule WHERE lesson_id IN (SELECT lesson_id FROM lesson WHERE teacher_id=?))";
     private Connection connection;
     public ScheduleDao(Connection connection) {
         this.connection = connection;
@@ -62,6 +65,55 @@ public class ScheduleDao implements IScheduleDao {
         return schedule;    }
 
     @Override
+    public List<ScheduleUnit> findUnitsByIdAndDepartment(Integer scheduleId, Department department) {
+        List<ScheduleUnit> units = new ArrayList<>();
+        try (PreparedStatement statement
+                     = connection.prepareStatement(SELECT_DEPARTMENT_SCHEDULE_UNITS)) {
+            statement.setInt(1, department.getDepartmentId());
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                units.add(EntityRetriever.retrieveScheduleUnit(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return units;
+    }
+
+    @Override
+    public List<ScheduleUnit> findUnitsByIdAndLesson(Integer scheduleId, Lesson lesson) {
+        List<ScheduleUnit> units = new ArrayList<>();
+        try (PreparedStatement statement
+                     = connection.prepareStatement(SELECT_LESSON_SCHEDULE_UNITS)) {
+            statement.setInt(1, lesson.getLessonId());
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                units.add(EntityRetriever.retrieveScheduleUnit(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return units;
+    }
+
+    @Override
+    public List<ScheduleUnit> findUnitsByIdAndTeacher(Integer scheduleId, Teacher teacher) {
+        List<ScheduleUnit> units = new ArrayList<>();
+        try (PreparedStatement statement
+                     = connection.prepareStatement(SELECT_TEACHER_SCHEDULE_UNITS)) {
+            statement.setInt(1, teacher.getTeacherId());
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                units.add(EntityRetriever.retrieveScheduleUnit(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return units;
+    }
+
+
+    @Override
     public List<Schedule> getByLesson(Lesson lesson) {
         List<Schedule> allSchedule = new ArrayList<>();
         try (PreparedStatement statement
@@ -69,7 +121,7 @@ public class ScheduleDao implements IScheduleDao {
             statement.setInt(1, lesson.getLessonId());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                allSchedule.add(EntityRetriever.retrieveSchedule(rs));
+                allSchedule.add(EntityRetriever.retrieveLessonSchedule(rs,lesson));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,7 +136,7 @@ public class ScheduleDao implements IScheduleDao {
             statement.setInt(1, department.getDepartmentId());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                allSchedule.add(EntityRetriever.retrieveSchedule(rs));
+                allSchedule.add(EntityRetriever.retrieveDepartmentSchedule(rs,department));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,7 +151,7 @@ public class ScheduleDao implements IScheduleDao {
             statement.setInt(1, teacher.getTeacherId());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                allSchedule.add(EntityRetriever.retrieveSchedule(rs));
+                allSchedule.add(EntityRetriever.retrieveTeacherSchedule(rs,teacher));
             }
         } catch (SQLException e) {
             e.printStackTrace();
