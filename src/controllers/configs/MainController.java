@@ -76,6 +76,10 @@ public class MainController {
                     }
                 }
                 String templateName = ((String) m.invoke(controller, methodParams.toArray()));
+                if(templateName.startsWith("redirect:")) {
+                    renderTemplate(templateName.substring(9), model.getAllParams());
+                    return;
+                }
                 pane = new JEditorPane();
                 pane.setEditable(false);
                 pane.setContentType("text/html");

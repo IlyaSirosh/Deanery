@@ -1,6 +1,8 @@
 package controllers.configs;
 
+import controllers.exceptions.EvaluatingExpression;
 import org.w3c.dom.*;
+import org.w3c.dom.events.EventException;
 import resources.Resources;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -114,18 +116,26 @@ public class Processor {
     }
 
     private void processText(Node originalNode){
-        NamedNodeMap attributes = originalNode.getAttributes();
-        if(attributes!=null){
-            originalNode.setTextContent(processExpression(attributes.getNamedItem(CustomTags.TEXT.code).getNodeValue()));
-            attributes.removeNamedItem(CustomTags.TEXT.code);
+        try {
+            NamedNodeMap attributes = originalNode.getAttributes();
+            if (attributes != null) {
+                originalNode.setTextContent(processExpression(attributes.getNamedItem(CustomTags.TEXT.code).getNodeValue()));
+                attributes.removeNamedItem(CustomTags.TEXT.code);
+            }
+        }catch (EvaluatingExpression e){
+            System.out.println("while processing pp:text on tag "+originalNode.getNodeName());
         }
     }
 
     private void processAttribute(Node originalNode, CustomTags tag){
-        NamedNodeMap attributes = originalNode.getAttributes();
-        if(attributes!=null){
-            ((Element)originalNode).setAttribute(tag.getAttrName(),processExpression(attributes.getNamedItem(tag.code).getNodeValue()));
-            attributes.removeNamedItem(tag.code);
+        try {
+            NamedNodeMap attributes = originalNode.getAttributes();
+            if (attributes != null) {
+                ((Element) originalNode).setAttribute(tag.getAttrName(), processExpression(attributes.getNamedItem(tag.code).getNodeValue()));
+                attributes.removeNamedItem(tag.code);
+            }
+        }catch (EvaluatingExpression e){
+            System.out.println("while processing tag ("+tag+") "+originalNode.getNodeName());
         }
     }
 
@@ -152,31 +162,44 @@ public class Processor {
         parameters.remove(paramName); parameters.remove(indexName);
     }
 
-    private String processExpression(String expression){
-        if(expression.contains("~")){
-            String res = expression.substring(0, expression.indexOf('~'));
-            expression=expression.substring(expression.indexOf('~')+1);
-            res+=evalExpression(expression.substring(0, expression.indexOf('~')));
-            expression=expression.substring(expression.indexOf('~')+1);
-            res+=expression;
-            return res;
+    private String processExpression(String expression) throws EvaluatingExpression {
+        String originalExpression = expression;
+        try {
+            if (expression.contains("~")) {
+                String res = expression.substring(0, expression.indexOf('~'));
+                expression = expression.substring(expression.indexOf('~') + 1);
+                res += evalExpression(expression.substring(0, expression.indexOf('~')));
+                expression = expression.substring(expression.indexOf('~') + 1);
+                res += expression;
+                return res;
+            }
+            return parameters.get(expression).toString();
+        } catch (EvaluatingExpression e){
+            System.out.println("In expresiion: "+originalExpression);
+            throw new EvaluatingExpression();
         }
-        return parameters.get(expression).toString();
     }
 
-    public String evalExpression(String exp){
-        if(exp.indexOf('.')!=-1){
-            Object obj = parameters.get(exp.substring(0, exp.indexOf('.')));
-            java.lang.reflect.Method method;
-            try {
-                String paramName=exp.substring(exp.indexOf('.')+1);
-                method = obj.getClass().getMethod(createGetterName(paramName));
-                return method.invoke(obj).toString();
-            } catch (Exception e) { e.printStackTrace(); }
-        } else {
-            return parameters.get(exp).toString();
+    private String evalExpression(String exp) throws EvaluatingExpression {
+        try {
+            if (exp.indexOf('.') != -1) {
+                Object obj = parameters.get(exp.substring(0, exp.indexOf('.')));
+                java.lang.reflect.Method method;
+                try {
+                    String paramName = exp.substring(exp.indexOf('.') + 1);
+                    method = obj.getClass().getMethod(createGetterName(paramName));
+                    return method.invoke(obj).toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                return parameters.get(exp).toString();
+            }
+            return null;
+        }catch (Exception e){
+            System.out.println("Exception while evaluating "+exp);
+            throw new EvaluatingExpression();
         }
-        return null;
     }
 
     private String createGetterName(String paramName){

@@ -17,6 +17,7 @@ public class RealController {
     @RequestPath(value = "/anotherOne")
     public String saveSmth(@RequestParam("param1") String someString, Model m){
         m.addParam("saved", someString);
-        return "second";
+        m.addParam("testValue", "redirected");
+        return "redirect:/try";
     }
 }
