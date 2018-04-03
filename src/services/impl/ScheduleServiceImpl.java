@@ -44,7 +44,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void print(List<Schedule> schedule) {
-        //TODO
+    public boolean delete(Schedule schedule) {
+        return scheduleDao.delete(schedule);
     }
+
+
 }
