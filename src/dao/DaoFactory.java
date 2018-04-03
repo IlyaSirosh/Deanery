@@ -1,12 +1,7 @@
 package dao;
 
 import dao.impl.Config;
-<<<<<<< HEAD
-import model.Lesson;
-=======
-import model.Department;
-import model.Schedule;
->>>>>>> 3f6d91e52d79fceb7401cd609d6a3bcc42e6be96
+
 
 /**
  * Created by PANNA on 02.04.2018.
