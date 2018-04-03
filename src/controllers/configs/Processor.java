@@ -174,9 +174,9 @@ public class Processor {
                 res += processExpression(expression);
                 return res;
             }
-            return parameters.get(expression).toString();
+            return expression;
         } catch (EvaluatingExpression e){
-            System.out.println("In expresiion: "+originalExpression);
+            System.out.println("In expresion: "+originalExpression);
             throw new EvaluatingExpression();
         }
     }

@@ -82,7 +82,17 @@ public class MainController {
                     if (param.getType().equals(Model.class)) methodParams.add(model);
                     else {
                         String name = param.getAnnotation(RequestParam.class).value();
-                        methodParams.add(param.getType().cast(params.get(name)));
+                        if(param.getType().equals(int.class)||param.getType().equals(Integer.class)){
+                            methodParams.add(Integer.parseInt(params.get(name).toString()));
+                        }else if(param.getType().equals(long.class)||param.getType().equals(Long.class)){
+                            methodParams.add(Long.parseLong(params.get(name).toString()));
+                        }else if(param.getType().equals(double.class)||param.getType().equals(Double.class)){
+                            methodParams.add(Double.parseDouble(params.get(name).toString()));
+                        }else if(param.getType().equals(float.class)||param.getType().equals(Float.class)){
+                            methodParams.add(Float.parseFloat(params.get(name).toString()));
+                        }else {
+                            methodParams.add(param.getType().cast(params.get(name)));
+                        }
                     }
                 }
                 String templateName = ((String) m.invoke(instantiatedControllers.get(linkedPaths.get(path).getDeclaringClass().getName().toLowerCase()), methodParams.toArray()));
