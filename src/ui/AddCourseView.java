@@ -41,7 +41,7 @@ public class AddCourseView extends View{
 
         JFrame f = new JFrame();
         f.setSize(400, 350);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLayout(new BorderLayout());
 
         JPanel panelInputs = new JPanel();
@@ -111,6 +111,8 @@ public class AddCourseView extends View{
             newCourse.setConclusion("342423");
             System.out.println(newCourse.toString());
             MainController.getMainController().renderTemplate("/saveCourse", new HashMap<String, Object>() {{put("course", newCourse);}});
+
+            f.dispose();
         });
 
         JLabel mainLabel = new JLabel("Create course");
