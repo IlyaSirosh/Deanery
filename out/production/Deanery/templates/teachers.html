@@ -96,35 +96,33 @@
 </head>
 <body>
 <div class="header">
-<table>
-    <tr>
-        <td>
-            <div class="back"><a href="/index">Back</a></div>
-        </td>
-        <td>
-            <h1>Courses</h1>
-        </td>
-        <td>
-            <div><a href="/addCourse">Create course</a></div>
-        </td>
-    </tr>
-</table>
+    <table>
+        <tr>
+            <td>
+                <div class="back"><a href="/index">Back</a></div>
+            </td>
+            <td>
+                <h1>Teachers</h1>
+            </td>
+            <td>
+                <div><a href="/addCourse">Add teacher</a></div>
+            </td>
+        </tr>
+    </table>
 </div>
 <table class="table-fill">
     <tr>
 
         <th class="text-center">Name</th>
-        <th class="text-center">Teacher</th>
         <th class="text-center">Department</th>
-        <th class="text-center">Lectures/Practices</th>
+        <th class="text-center">Role</th>
         <th class="text-center"></th>
     </tr>
     <tbody>
-    <tr pp:foreach="courses" pp:item="course" pp:index="ind">
-        <td class="text-center" pp:text="~course.name~">Управління проектами</td>
-        <td class="text-center" pp:text="~course.credits~">Проценко Володимир Семенович</td>
-        <td class="text-center" pp:text="~course.department.name~">Кафедра інформатики</td>
-        <td class="text-center" pp:text="~course.lections~/~course.seminars~">12/10</td>
+    <tr pp:foreach="teachers" pp:item="teacher" pp:index="ind">
+        <td class="text-center" pp:text="~teacher.name~">Управління проектами</td>
+        <td class="text-center" pp:text="~teacher.department.name~">Проценко Володимир Семенович</td>
+        <td class="text-center" pp:text="~teacher.role~">Кафедра інформатики</td>
         <td class="text-center"><a class="delete" pp:href="/deleteCourse?id=~course.courseId~">x</a></td>
     </tr>
     </tbody>
