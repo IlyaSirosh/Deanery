@@ -32,6 +32,8 @@ public class ScheduleDao implements IScheduleDao {
     private static final String SELECT_DEPARTMENT_SCHEDULE_UNITS = "SELECT lesson_id, class_id FROM lesson_has_schedule WHERE lesson_id IN (SELECT lesson_id FROM lesson WHERE course_ID IN (SELECT course_id FROM course WHERE department_id=?))))";
     private static final String SELECT_LESSON_SCHEDULE_UNITS = "SELECT lesson_id, class_id FROM lesson_has_schedule WHERE lesson_id=?";
     private static final String SELECT_TEACHER_SCHEDULE_UNITS = "SELECT lesson_id, class_id FROM lesson_has_schedule WHERE lesson_id IN (SELECT lesson_id FROM lesson WHERE teacher_id=?))";
+    private static final String INSERT_UNIT = "INSERT INTO lesson_has_schedule (schedule_id, lesson_id, class_id) VALUES (?,?,?)";
+    private static final String DELETE_UNIT  = "DELETE lesson_has_schedule WHERE schedule_id=? AND lesson_id=? AND class_id=?";
     private Connection connection;
     public ScheduleDao(Connection connection) {
         this.connection = connection;
@@ -204,4 +206,36 @@ public class ScheduleDao implements IScheduleDao {
             return false;
         }
         return true;    }
+
+    @Override
+    public boolean createUnit(Integer scheduleId, Integer lessonId, Integer classId) {
+        try (PreparedStatement statement
+                     = connection.prepareStatement(INSERT_UNIT)) {
+            statement.setInt(1, scheduleId);
+            statement.setInt(2, lessonId);
+            statement.setInt(3, classId);
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deleteUnit(Integer scheduleId, Integer lessonId, Integer classId) {
+        try (PreparedStatement statement
+                     = connection.prepareStatement(DELETE_UNIT)) {
+            statement.setInt(1, scheduleId);
+            statement.setInt(2, lessonId);
+            statement.setInt(3, classId);
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

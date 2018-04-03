@@ -4,6 +4,7 @@ import dao.Interfaces.IClassDao;
 import dao.Interfaces.ISemesterDao;
 import dao.Interfaces.IStudentDao;
 import dao.Interfaces.IWeekDao;
+import dao.impl.JDBCDaoFactory;
 import model.Semester;
 import model.Student;
 import model.Week;
@@ -14,10 +15,10 @@ import java.util.List;
 
 public class DeaneryServiceImpl implements DeaneryService {
 
-    private ISemesterDao semesterDao;
-    private IWeekDao weekDao;
-    private IStudentDao studentDao;
-    private IClassDao classDao;
+    private static ISemesterDao semesterDao = JDBCDaoFactory.getInstance().createSemesterDao();
+    private static IWeekDao weekDao = JDBCDaoFactory.getInstance().createWeekDao();
+    private static IStudentDao studentDao = JDBCDaoFactory.getInstance().createStudentDao();
+    private static IClassDao classDao = JDBCDaoFactory.getInstance().createClassDao();
 
     @Override
     public List<Semester> getAllSemesters() {

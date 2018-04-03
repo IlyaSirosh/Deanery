@@ -19,4 +19,7 @@ public interface IScheduleDao {
     public boolean create(Schedule schedule);
     public boolean update(Schedule infoForUpdate);
     public boolean delete(Schedule schedule);
+
+    boolean createUnit(Integer scheduleId, Integer lessonId, Integer classId);
+    boolean deleteUnit(Integer scheduleId, Integer lessonId, Integer classId);
 }

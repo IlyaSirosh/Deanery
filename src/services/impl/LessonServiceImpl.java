@@ -2,6 +2,7 @@ package services.impl;
 
 import dao.Interfaces.ILessonDao;
 import dao.Interfaces.IStudentDao;
+import dao.impl.JDBCDaoFactory;
 import model.*;
 import model.enums.Day;
 import model.enums.LessonType;
@@ -14,8 +15,8 @@ import java.util.stream.Collectors;
 
 public class LessonServiceImpl implements LessonService {
 
-    private ILessonDao lessonDao;
-    private IStudentDao studentDao;
+    private static ILessonDao lessonDao = JDBCDaoFactory.getInstance().createLessonDao();
+    private static IStudentDao studentDao = JDBCDaoFactory.getInstance().createStudentDao();
 
 
     @Override
@@ -95,13 +96,13 @@ public class LessonServiceImpl implements LessonService {
 
     private List<Lesson> getListBy(Week week, Day day, Integer lessonNumber){
 
-        if(week==null && day ==null && (lessonNumber!=null || lessonNumber!=0)){
+        if(week==null && day ==null && (lessonNumber==null || lessonNumber==0)){
             return getList();
         }else if(week==null && day ==null) {
             return lessonDao.findyByLessonNumber(lessonNumber);
-        }else if(day ==null && (lessonNumber!=null || lessonNumber!=0)){
+        }else if(day ==null && (lessonNumber==null || lessonNumber==0)){
             return lessonDao.findByWeek(week.getWeekId());
-        }else if(week==null && (lessonNumber!=null || lessonNumber!=0)){
+        }else if(week==null && (lessonNumber==null || lessonNumber==0)){
             return lessonDao.findByDay(day.getValue());
         }else if(week == null){
             return lessonDao.findByDayAndLessonNumber(day.getValue(), lessonNumber);
@@ -135,13 +136,32 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public boolean addToGroup(Lesson lesson, Student student) {
 
-        return studentDao.addToLesson(lesson,student);
+        boolean result = studentDao.addToLesson(lesson,student);
+
+        if(result){
+            Student s = studentDao.findById(student.getStudentId());
+
+            s.setCredits(s.getCredits() + lesson.getCourse().getCredits());
+
+            result = result && studentDao.update(s);
+        }
+
+        return result;
     }
 
     @Override
     public boolean deleteFromGroup(Lesson lesson, Student student) {
 
-        return deleteFromGroup(lesson,student);
+        boolean result = deleteFromGroup(lesson,student);
+
+        if(result){
+            Student s = studentDao.findById(student.getStudentId());
+            s.setCredits(s.getCredits() - lesson.getCourse().getCredits());
+
+            result = result && studentDao.update(s);
+        }
+
+        return result;
     }
 
 }
