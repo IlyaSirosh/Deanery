@@ -15,17 +15,23 @@ public class AddCourseView extends View{
     public void renderView() {
         JFrame f = new JFrame();
         f.setSize(400, 200);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLayout(new BorderLayout());
-        JTextField textField = new JTextField("This is a text");
-        JButton b = new JButton("GOGOGOGO");
-        f.add(b, BorderLayout.SOUTH);
-        b.addActionListener(e -> {
-            HashMap<String, Object> params = new HashMap<>();
-            params.put("testValue", textField.getText());
-            handleSubmit("/try", params);
-            f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
-        });
-        f.add(textField, BorderLayout.NORTH);
+        JPanel panelDown = new JPanel();
+        JButton okButton = new JButton("OK");
+        panelDown.add(okButton);
+        JButton cancelButton = new JButton("Cancel");
+        panelDown.add(cancelButton);
+
+        JPanel panelInputs = new JPanel();
+        JTextField name = new JTextField();
+        name.setColumns(20);
+        JLabel nameLabel = new JLabel("Name: ", JLabel.LEFT);
+        panelInputs.add(nameLabel);
+        panelInputs.add(name);
+
+        f.add(panelInputs, BorderLayout.CENTER);
+        f.add(panelDown, BorderLayout.SOUTH);
         f.setVisible(true);
     }
 }
