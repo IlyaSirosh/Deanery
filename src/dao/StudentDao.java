@@ -1,8 +1,7 @@
 package dao;
 import dao.Interfaces.IStudentDao;
-import dao.impl.Config;
 import dao.impl.EntityRetriever;
-import model.Course;
+import model.Lesson;
 import model.Student;
 
 import java.sql.Connection;
@@ -17,13 +16,13 @@ import java.util.List;
  */
 public  class StudentDao implements IStudentDao{
     private static final String SELECT_ALL = "SELECT * FROM student";
-    private static final String SELECT_BY_ID = "SELECT * FROM student WHERE studen_id = ?";
-    private static final String SELECT_BY_LESSON_ID = "SELECT * FROM student WHERE student_id IN (SELECT student_id from lesson where lesson_id=?);";
+    private static final String SELECT_BY_ID = "SELECT * FROM student WHERE student_id = ?";
+    private static final String SELECT_BY_LESSON_ID = "SELECT * FROM student WHERE student_id IN (SELECT student_id from group_has_student where group_id=?)";
 
     private static final String CREATE = "INSERT INTO student ( surname, speciality, startdate, enddate, enddate_reason, credits)\n" +
             "VALUES (?,?,?,?,?,?);";
     private static final String UPDATE = "UPDATE student SET " +
-            "surname = ?"+
+            "surname = ?,"+
             "speciality = ? ," +
             "startdate = ?, "+
             "enddate = ?, " +
@@ -31,6 +30,9 @@ public  class StudentDao implements IStudentDao{
             "credits = ? " +
             "WHERE student_id = ?";
     private static final String DELETE = "DELETE FROM student WHERE student_id=?";
+    private static final String ADD_STUDENT_TO_LESSON = "INSERT INTO group_has_student (group_id, student_id) VALUES (?,?)";
+    private static final String DELETE_STUDENT_FROM_LESSON = "DELETE FROM group_has_student WHERE student_id=? AND group_id=?";
+
     private Connection connection;
     public StudentDao(Connection connection) {
         this.connection = connection;
@@ -71,6 +73,36 @@ public  class StudentDao implements IStudentDao{
         return allStudents;
     }
 
+    @Override
+    public boolean addToLesson(Lesson lesson, Student student) {
+        try (PreparedStatement statement
+                     = connection.prepareStatement(ADD_STUDENT_TO_LESSON)) {
+
+            statement.setInt(1, lesson.getLessonId());
+            statement.setInt(2, student.getStudentId());
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deleteFromLesson(Lesson lesson, Student student) {
+        try (PreparedStatement statement
+                     = connection.prepareStatement(DELETE_STUDENT_FROM_LESSON)){
+            statement.setInt(1, student.getStudentId());
+            statement.setInt(2, lesson.getLessonId());
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
 
     @Override
@@ -80,12 +112,14 @@ public  class StudentDao implements IStudentDao{
                      = connection.prepareStatement(SELECT_BY_ID)) {
             statement.setInt(1, studentId);
             ResultSet rs = statement.executeQuery();
-            student = EntityRetriever.retrieveStudent(rs);
-
+            while(rs.next()) {
+                student = EntityRetriever.retrieveStudent(rs);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return student;    }
+        return student;
+    }
 
     @Override
     public boolean create(Student student) {
@@ -107,16 +141,16 @@ public  class StudentDao implements IStudentDao{
 
     @Override
     public boolean update(Student infoForUpdate) {
-        Student current = findById(infoForUpdate.getStudentId());
+        //Student current = findById(infoForUpdate.getStudentId());
         try (PreparedStatement statement
                      = connection.prepareStatement(UPDATE)){
-            statement.setString(2, infoForUpdate.getSurname());
-            statement.setString(3, infoForUpdate.getSpeciality());
-            statement.setDate(4,infoForUpdate.getStartdate());
-            statement.setDate(5, infoForUpdate.getEnddate());
-            statement.setInt(6, ((Student.LeaveReason.valueOf(infoForUpdate.getEnddateReason().toString()).ordinal())));
-            statement.setInt(7, infoForUpdate.getCredits());
-
+            statement.setString(1, infoForUpdate.getSurname());
+            statement.setString(2, infoForUpdate.getSpeciality());
+            statement.setDate(3,infoForUpdate.getStartdate());
+            statement.setDate(4, infoForUpdate.getEnddate());
+            statement.setInt(5, ((Student.LeaveReason.valueOf(infoForUpdate.getEnddateReason().toString()).ordinal())));
+            statement.setInt(6, infoForUpdate.getCredits());
+            statement.setInt(7, infoForUpdate.getStudentId());
             statement.execute();
 
         } catch (SQLException e) {
@@ -127,7 +161,7 @@ public  class StudentDao implements IStudentDao{
 
     @Override
     public boolean delete(Student student) {
-        Student current = findById(student.getStudentId());
+        //Student current = findById(student.getStudentId());
         try (PreparedStatement statement
                      = connection.prepareStatement(DELETE)){
             statement.setInt(1, student.getStudentId());

@@ -54,8 +54,9 @@ public class SemesterDao implements ISemesterDao {
                      = connection.prepareStatement(SELECT_BY_ID)) {
             statement.setInt(1, semesterId);
             ResultSet rs = statement.executeQuery();
-            semester = EntityRetriever.retrieveSemester(rs);
-
+            while(rs.next()) {
+                semester = EntityRetriever.retrieveSemester(rs);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

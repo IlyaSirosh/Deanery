@@ -1,6 +1,8 @@
 package dao.Interfaces;
 
+import model.Course;
 import model.Lesson;
+import model.Student;
 
 import java.util.List;
 
@@ -10,11 +12,20 @@ import java.util.List;
 public interface ILessonDao {
     public List<Lesson> findAll();
     public Lesson findById(Integer lessonId);
-    public List<Lesson> findByDepartmentId(Integer departmentId);
-    public List<Lesson> findByTeacherId(Integer teacherId);
-    public List<Lesson> findByCourseId(Integer courseId);
-    public List<Lesson> findBySemesterId(Integer semesterId);
-    public List<Lesson> findByWeekId(Integer weekId);
+    public List<Lesson> findByWeek(Integer weekId);
+    public List<Lesson> findByDay(Integer dayId);
+    public List<Lesson> findyByLessonNumber(Integer lessonNumber);
+    public List<Lesson> findByWeekAndDay(Integer weekId, Integer dayId);
+    public List<Lesson> findByWeekAndLessonNumber(Integer weekId, Integer lessonNumber);
+    public List<Lesson> findByDayAndLessonNumber(Integer dayId, Integer lessonNumber);
+    public List<Lesson> findByWeekDayAndLessonNumber(Integer weekId, Integer dayId, Integer lessonNumber);
+
+    Lesson getLecture(Course course);
+    List<Lesson> getSeminars(Course course);
+    List<Lesson> getSeminars(Lesson lesson);
+    boolean connectSeminarsToLecture(Lesson lecture);
+
+
     public boolean create(Lesson lesson);
     public boolean update(Lesson infoForUpdate);
     public boolean delete(Lesson lesson);
