@@ -5,6 +5,7 @@ import controllers.RealController;
 import controllers.decorators.RequestParam;
 import controllers.decorators.RequestPath;
 import controllers.exceptions.MappingNotFoundException;
+import controllers.exceptions.UnsatisfiedDependencyException;
 import ui.AddCourseView;
 import ui.View;
 
@@ -13,12 +14,13 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.Element;
 import javax.swing.text.html.HTMLEditorKit;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.*;
 
 public class MainController {
-    public static final MainController MAIN_CONTROLLER = new MainController();
+    private static MainController MAIN_CONTROLLER;
     private JFrame mainPage;
     private JEditorPane pane;
     private Class[] controllers = new Class[]{RealController.class, CoursesController.class};
@@ -26,15 +28,26 @@ public class MainController {
     private HashMap<String, Method> linkedPaths;
     private HashMap<String, View> linkedViews;
 
-    public MainController() {
+    private HashMap<String, Object> instantiatedControllers;
+
+    private MainController() throws UnsatisfiedDependencyException {
         mainPage = new JFrame();
         mainPage.setLocationRelativeTo(null);
         mainPage.setSize(1000, 1000);
         mainPage.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         linkedPaths = new HashMap<>();
         linkedViews = new HashMap<>();
+        instantiatedControllers = new HashMap<>();
+        instantiateControllers();
     }
 
+    public static void createMainController() throws UnsatisfiedDependencyException {
+        MAIN_CONTROLLER = new MainController();
+    }
+
+    public static MainController getMainController(){
+        return MAIN_CONTROLLER;
+    }
 
 
     public void linkEverything(){
@@ -61,7 +74,6 @@ public class MainController {
                 view.renderView();
             } else {
                 if(pane!=null) mainPage.remove(pane);
-                Object controller = linkedPaths.get(path).getDeclaringClass().newInstance();
                 Method m = linkedPaths.get(path);
                 Model model = new Model();
                 List<Object> methodParams = new LinkedList<>();
@@ -70,10 +82,20 @@ public class MainController {
                     if (param.getType().equals(Model.class)) methodParams.add(model);
                     else {
                         String name = param.getAnnotation(RequestParam.class).value();
-                        methodParams.add(param.getType().cast(params.get(name)));
+                        if(param.getType().equals(int.class)||param.getType().equals(Integer.class)){
+                            methodParams.add(Integer.parseInt(params.get(name).toString()));
+                        }else if(param.getType().equals(long.class)||param.getType().equals(Long.class)){
+                            methodParams.add(Long.parseLong(params.get(name).toString()));
+                        }else if(param.getType().equals(double.class)||param.getType().equals(Double.class)){
+                            methodParams.add(Double.parseDouble(params.get(name).toString()));
+                        }else if(param.getType().equals(float.class)||param.getType().equals(Float.class)){
+                            methodParams.add(Float.parseFloat(params.get(name).toString()));
+                        }else {
+                            methodParams.add(param.getType().cast(params.get(name)));
+                        }
                     }
                 }
-                String templateName = ((String) m.invoke(controller, methodParams.toArray()));
+                String templateName = ((String) m.invoke(instantiatedControllers.get(linkedPaths.get(path).getDeclaringClass().getName().toLowerCase()), methodParams.toArray()));
                 if(templateName.startsWith("redirect:")) {
                     renderTemplate(templateName.substring(9), model.getAllParams());
                     return;
@@ -136,6 +158,23 @@ public class MainController {
                 pathToGo=pathToGo.substring(0, pathToGo.indexOf("?"));
             }
             renderTemplate(pathToGo, params);
+        }
+    }
+
+    private void instantiateControllers() throws UnsatisfiedDependencyException {
+        for(Class controller: controllers){
+            Constructor constructor = controller.getConstructors()[0];
+            List<Object> params = new ArrayList<>();
+            for(Class parameter: constructor.getParameterTypes()) {
+                params.add(ServicesDispatcher.getServicesDispatcher().getService(parameter.getName().toLowerCase()));
+            }
+            Object controllerInstance;
+            try {
+                controllerInstance = constructor.newInstance(params.toArray());
+            }catch (Exception e){
+                throw new UnsatisfiedDependencyException(controller.getName());
+            }
+            instantiatedControllers.put(controller.getName().toLowerCase(), controllerInstance);
         }
     }
 }
