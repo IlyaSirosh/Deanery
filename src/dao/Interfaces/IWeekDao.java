@@ -10,6 +10,7 @@ import java.util.List;
 public interface IWeekDao {
     public List<Week> findAll();
     public Week findById(Integer weekId);
+    public List<Week> findBySemester(Integer semesterId);
     public boolean create(Week week);
     public boolean update(Week infoForUpdate);
     public boolean delete(Week week);

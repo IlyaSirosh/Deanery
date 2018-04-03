@@ -36,5 +36,6 @@ public class JDBCDaoFactory extends DaoFactory {
     public SemesterDao createSemesterDao(){ return new SemesterDao(getConnection()); }
     public StudentDao createStudentDao(){ return new StudentDao(getConnection()); }
     public WeekDao createWeekDao(){ return new WeekDao(getConnection()); }
-
+    public DepartmentDao createDepartmentDao(){return new DepartmentDao(getConnection()); }
+    public TeacherDao createTeacherDao(){return new TeacherDao(getConnection());}
 }
