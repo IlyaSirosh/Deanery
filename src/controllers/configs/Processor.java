@@ -176,7 +176,7 @@ public class Processor {
             }
             return expression;
         } catch (EvaluatingExpression e){
-            System.out.println("In expresiion: "+originalExpression);
+            System.out.println("In expresion: "+originalExpression);
             throw new EvaluatingExpression();
         }
     }
