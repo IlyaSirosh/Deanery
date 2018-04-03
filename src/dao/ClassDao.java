@@ -21,7 +21,7 @@ public class ClassDao implements IClassDao {
     private static final String CREATE = "INSERT INTO class (building, number, capacity)\n" +
             "VALUES (?,?,?);";
     private static final String UPDATE = "UPDATE class SET " +
-            "building = ?"+
+            "building = ?, "+
             "number = ? ," +
             "capacity = ? "+
             "WHERE class_id = ?";
@@ -53,11 +53,14 @@ public class ClassDao implements IClassDao {
                      = connection.prepareStatement(SELECT_BY_ID)) {
             statement.setInt(1, classId);
             ResultSet rs = statement.executeQuery();
-            classEx = EntityRetriever.retrieveClass(rs);
+            while (rs.next()) {
+                classEx = EntityRetriever.retrieveClass(rs);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return classEx;     }
 
     @Override
@@ -83,6 +86,8 @@ public class ClassDao implements IClassDao {
             statement.setInt(1, infoForUpdate.getBuilding());
             statement.setInt(2, infoForUpdate.getNumber());
             statement.setInt(3, infoForUpdate.getCapacity());
+            statement.setInt(4, infoForUpdate.getClassId());
+
             statement.execute();
 
         } catch (SQLException e) {

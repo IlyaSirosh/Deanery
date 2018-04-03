@@ -3,6 +3,7 @@ package services.impl;
 import dao.CourseDao;
 import dao.Interfaces.ICourseDao;
 import dao.Interfaces.ILessonDao;
+import dao.impl.JDBCDaoFactory;
 import model.Course;
 import model.Department;
 import model.Lesson;
@@ -10,11 +11,12 @@ import model.Teacher;
 import services.CourseService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CourseServiceImpl implements CourseService {
 
-    private ICourseDao courseDao;
-    private ILessonDao lessonDao;
+    private ICourseDao courseDao = JDBCDaoFactory.getInstance().createCourseDao();
+    private ILessonDao lessonDao = JDBCDaoFactory.getInstance().createLessonDao();
 
 
     @Override
@@ -29,8 +31,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getByTeacher(Teacher teacher) {
-        //TODO find by teacher
-        return null;
+
+        return courseDao.findByTeacher(teacher.getTeacherId());
     }
 
     @Override
@@ -45,14 +47,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean delete(Course course) {
-        //TODO delete course
-        return false;
+
+        return courseDao.delete(course);
     }
 
     @Override
     public List<Lesson> getLessons(Course course) {
-        //TODO find lesson by course
-        //return lessonDao.findLessons(course.id);
-        return null;
+        return lessonDao.findAll().stream().filter(lesson -> lesson.getCourse().equals(course)).collect(Collectors.toList());
     }
 }

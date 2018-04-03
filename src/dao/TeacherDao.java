@@ -22,10 +22,10 @@ public class TeacherDao implements ITeacherDao {
     private static final String SELECT_BY_DEPARTMENT_ID = "SELECT * FROM teacher WHERE department_id =?";
     private static final String CREATE = "INSERT INTO teacher (department_id,name,role)\n" +
             "VALUES (?,?,?);";
-    private static final String UPDATE = "UPDATE week SET " +
-            "department_id = ?"+
+    private static final String UPDATE = "UPDATE teacher SET " +
+            "department_id = ?,"+
             "name = ? ," +
-            "role = ?, "+
+            "role = ? "+
             "WHERE teacher_id = ?";
     private static final String DELETE ="DELETE FROM teacher WHERE teacher_id=?";
 
@@ -56,8 +56,9 @@ public class TeacherDao implements ITeacherDao {
                      = connection.prepareStatement(SELECT_BY_ID)) {
             statement.setInt(1, teacherId);
             ResultSet rs = statement.executeQuery();
-            teacher = EntityRetriever.retrieveTeacher(rs);
-
+            while(rs.next()) {
+                teacher = EntityRetriever.retrieveTeacher(rs);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -94,12 +95,13 @@ public class TeacherDao implements ITeacherDao {
 
     @Override
     public boolean update(Teacher infoForUpdate) {
-        Teacher current = findById(infoForUpdate.getTeacherId());
+        Teacher current = infoForUpdate;
         try (PreparedStatement statement
                      = connection.prepareStatement(UPDATE)){
             statement.setInt(1, current.getDepartment().getDepartmentId());
             statement.setString(2, current.getName());
             statement.setString(3, current.getRole());
+            statement.setInt(4, current.getTeacherId());
             statement.execute();
 
         } catch (SQLException e) {

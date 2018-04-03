@@ -26,8 +26,6 @@ public interface LessonService {
 
     boolean addToGroup(Lesson lesson, Student student);
     boolean deleteFromGroup(Lesson lesson, Student student);
-    boolean addGroup(Lesson lesson, List<Student> group);
-    boolean updateGroup(Lesson lesson, List<Student> group);
 
 
 }

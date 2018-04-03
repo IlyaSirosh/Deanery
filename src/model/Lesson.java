@@ -1,8 +1,10 @@
 package model;
 
+import model.enums.LessonType;
+
 public class Lesson {
     private int lessonId;
-    private String type;
+    private LessonType type;
     private Teacher teacher;
     private Course course;
     private Semester semester;
@@ -72,11 +74,11 @@ public class Lesson {
         this.lessonId = lessonId;
     }
 
-    public String getType() {
+    public LessonType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(LessonType type) {
         this.type = type;
     }
 
