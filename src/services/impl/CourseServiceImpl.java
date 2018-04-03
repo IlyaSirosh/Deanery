@@ -10,6 +10,7 @@ import model.Teacher;
 import services.CourseService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CourseServiceImpl implements CourseService {
 
@@ -51,8 +52,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Lesson> getLessons(Course course) {
-        //TODO find lesson by course
-        //return lessonDao.findLessons(course.id);
-        return null;
+        return lessonDao.findAll().stream().filter(lesson -> lesson.getCourse().equals(course)).collect(Collectors.toList());
     }
 }
