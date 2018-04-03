@@ -1,10 +1,7 @@
 package controllers.configs;
 
 import controllers.exceptions.UnsatisfiedDependencyException;
-import services.impl.CourseServiceImpl;
-import services.impl.DeaneryServiceImpl;
-import services.impl.LessonServiceImpl;
-import services.impl.ScheduleServiceImpl;
+import services.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +15,7 @@ public class ServicesDispatcher {
         String currentClass = "";
         try {
             serviceInstances = new HashMap<>();
-            Class[] services = new Class[]{CourseServiceImpl.class, DeaneryServiceImpl.class, LessonServiceImpl.class, ScheduleServiceImpl.class};
+            Class[] services = new Class[]{CourseServiceImpl.class, DeaneryServiceImpl.class, LessonServiceImpl.class, ScheduleServiceImpl.class, DepartmentServiceImpl.class};
             for (Class service : services) {
                 currentClass = service.getName();
                 serviceInstances.put(service.getInterfaces()[0].getName().toLowerCase(), service.newInstance());
@@ -38,6 +35,6 @@ public class ServicesDispatcher {
     }
 
     public Object getService(String beanName){
-        return serviceInstances.get(beanName);
+        return serviceInstances.get(beanName.toLowerCase());
     }
 }

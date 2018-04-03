@@ -7,6 +7,7 @@ import controllers.exceptions.UnsatisfiedDependencyException;
 import javafx.scene.control.ComboBox;
 import model.Course;
 import model.Department;
+import model.enums.Conclusion;
 import services.DepartmentService;
 
 import javax.swing.*;
@@ -61,13 +62,17 @@ public class AddCourseView extends View{
 
         JComboBox deps = new JComboBox();
         JLabel depsLabel = new JLabel("Department: ", JLabel.LEFT);
-//        List<Department> departments = ds.getAll();
-//        departments.forEach(d -> {
-//            deps.addItem(new Item(d));
-//        });
+        System.out.println(ds);
+        List<Department> departments = ds.getAll();
+        departments.forEach(d -> {
+            deps.addItem(new Item(d));
+        });
 
         JComboBox semestr = new JComboBox();
         JLabel semestrLabel = new JLabel("Semester: ", JLabel.LEFT);
+
+        JComboBox conclusion = new JComboBox(Conclusion.values());
+        JLabel conclusionLabel = new JLabel("Conclusion: ", JLabel.LEFT);
 
         JSpinner credits = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
         JLabel creditsLabel = new JLabel("Credits: ", JLabel.LEFT);
@@ -78,6 +83,9 @@ public class AddCourseView extends View{
         JSpinner practices = new JSpinner(new SpinnerNumberModel(1, 1, 20, 1));
         JLabel practicesLabel = new JLabel("Practices: ", JLabel.LEFT);
 
+        JCheckBox mandatory = new JCheckBox("Is Mandatory");
+        mandatory.setSelected(true);
+
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(nameLabel).addComponent(name))
@@ -86,32 +94,46 @@ public class AddCourseView extends View{
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(semestrLabel).addComponent(semestr))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(conclusionLabel).addComponent(conclusion))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(creditsLabel).addComponent(credits))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(lecturesLabel).addComponent(lectures))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(practicesLabel).addComponent(practices)));
+                        .addComponent(practicesLabel).addComponent(practices))
+                .addComponent(mandatory));
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(nameLabel).addComponent(depsLabel).addComponent(semestrLabel).addComponent(creditsLabel).addComponent(lecturesLabel).addComponent(practicesLabel))
+                        .addComponent(nameLabel).addComponent(depsLabel).addComponent(semestrLabel).addComponent(conclusionLabel).addComponent(creditsLabel).addComponent(lecturesLabel).addComponent(practicesLabel).addComponent(mandatory))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(name).addComponent(deps).addComponent(semestr).addComponent(credits).addComponent(lectures).addComponent(practices)));
+                        .addComponent(name).addComponent(deps).addComponent(semestr).addComponent(conclusion).addComponent(credits).addComponent(lectures).addComponent(practices)));
 
+
+        deps.addActionListener(e -> {
+            JComboBox box = (JComboBox)e.getSource();
+            String item = (String)box.getSelectedItem();
+            System.out.println(item);
+        });
 
         okButton.addActionListener(e -> {
+            System.out.println(deps.getSelectedIndex());
             Department d = new Department();
-            d.setDepartmentId(1);
+            d.setDepartmentId(deps.getSelectedIndex());
             Course newCourse = new Course();
             newCourse.setName(name.getText());
             newCourse.setDepartment(d);
             newCourse.setCredits((Integer) credits.getValue());
             newCourse.setLections((Integer) lectures.getValue());
             newCourse.setSeminars((Integer) practices.getValue());
-            newCourse.setConclusion("342423");
+            newCourse.setConclusion(conclusion.getSelectedItem().toString());
             System.out.println(newCourse.toString());
             MainController.getMainController().renderTemplate("/saveCourse", new HashMap<String, Object>() {{put("course", newCourse);}});
 
+            f.dispose();
+        });
+
+        cancelButton.addActionListener(e -> {
             f.dispose();
         });
 
