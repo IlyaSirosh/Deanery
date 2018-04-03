@@ -1,5 +1,6 @@
 package dao.Interfaces;
 
+import model.Course;
 import model.Lesson;
 import model.Student;
 
@@ -19,11 +20,11 @@ public interface ILessonDao {
     public List<Lesson> findByDayAndLessonNumber(Integer dayId, Integer lessonNumber);
     public List<Lesson> findByWeekDayAndLessonNumber(Integer weekId, Integer dayId, Integer lessonNumber);
 
-    public List<Student> getGroup(Lesson lesson);
-    public boolean addToGroup(Lesson lesson, Student student);
-    public boolean deleteFromGroup(Lesson lesson, Student student);
-    public boolean addGroup(Lesson lesson, List<Student> group);
-    public boolean updateGroup(Lesson lesson, List<Student> group);
+    Lesson getLecture(Course course);
+    List<Lesson> getSeminars(Course course);
+    List<Lesson> getSeminars(Lesson lesson);
+    boolean connectSeminarsToLecture(Lesson lecture);
+
 
     public boolean create(Lesson lesson);
     public boolean update(Lesson infoForUpdate);
