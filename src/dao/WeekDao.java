@@ -24,7 +24,7 @@ public class WeekDao implements IWeekDao {
     private static final String CREATE = "INSERT INTO week (number, start, end, semester_id)\n" +
             "VALUES (?,?,?,?);";
     private static final String UPDATE = "UPDATE week SET " +
-            "number = ?"+
+            "number = ?,"+
             "start = ? ," +
             "end = ?, "+
             "semester_id = ? " +
@@ -58,8 +58,9 @@ public class WeekDao implements IWeekDao {
                      = connection.prepareStatement(SELECT_BY_ID)) {
             statement.setInt(1, weekId);
             ResultSet rs = statement.executeQuery();
-            week = EntityRetriever.retrieveWeek(rs);
-
+            while(rs.next()) {
+                week = EntityRetriever.retrieveWeek(rs);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -98,13 +99,14 @@ public class WeekDao implements IWeekDao {
 
     @Override
     public boolean update(Week infoForUpdate) {
-        Week current = findById(infoForUpdate.getWeekId());
+        Week current =infoForUpdate;
         try (PreparedStatement statement
                      = connection.prepareStatement(UPDATE)){
             statement.setInt(1, current.getNumber());
             statement.setDate(2, current.getStart());
             statement.setDate(3, current.getEnd());
             statement.setInt(4, current.getSemester().getSemesterId());
+            statement.setInt(5, current.getWeekId());
             statement.execute();
 
         } catch (SQLException e) {

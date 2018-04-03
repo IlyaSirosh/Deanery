@@ -22,7 +22,7 @@ public  class StudentDao implements IStudentDao{
     private static final String CREATE = "INSERT INTO student ( surname, speciality, startdate, enddate, enddate_reason, credits)\n" +
             "VALUES (?,?,?,?,?,?);";
     private static final String UPDATE = "UPDATE student SET " +
-            "surname = ?"+
+            "surname = ?,"+
             "speciality = ? ," +
             "startdate = ?, "+
             "enddate = ?, " +
@@ -112,8 +112,9 @@ public  class StudentDao implements IStudentDao{
                      = connection.prepareStatement(SELECT_BY_ID)) {
             statement.setInt(1, studentId);
             ResultSet rs = statement.executeQuery();
-            student = EntityRetriever.retrieveStudent(rs);
-
+            while(rs.next()) {
+                student = EntityRetriever.retrieveStudent(rs);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
