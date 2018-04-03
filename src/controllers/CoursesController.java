@@ -9,8 +9,12 @@ import services.CourseService;
 
 @Controller
 public class CoursesController {
-    //TODO add serviceImplementation use
-    private CourseService courseService= null;
+    private final CourseService courseService;
+
+    public CoursesController(CourseService courseService) {
+        this.courseService = courseService;
+    }
+
 
     @RequestPath("/showCourses")
     public String renderView(Model m){

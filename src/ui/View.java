@@ -8,6 +8,6 @@ public abstract class View {
 
     public abstract void renderView();
     public void handleSubmit(String path, Map<String, Object> params){
-        MainController.MAIN_CONTROLLER.renderTemplate(path, params);
+        MainController.getMainController().renderTemplate(path, params);
     };
 }

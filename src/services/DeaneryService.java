@@ -3,6 +3,7 @@ package services;
 import model.Semester;
 import model.Student;
 import model.Week;
+import model.Class;
 
 import java.util.List;
 
