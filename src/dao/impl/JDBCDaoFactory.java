@@ -2,32 +2,28 @@
 package dao.impl;
 import dao.*;
 import dao.impl.Config;
+import model.Schedule;
 import org.apache.commons.dbcp2.BasicDataSource;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
 
 public class JDBCDaoFactory extends DaoFactory {
-
-    static Connection getConnection(){
-        Config config = Config.getInstance();
-
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUrl(config.getUrl());
-        ds.setPassword(config.getPass());
-        ds.setUsername(config.getUser());
-
-        Connection connection;
+    Connection connection = null;
+    public Connection getConnection(){
         try {
-            connection = ds.getConnection();
+            Class.forName("com.mysql.jdbc.Driver");
+            if(connection == null)
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "12345");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return connection;
     }
-
 
     public CourseDao createCourseDao() {
         return new CourseDao(getConnection());

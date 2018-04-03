@@ -1,5 +1,6 @@
 package dao.impl;
 
+import dao.DaoFactory;
 import dao.DepartmentDao;
 import dao.Interfaces.*;
 import dao.SemesterDao;
@@ -17,12 +18,8 @@ import java.sql.SQLException;
  */
 public class EntityRetriever {
 
-    private static IDepartmentDao departmentDao;
-    private static ITeacherDao teacherDao;
     private static IWeekDao weekDao;
     private static IClassDao classDao;
-    private static ICourseDao courseDao;
-    private static ISemesterDao semesterDao;
     private static ILessonDao lessonDao;
     private static IScheduleDao scheduleDao;
 
@@ -31,8 +28,8 @@ public class EntityRetriever {
         Course course = new Course();
         course.setCourseId(rs.getInt("course_id"));
         Department department = new Department();
-        department.setDepartmentId(rs.getInt("department_id"));
-        department = departmentDao.findById(department.getDepartmentId());
+        IDepartmentDao departmentDao= DaoFactory.getInstance().createDepartmentDao();
+        department=departmentDao.findById(rs.getInt("department_id"));
         course.setDepartment(department);
         course.setName(rs.getString("name"));
         course.setLections(rs.getInt("lections"));
@@ -59,10 +56,12 @@ public class EntityRetriever {
         lesson.setType(LessonType.values()[rs.getInt("type")]);
         Teacher teacher = new Teacher();
         teacher.setTeacherId(rs.getInt("teacher_id"));
+        ITeacherDao teacherDao= DaoFactory.getInstance().createTeacherDao();
         teacher= teacherDao.findById(teacher.getTeacherId());
         lesson.setTeacher(teacher);
         Course course = new Course();
         course.setCourseId(rs.getInt("course_id"));
+        ICourseDao courseDao= DaoFactory.getInstance().createCourseDao();
         course = courseDao.findById(course.getCourseId());
         lesson.setCourse(course);
         lesson.setThreadName(rs.getString("thread_name"));
@@ -70,6 +69,7 @@ public class EntityRetriever {
         lesson.setGroupNumber(rs.getInt("group_number"));
         Semester semester = new Semester();
         semester.setSemesterId(rs.getInt("semester_id"));
+        ISemesterDao semesterDao= DaoFactory.getInstance().createSemesterDao();
         semester=semesterDao.findById(semester.getSemesterId());
         lesson.setSemester(semester);
         return lesson;
@@ -83,6 +83,8 @@ public class EntityRetriever {
         week.setStart(rs.getDate("start"));
         week.setEnd(rs.getDate("end"));
         semester.setSemesterId(rs.getInt("semester_id"));
+        ISemesterDao semesterDao= DaoFactory.getInstance().createSemesterDao();
+
         semester = semesterDao.findById(semester.getSemesterId());
         week.setSemester(semester);
         return week;
@@ -107,7 +109,7 @@ public class EntityRetriever {
 
     public static Department retrieveDepartment(ResultSet rs) throws SQLException{
         Department department = new Department();
-        department.setDepartmentId(rs.getInt("semester_id"));
+        department.setDepartmentId(rs.getInt("department_id"));
         department.setName(rs.getString("name"));
         department.setBuildingNumber(rs.getInt("building_number"));
         return department;
@@ -119,6 +121,7 @@ public class EntityRetriever {
         Department department = new Department();
         department.setDepartmentId(rs.getInt("department_id"));
         int departmentId=department.getDepartmentId();
+        IDepartmentDao departmentDao=DaoFactory.getInstance().createDepartmentDao();
         department = departmentDao.findById(departmentId);
         teacher.setDepartment(department);
         teacher.setName(rs.getString("name"));
@@ -133,6 +136,7 @@ public class EntityRetriever {
         schedule.setLessonNumber((rs.getInt("lesson_number")));
         Week week = new Week();
         week.setWeekId(rs.getInt("week_id"));
+        IWeekDao weekDao = DaoFactory.getInstance().createWeekDao();
         week = weekDao.findById(week.getWeekId());
         schedule.setWeek(week);
         return schedule;
