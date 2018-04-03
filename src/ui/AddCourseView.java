@@ -1,6 +1,13 @@
 package ui;
 
+import controllers.configs.MainController;
+import controllers.configs.ServicesDispatcher;
 import controllers.decorators.RequestPath;
+import controllers.exceptions.UnsatisfiedDependencyException;
+import javafx.scene.control.ComboBox;
+import model.Course;
+import model.Department;
+import services.DepartmentService;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -9,14 +16,29 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequestPath("/addCourse")
 public class AddCourseView extends View{
-    String[] petStrings = { "Bird", "Cat", "Dog", "Rabbit", "Pig" };
+    private class Item
+    {
+        Department department;
+
+        public Item(Department department) {
+            this.department = department;
+        }
+
+        public String toString()
+        {
+            return department.getName();
+        }
+    }
 
     @Override
-    public void renderView() {
+    public void renderView() throws UnsatisfiedDependencyException {
+        DepartmentService ds = (DepartmentService) ServicesDispatcher.getServicesDispatcher().getService(DepartmentService.class.getName());
+
         JFrame f = new JFrame();
         f.setSize(400, 350);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,16 +57,24 @@ public class AddCourseView extends View{
         panelDown.add(cancelButton);
 
         JTextField name = new JTextField();
-        name.setColumns(20);
         JLabel nameLabel = new JLabel("Name: ", JLabel.LEFT);
-        JComboBox deps = new JComboBox(petStrings);
+
+        JComboBox deps = new JComboBox();
         JLabel depsLabel = new JLabel("Department: ", JLabel.LEFT);
-        JComboBox semestr = new JComboBox(petStrings);
+//        List<Department> departments = ds.getAll();
+//        departments.forEach(d -> {
+//            deps.addItem(new Item(d));
+//        });
+
+        JComboBox semestr = new JComboBox();
         JLabel semestrLabel = new JLabel("Semester: ", JLabel.LEFT);
+
         JSpinner credits = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
         JLabel creditsLabel = new JLabel("Credits: ", JLabel.LEFT);
+
         JSpinner lectures = new JSpinner(new SpinnerNumberModel(1, 1, 20, 1));
         JLabel lecturesLabel = new JLabel("Lectures: ", JLabel.LEFT);
+
         JSpinner practices = new JSpinner(new SpinnerNumberModel(1, 1, 20, 1));
         JLabel practicesLabel = new JLabel("Practices: ", JLabel.LEFT);
 
@@ -68,6 +98,20 @@ public class AddCourseView extends View{
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(name).addComponent(deps).addComponent(semestr).addComponent(credits).addComponent(lectures).addComponent(practices)));
 
+
+        okButton.addActionListener(e -> {
+            Department d = new Department();
+            d.setDepartmentId(1);
+            Course newCourse = new Course();
+            newCourse.setName(name.getText());
+            newCourse.setDepartment(d);
+            newCourse.setCredits((Integer) credits.getValue());
+            newCourse.setLections((Integer) lectures.getValue());
+            newCourse.setSeminars((Integer) practices.getValue());
+            newCourse.setConclusion("342423");
+            System.out.println(newCourse.toString());
+            MainController.getMainController().renderTemplate("/saveCourse", new HashMap<String, Object>() {{put("course", newCourse);}});
+        });
 
         JLabel mainLabel = new JLabel("Create course");
         mainLabel.setFont (mainLabel.getFont ().deriveFont (18.0f));
