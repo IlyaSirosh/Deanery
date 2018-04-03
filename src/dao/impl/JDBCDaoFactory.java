@@ -39,4 +39,6 @@ public class JDBCDaoFactory extends DaoFactory {
     public DepartmentDao createDepartmentDao(){return new DepartmentDao(getConnection()); }
     public TeacherDao createTeacherDao(){return new TeacherDao(getConnection());}
     public LessonDao createLessonDao(){return new LessonDao(getConnection());}
+    public ScheduleDao createScheduleDao(){return new ScheduleDao(getConnection());}
+
 }

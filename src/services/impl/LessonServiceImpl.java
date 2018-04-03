@@ -2,6 +2,7 @@ package services.impl;
 
 import dao.Interfaces.ILessonDao;
 import dao.Interfaces.IStudentDao;
+import dao.impl.JDBCDaoFactory;
 import model.*;
 import model.enums.Day;
 import model.enums.LessonType;
@@ -14,8 +15,8 @@ import java.util.stream.Collectors;
 
 public class LessonServiceImpl implements LessonService {
 
-    private ILessonDao lessonDao;
-    private IStudentDao studentDao;
+    private ILessonDao lessonDao = JDBCDaoFactory.getInstance().createLessonDao();
+    private IStudentDao studentDao = JDBCDaoFactory.getInstance().createStudentDao();
 
 
     @Override
@@ -135,13 +136,32 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public boolean addToGroup(Lesson lesson, Student student) {
 
-        return studentDao.addToLesson(lesson,student);
+        boolean result = studentDao.addToLesson(lesson,student);
+
+        if(result){
+            Student s = studentDao.findById(student.getStudentId());
+
+            s.setCredits(s.getCredits() + lesson.getCourse().getCredits());
+
+            result = result && studentDao.update(s);
+        }
+
+        return result;
     }
 
     @Override
     public boolean deleteFromGroup(Lesson lesson, Student student) {
 
-        return deleteFromGroup(lesson,student);
+        boolean result = deleteFromGroup(lesson,student);
+
+        if(result){
+            Student s = studentDao.findById(student.getStudentId());
+            s.setCredits(s.getCredits() - lesson.getCourse().getCredits());
+
+            result = result && studentDao.update(s);
+        }
+
+        return result;
     }
 
 }

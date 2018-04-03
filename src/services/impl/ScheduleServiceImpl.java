@@ -1,6 +1,7 @@
 package services.impl;
 
 import dao.Interfaces.IScheduleDao;
+import dao.impl.JDBCDaoFactory;
 import model.Department;
 import model.Lesson;
 import model.Schedule;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class ScheduleServiceImpl implements ScheduleService {
 
-    private IScheduleDao scheduleDao;
+    private IScheduleDao scheduleDao = JDBCDaoFactory.getInstance().createScheduleDao();
 
     @Override
     public List<Schedule> getAll() {

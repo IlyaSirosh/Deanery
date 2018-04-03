@@ -3,6 +3,7 @@ package services.impl;
 import dao.CourseDao;
 import dao.Interfaces.ICourseDao;
 import dao.Interfaces.ILessonDao;
+import dao.impl.JDBCDaoFactory;
 import model.Course;
 import model.Department;
 import model.Lesson;
@@ -14,8 +15,8 @@ import java.util.stream.Collectors;
 
 public class CourseServiceImpl implements CourseService {
 
-    private ICourseDao courseDao;
-    private ILessonDao lessonDao;
+    private ICourseDao courseDao = JDBCDaoFactory.getInstance().createCourseDao();
+    private ILessonDao lessonDao = JDBCDaoFactory.getInstance().createLessonDao();
 
 
     @Override
