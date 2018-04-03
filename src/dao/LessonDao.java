@@ -73,7 +73,10 @@ public class LessonDao implements ILessonDao {
                      = connection.prepareStatement(SELECT_BY_ID)) {
             statement.setInt(1, lessonId);
             ResultSet rs = statement.executeQuery();
-            lesson = EntityRetriever.retrieveLesson(rs);
+            while (rs.next()) {
+                lesson = EntityRetriever.retrieveLesson(rs);
+
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -199,8 +202,9 @@ public class LessonDao implements ILessonDao {
             statement.setInt(1, course.getCourseId());
             statement.setInt(2, LessonType.LECTURE.getValue());
             ResultSet rs = statement.executeQuery();
-            lesson = EntityRetriever.retrieveLesson(rs);
-
+            while(rs.next()) {
+                lesson = EntityRetriever.retrieveLesson(rs);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

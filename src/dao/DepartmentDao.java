@@ -21,7 +21,7 @@ public class DepartmentDao implements IDepartmentDao {
     private static final String CREATE = "INSERT INTO department (name, building_number)\n" +
             "VALUES (?,?);";
     private static final String UPDATE = "UPDATE department SET " +
-            "name = ?"+
+            "name = ?,"+
             "building_number = ? " +
             "WHERE department_id = ?";
     private static final String DELETE ="DELETE FROM department WHERE department_id=?";
@@ -53,8 +53,9 @@ public class DepartmentDao implements IDepartmentDao {
                      = connection.prepareStatement(SELECT_BY_ID)) {
             statement.setInt(1, departmentId);
             ResultSet rs = statement.executeQuery();
-            department = EntityRetriever.retrieveDepartment(rs);
-
+            while(rs.next()) {
+                department = EntityRetriever.retrieveDepartment(rs);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,13 +76,14 @@ public class DepartmentDao implements IDepartmentDao {
 
     @Override
     public boolean update(Department infoForUpdate) {
-        Department current = findById(infoForUpdate.getDepartmentId());
+        Department current=infoForUpdate;
         try (PreparedStatement statement
                      = connection.prepareStatement(UPDATE)){
             statement.setString(1, current.getName());
             statement.setInt(2, current.getBuildingNumber());
+            statement.setInt(3, current.getDepartmentId());
             statement.execute();
-
+            System.out.println(statement.toString());
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

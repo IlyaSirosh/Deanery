@@ -24,7 +24,7 @@ public class ScheduleDao implements IScheduleDao {
     private static final String CREATE = "INSERT INTO schedule ( day, lesson_number, week_id)\n" +
             "VALUES (?,?,?);";
     private static final String UPDATE = "UPDATE schedule SET " +
-            "day = ?"+
+            "day = ?,"+
             "lesson_number = ? ," +
             "week_id = ? "+
             "WHERE schedule_id = ?";
@@ -57,8 +57,9 @@ public class ScheduleDao implements IScheduleDao {
                      = connection.prepareStatement(SELECT_BY_ID)) {
             statement.setInt(1, scheduleId);
             ResultSet rs = statement.executeQuery();
-            schedule = EntityRetriever.retrieveSchedule(rs);
-
+            while(rs.next()) {
+                schedule = EntityRetriever.retrieveSchedule(rs);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -181,6 +182,7 @@ public class ScheduleDao implements IScheduleDao {
             statement.setInt(1, ((Day.valueOf(schedule.getDay().toString()).ordinal())));
             statement.setInt(2, schedule.getLessonNumber());
             statement.setInt(3, schedule.getWeek().getWeekId());
+            statement.setInt(4, schedule.getScheduleId());
             statement.execute();
 
         } catch (SQLException e) {

@@ -26,7 +26,7 @@ public class CourseDao implements ICourseDao {
             "VALUES (?,?,?,?,?,?,?);";
     private static final String UPDATE = "UPDATE course SET " +
 
-            "department_id = ?"+
+            "department_id = ?,"+
             "name = ? ," +
             "lections = ?, "+
             "seminars = ?, " +
@@ -59,7 +59,9 @@ public class CourseDao implements ICourseDao {
                      = connection.prepareStatement(SELECT_BY_ID)) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            course = EntityRetriever.retrieveCourse(rs);
+            while(rs.next()) {
+                course = EntityRetriever.retrieveCourse(rs);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,14 +119,14 @@ public class CourseDao implements ICourseDao {
         Course current = findById(infoForUpdate.getCourseId());
         try (PreparedStatement statement
                      = connection.prepareStatement(UPDATE)){
-            statement.setInt(2, infoForUpdate.getDepartment().getDepartmentId());
-            statement.setString(3, infoForUpdate.getName());
-            statement.setInt(4,infoForUpdate.getLections());
-            statement.setInt(5, infoForUpdate.getSeminars());
-            statement.setString(6, infoForUpdate.getConclusion());
-            statement.setInt(7, infoForUpdate.getCredits());
-            statement.setBoolean(8, infoForUpdate.isObligatory());
-
+            statement.setInt(1, infoForUpdate.getDepartment().getDepartmentId());
+            statement.setString(2, infoForUpdate.getName());
+            statement.setInt(3,infoForUpdate.getLections());
+            statement.setInt(4, infoForUpdate.getSeminars());
+            statement.setString(5, infoForUpdate.getConclusion());
+            statement.setInt(6, infoForUpdate.getCredits());
+            statement.setBoolean(7, infoForUpdate.isObligatory());
+            statement.setInt(8, infoForUpdate.getCourseId());
             statement.execute();
 
         } catch (SQLException e) {
