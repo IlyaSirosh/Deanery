@@ -21,43 +21,43 @@ public class DeaneryServiceImpl implements DeaneryService {
 
     @Override
     public List<Semester> getAllSemesters() {
-        //TODO change signature of semesterDao
+
         return semesterDao.findAll();
     }
 
     @Override
     public boolean createSemester(Semester semester) {
-        //TODO change signature of semesterDao
+
         return semesterDao.create(semester);
     }
 
     @Override
     public boolean updateSemester(Semester semester) {
-        //TODO change signature of semesterDao
+
         return semesterDao.update(semester);
     }
 
     @Override
     public boolean deleteSemester(Semester semester) {
-        //TODO delete semester
-        return false;
+
+        return semesterDao.delete(semester);
     }
 
     @Override
     public List<Week> getAllWeeks() {
-        //TODO change signature of weekDao
+
         return weekDao.findAll();
     }
 
     @Override
     public List<Week> getWeeks(Semester semester) {
-        //TODO get weeks by semester
-        return null;
+
+        return weekDao.findBySemester(semester.getSemesterId());
     }
 
     @Override
     public boolean createWeek(Week week) {
-        //TODO change signature of weekDao
+
         return weekDao.create(week);
     }
 
@@ -68,8 +68,8 @@ public class DeaneryServiceImpl implements DeaneryService {
 
     @Override
     public boolean deleteWeek(Week week) {
-        //TODO implement week delete
-        return false;
+
+        return weekDao.delete(week);
     }
 
     @Override
@@ -89,8 +89,8 @@ public class DeaneryServiceImpl implements DeaneryService {
 
     @Override
     public boolean deleteStudent(Student student) {
-        //TODO implement student delete
-        return false;
+
+        return studentDao.delete(student);
     }
 
     @Override
@@ -110,7 +110,6 @@ public class DeaneryServiceImpl implements DeaneryService {
 
     @Override
     public boolean deleteClass(Class c) {
-        //TODO implement class delete
-        return false;
+        return classDao.delete(c);
     }
 }
