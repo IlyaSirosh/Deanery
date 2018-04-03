@@ -7,10 +7,14 @@ import controllers.decorators.RequestPath;
 
 @Controller
 public class RealController {
-    @RequestPath(value = "/try")
-    public String renderView(Model m,@RequestParam("testValue") String testValue){
-        m.addParam("inputValue",testValue);
+    @RequestPath(value = "/index")
+    public String renderView(Model m){
         return "index";
+    }
+
+    @RequestPath(value = "/courses")
+    public String courses(){
+        return "courses";
     }
 
     @RequestPath(value = "/anotherOne")
