@@ -38,6 +38,11 @@
             position: absolute;
         }
 
+        .delete{
+            color: #4f3424;
+            text-decoration: none;
+        }
+
         .table-title h3 {
             letter-spacing: 2px;
             color: #333333;
@@ -82,13 +87,12 @@
             font-size: 12px;
         }
 
-
         .text-center {
             text-align: center;
         }
 
-        div.text-center{
-            padding: 20px;
+        .name{
+            color: #4f3424;
         }
 
 
@@ -102,17 +106,30 @@
                 <div class="back"><a href="/index">Back</a></div>
             </td>
             <td>
-                <h1>Lessons</h1>
+                <h1>Semesters</h1>
             </td>
             <td>
-                <div><a class=".baack" href="/addCourse">Create lesson</a></div>
+                <div><a href="/addSemester">Add semester</a></div>
             </td>
         </tr>
     </table>
 </div>
-<div class="text-center">
-    <h3>Lesson has been <span pp:text="~action~"></span></h3>
-    <a href="/showLessons">Back to lessons</a>
-</div>
+<table class="table-fill">
+    <tr>
+
+        <th class="text-center">ID</th>
+        <th class="text-center">Year</th>
+        <th class="text-center">Semester</th>
+        <th class="text-center"></th>
+    </tr>
+    <tbody>
+    <tr pp:foreach="semesters" pp:item="semester" pp:index="ind">
+        <td class="text-center"><a pp:href="/editSemester?id=~semester.semesterId~" class="name" pp:text="~semester.semesterId~">Управління проектами</a></td>
+        <td class="text-center" pp:text="~semester.year~">Проценко Володимир Семенович</td>
+        <td class="text-center" pp:text="~semester.semester~">Кафедра інформатики</td>
+        <td class="text-center"><a class="delete" pp:href="/deleteSemester?id=~semester.semesterId~">x</a></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

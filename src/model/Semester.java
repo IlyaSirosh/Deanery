@@ -66,10 +66,18 @@ public class Semester {
         this.semester = semester;
     }
 
+<<<<<<< HEAD
     public Semester(int id){
         this.semesterId = id;
     }
 
     public Semester(){
+=======
+    public Semester() {
+    }
+
+    public Semester(int semesterId) {
+        this.semesterId = semesterId;
+>>>>>>> Oleksii
     }
 }
