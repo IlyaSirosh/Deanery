@@ -75,7 +75,7 @@ public class EditClassView extends View{
             f.dispose();
         });
 
-        JLabel mainLabel = new JLabel("Add teacher");
+        JLabel mainLabel = new JLabel("Edit class");
         mainLabel.setFont (mainLabel.getFont ().deriveFont (18.0f));
         mainLabel.setFont(mainLabel.getFont ().deriveFont(mainLabel.getFont ().getStyle() | Font.BOLD));
         mainLabel.setHorizontalAlignment(SwingConstants.CENTER);
