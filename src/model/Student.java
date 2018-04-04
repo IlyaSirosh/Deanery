@@ -119,4 +119,10 @@ public class Student {
         this.credits = credits;
     }
 
+    public Student(int studentId) {
+        this.studentId = studentId;
+    }
+
+    public Student() {
+    }
 }
