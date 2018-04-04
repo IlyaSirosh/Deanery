@@ -18,9 +18,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
-@RequestPath("/viewCourse")
+@RequestPath("/editCourse")
 public class EditCourseView extends View{
 
     private class Item
@@ -38,7 +39,8 @@ public class EditCourseView extends View{
     }
 
     @Override
-    public void renderView() throws UnsatisfiedDependencyException {
+    public void renderView(Map<String, Object> params) throws UnsatisfiedDependencyException {
+        params.forEach((s, o) -> System.out.println(s+"--"+o));
         DepartmentService ds = (DepartmentService) ServicesDispatcher.getServicesDispatcher().getService(DepartmentService.class.getName());
 
         JFrame f = new JFrame();

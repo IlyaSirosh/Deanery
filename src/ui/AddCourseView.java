@@ -38,7 +38,7 @@ public class AddCourseView extends View{
     }
 
     @Override
-    public void renderView() throws UnsatisfiedDependencyException {
+    public void renderView(Map<String, Object> params) throws UnsatisfiedDependencyException {
         DepartmentService ds = (DepartmentService) ServicesDispatcher.getServicesDispatcher().getService(DepartmentService.class.getName());
 
         JFrame f = new JFrame();
