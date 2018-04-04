@@ -44,4 +44,10 @@ public class DepartmentsController {
         m.addParam("action", "delete");
         return "departmentChanged";
     }
+
+    @RequestPath("/detailsDepartment")
+    public String deleteDepartment(Model m, @RequestParam("department") Department department){
+        m.addParam("department", department);
+        return "detailsDepartment";
+    }
 }

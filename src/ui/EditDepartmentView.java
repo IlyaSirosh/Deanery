@@ -1,9 +1,11 @@
 package ui;
 
 import controllers.configs.MainController;
+import controllers.configs.ServicesDispatcher;
 import controllers.decorators.RequestPath;
 import controllers.exceptions.UnsatisfiedDependencyException;
 import model.Department;
+import services.DepartmentService;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -17,6 +19,8 @@ import java.util.Map;
 public class EditDepartmentView extends View{
     @Override
     public void renderView(Map<String, Object> params) throws UnsatisfiedDependencyException {
+        DepartmentService ds = (DepartmentService) ServicesDispatcher.getServicesDispatcher().getService(DepartmentService.class.getName());
+
         JFrame f = new JFrame();
         f.setSize(400, 250);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -29,6 +33,8 @@ public class EditDepartmentView extends View{
         layout.setAutoCreateContainerGaps(true);
 
         JPanel panelDown = new JPanel();
+        JButton detailsButton = new JButton("Detailed View");
+        panelDown.add(detailsButton);
         JButton okButton = new JButton("OK");
         panelDown.add(okButton);
         JButton cancelButton = new JButton("Cancel");
@@ -63,6 +69,10 @@ public class EditDepartmentView extends View{
             MainController.getMainController().renderTemplate("/updateDepartment", new HashMap<String, Object>() {{put("department", newDepartment);}});
 
             f.dispose();
+        });
+
+        detailsButton.addActionListener(e -> {
+            MainController.getMainController().renderTemplate("/detailsDepartment", new HashMap<String, Object>() {{put("department", params.get("department"));}});
         });
 
         cancelButton.addActionListener(e -> {
