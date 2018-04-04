@@ -2,7 +2,6 @@ package controllers.configs;
 
 import controllers.exceptions.EvaluatingExpression;
 import org.w3c.dom.*;
-import org.w3c.dom.events.EventException;
 import resources.Resources;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -12,7 +11,6 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -48,12 +46,12 @@ public class Processor {
      * @param sourceFile - an HTML file that represents html file to be processed
      * @return a processed pure html file in a string
      */
-    private String renderPage(File sourceFile, Map<String, Object> params){
+    private String renderPage(String sourceFile, Map<String, Object> params){
         parameters = params;
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(sourceFile);
+            Document doc = dBuilder.parse(getClass().getResourceAsStream(sourceFile));
             doc.getDocumentElement().normalize();
 
             NodeList nodes = doc.getDocumentElement().getChildNodes();
@@ -67,10 +65,7 @@ public class Processor {
         return "";
     }
     String renderPage(String sourceFile, Model params){
-        return renderPage(new File(getClass()
-                        .getClassLoader()
-                        .getResource(getTemplateName(sourceFile))
-                        .getFile()),
+        return renderPage(getTemplateName(sourceFile),
                 params.getAllParams());
     }
 

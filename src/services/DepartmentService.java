@@ -17,4 +17,6 @@ public interface DepartmentService {
 
     boolean addTeacher(Department department, Teacher teacher);
 
+    Department findById(Department department);
+
 }

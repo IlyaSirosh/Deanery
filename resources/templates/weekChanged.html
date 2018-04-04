@@ -38,11 +38,6 @@
             position: absolute;
         }
 
-        .delete{
-            color: #4f3424;
-            text-decoration: none;
-        }
-
         .table-title h3 {
             letter-spacing: 2px;
             color: #333333;
@@ -65,7 +60,7 @@
             text-align: center;
             color: #fdefe7;
             background: #C4584D;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             padding: 15px;
             vertical-align: middle;
@@ -87,14 +82,14 @@
             font-size: 12px;
         }
 
+
         .text-center {
             text-align: center;
         }
 
-        .name{
-            color: #4f3424;
+        div.text-center{
+            padding: 20px;
         }
-
 
 
     </style>
@@ -107,30 +102,17 @@
                 <div class="back"><a href="/index">Back</a></div>
             </td>
             <td>
-                <h1>Classes</h1>
+                <h1>Weeks</h1>
             </td>
             <td>
-                <div><a href="/addClass">Create class</a></div>
+                <div><a class=".baack" href="/addWeek">Create week</a></div>
             </td>
         </tr>
     </table>
 </div>
-<table class="table-fill">
-    <tr>
-
-        <th class="text-center">Number</th>
-        <th class="text-center">Building</th>
-        <th class="text-center">Capacity</th>
-        <th class="text-center"></th>
-    </tr>
-    <tbody>
-    <tr pp:foreach="classes" pp:item="class" pp:index="ind">
-        <td class="text-center"><a pp:href="/editClass?id=~class.classId~" class="name" pp:text="~class.number~"></a></td>
-        <td class="text-center" pp:text="~class.building~">Проценко Володимир Семенович</td>
-        <td class="text-center" pp:text="~class.capacity~">Кафедра інформатики</td>
-        <td class="text-center"><a class="delete" pp:href="/deleteClass?id=~class.classId~">x</a></td>
-    </tr>
-    </tbody>
-</table>
+<div class="text-center">
+    <h3>Week has been <span pp:text="~action~"></span></h3>
+    <a href="/showWeeks">Back to weeks</a>
+</div>
 </body>
 </html>

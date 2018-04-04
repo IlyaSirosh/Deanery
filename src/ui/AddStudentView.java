@@ -1,45 +1,27 @@
 package ui;
 
 import controllers.configs.MainController;
-import controllers.configs.ServicesDispatcher;
 import controllers.decorators.RequestPath;
 import controllers.exceptions.UnsatisfiedDependencyException;
-import model.Department;
-import model.Teacher;
-import services.DepartmentService;
+import model.Class;
+import model.Student;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.sql.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-@RequestPath("/editTeacher")
-public class EditTeacherView extends View{
-    private class Item
-    {
-        public Department department;
-
-        public Item(Department department) {
-            this.department = department;
-        }
-
-        public String toString()
-        {
-            return department.getName();
-        }
-    }
-
+@RequestPath("/addStudent")
+public class AddStudentView extends View{
 
     @Override
     public void renderView(Map<String, Object> params) throws UnsatisfiedDependencyException {
-        DepartmentService ds = (DepartmentService) ServicesDispatcher.getServicesDispatcher().getService(DepartmentService.class.getName());
-
         JFrame f = new JFrame();
-        f.setSize(400, 250);
+        f.setSize(400, 400);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLayout(new BorderLayout());
 
@@ -58,50 +40,53 @@ public class EditTeacherView extends View{
         JTextField name = new JTextField();
         JLabel nameLabel = new JLabel("Name: ", JLabel.LEFT);
 
-        JComboBox deps = new JComboBox();
-        JLabel depsLabel = new JLabel("Department: ", JLabel.LEFT);
-        System.out.println(ds);
-        List<Department> departments = ds.getAll();
-        departments.forEach(d -> {
-            deps.addItem(new Item(d));
-        });
+        JTextField steciality = new JTextField();
+        JLabel stecialityLabel = new JLabel("Speciality: ", JLabel.LEFT);
 
-        JTextField role = new JTextField();
-        JLabel roleLabel = new JLabel("Role: ", JLabel.LEFT);
+        JSpinner credits = new JSpinner(new SpinnerNumberModel(1, 1, 260, 1));
+        JLabel creditsLabel = new JLabel("Credits: ", JLabel.LEFT);
+
+        JTextField startDate = new JTextField("2018-04-04");
+        JLabel startDateLabel = new JLabel("Start Date: ", JLabel.LEFT);
+
+        JTextField endDate = new JTextField("2018-04-04");
+        JLabel endDateLabel = new JLabel("End Date: ", JLabel.LEFT);
+
+        JComboBox endReason = new JComboBox(Student.LeaveReason.values());
+        JLabel endReasonLabel = new JLabel("End Reason: ", JLabel.LEFT);
 
 
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(nameLabel).addComponent(name))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(depsLabel).addComponent(deps))
+                        .addComponent(stecialityLabel).addComponent(steciality))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(roleLabel).addComponent(role))
+                        .addComponent(creditsLabel).addComponent(credits))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(startDateLabel).addComponent(startDate))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(endDateLabel).addComponent(endDate))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(endReasonLabel).addComponent(endReason))
         );
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(nameLabel).addComponent(depsLabel).addComponent(roleLabel))
+                        .addComponent(nameLabel).addComponent(stecialityLabel).addComponent(creditsLabel).addComponent(startDateLabel).addComponent(endDateLabel).addComponent(endReasonLabel))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(name).addComponent(deps).addComponent(role)));
+                        .addComponent(name).addComponent(steciality).addComponent(credits).addComponent(startDate).addComponent(endDate).addComponent(endReason)));
 
-
-        deps.addActionListener(e -> {
-            JComboBox box = (JComboBox)e.getSource();
-            Item item = (Item)box.getSelectedItem();
-            System.out.println(item.department.getDepartmentId());
-        });
 
         okButton.addActionListener(e -> {
-            Item item = (Item)deps.getSelectedItem();
-            Department d = new Department();
-            d.setDepartmentId(item.department.getDepartmentId());
-            Teacher newTeacher = new Teacher();
-            newTeacher.setTeacherId(Integer.parseInt(params.get("id").toString()));
-            newTeacher.setName(name.getText());
-            newTeacher.setDepartment(d);
-            newTeacher.setRole(role.getText());
-            MainController.getMainController().renderTemplate("/updateTeacher", new HashMap<String, Object>() {{put("teacher", newTeacher);}});
+            Student newStudent = new Student();
+            newStudent.setSurname(name.getText());
+            newStudent.setSpeciality(steciality.getText());
+            newStudent.setCredits((Integer) credits.getValue());
+            newStudent.setStartdate(Date.valueOf(startDate.getText()));
+            newStudent.setEnddate(Date.valueOf(endDate.getText()));
+            newStudent.setEnddateReason((Student.LeaveReason) endReason.getSelectedItem());
+            MainController.getMainController().renderTemplate("/saveStudent", new HashMap<String, Object>() {{put("student", newStudent);}});
 
             f.dispose();
         });
@@ -110,7 +95,7 @@ public class EditTeacherView extends View{
             f.dispose();
         });
 
-        JLabel mainLabel = new JLabel("Add teacher");
+        JLabel mainLabel = new JLabel("Add student");
         mainLabel.setFont (mainLabel.getFont ().deriveFont (18.0f));
         mainLabel.setFont(mainLabel.getFont ().deriveFont(mainLabel.getFont ().getStyle() | Font.BOLD));
         mainLabel.setHorizontalAlignment(SwingConstants.CENTER);

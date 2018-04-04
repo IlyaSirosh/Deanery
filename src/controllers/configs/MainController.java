@@ -12,17 +12,24 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.Element;
 import javax.swing.text.html.HTMLEditorKit;
+import java.awt.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.*;
+import java.util.List;
 
 public class MainController {
     private static MainController MAIN_CONTROLLER;
     private JFrame mainPage;
-    private JEditorPane pane;
-    private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class, DepartmentsController.class, ClassesController.class};
-    private View[] views = new View[]{new AddCourseView(), new EditCourseView(), new AddTeacherView(), new EditTeacherView(), new EditDepartmentView(), new AddDepartmentView(), new AddClassView(), new EditClassView()};
+
+
+    private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class, DepartmentsController.class, ClassesController.class, LessonsController.class, SemestersController.class, StudentsController.class, WeekController.class};
+    private View[] views = new View[]{new AddCourseView(), new EditCourseView(), new AddTeacherView(), new EditTeacherView(), new EditDepartmentView(), new AddDepartmentView(), new AddClassView(), new EditClassView(), new AddLessonView(), new EditLessonView(), new AddSemesterView(), new EditSemesterView(), new AddStudentView(), new EditStudentView()};
+
+    private JScrollPane pane;
+    JEditorPane editorPane;
+
     private HashMap<String, Method> linkedPaths;
     private HashMap<String, View> linkedViews;
 
@@ -30,6 +37,7 @@ public class MainController {
 
     private MainController() throws UnsatisfiedDependencyException {
         mainPage = new JFrame();
+        mainPage.setResizable(false);
         mainPage.setLocationRelativeTo(null);
         mainPage.setSize(1000, 1000);
         mainPage.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -71,6 +79,7 @@ public class MainController {
                 View view = linkedViews.get(path);
                 view.renderView(params);
             } else {
+                if(editorPane!=null) pane.remove(editorPane);
                 if(pane!=null) mainPage.remove(pane);
                 Method m = linkedPaths.get(path);
                 Model model = new Model();
@@ -98,13 +107,16 @@ public class MainController {
                     renderTemplate(templateName.substring(9), model.getAllParams());
                     return;
                 }
-                pane = new JEditorPane();
-                pane.setEditable(false);
-                pane.setContentType("text/html");
-                pane.setText(new Processor().renderPage(templateName, model));
-                ((HTMLEditorKit)pane.getEditorKit()).setAutoFormSubmission(false);
-                mainPage.add(pane);
-                pane.addHyperlinkListener(this::hyperlinkUpdate);
+                editorPane = new JEditorPane();
+                editorPane.setEditable(false);
+                editorPane.setContentType("text/html");
+                editorPane.setText(new Processor().renderPage(templateName, model));
+                ((HTMLEditorKit)editorPane.getEditorKit()).setAutoFormSubmission(false);
+                editorPane.addHyperlinkListener(this::hyperlinkUpdate);
+                pane=new JScrollPane(editorPane);
+                pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+                pane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+                mainPage.add(pane, BorderLayout.CENTER);
                 mainPage.setVisible(true);
             }
         }catch (Exception e){

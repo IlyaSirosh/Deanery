@@ -1,25 +1,22 @@
 package ui;
 
 import controllers.configs.MainController;
-import controllers.configs.ServicesDispatcher;
 import controllers.decorators.RequestPath;
 import controllers.exceptions.UnsatisfiedDependencyException;
-import model.Department;
-import model.Teacher;
-import services.DepartmentService;
+import model.Semester;
+import model.enums.SemesterEnum;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-@RequestPath("/addDepartment")
-public class AddDepartmentView extends View{
-
+@RequestPath("/editSemester")
+public class EditSemesterView extends View{
     @Override
     public void renderView(Map<String, Object> params) throws UnsatisfiedDependencyException {
         JFrame f = new JFrame();
@@ -38,34 +35,43 @@ public class AddDepartmentView extends View{
         panelDown.add(okButton);
         JButton cancelButton = new JButton("Cancel");
         panelDown.add(cancelButton);
+        JButton detailsButton = new JButton("See Semester's Weeks");
+        panelDown.add(detailsButton);
 
-        JTextField name = new JTextField();
-        JLabel nameLabel = new JLabel("Name: ", JLabel.LEFT);
+        JComboBox sem = new JComboBox(SemesterEnum.values());
+        JLabel semLabel = new JLabel("Season: ", JLabel.LEFT);
 
-        JSpinner building = new JSpinner(new SpinnerNumberModel(1, 1, 9, 1));
-        JLabel buildingLabel = new JLabel("Building: ", JLabel.LEFT);
+        Calendar c = Calendar.getInstance();
+        JSpinner year = new JSpinner(new SpinnerNumberModel(c.get(Calendar.YEAR), c.get(Calendar.YEAR), c.get(Calendar.YEAR)+10, 1));
+        JLabel yearLabel = new JLabel("Year: ", JLabel.LEFT);
 
 
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(nameLabel).addComponent(name))
+                        .addComponent(semLabel).addComponent(sem))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(buildingLabel).addComponent(building))
+                        .addComponent(yearLabel).addComponent(year))
         );
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(nameLabel).addComponent(buildingLabel))
+                        .addComponent(semLabel).addComponent(yearLabel))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(name).addComponent(building)));
+                        .addComponent(sem).addComponent(year)));
 
 
         okButton.addActionListener(e -> {
-            Department newDepartment = new Department();
-            newDepartment.setName(name.getText());
-            newDepartment.setBuildingNumber((Integer) building.getValue());
-            MainController.getMainController().renderTemplate("/saveDepartment", new HashMap<String, Object>() {{put("department", newDepartment);}});
+            Semester newSem = new Semester();
+            newSem.setSemesterId(Integer.parseInt(params.get("id").toString()));
+            newSem.setSemester((SemesterEnum) sem.getSelectedItem());
+            newSem.setYear((Integer) year.getValue());
+            MainController.getMainController().renderTemplate("/updateSemester", new HashMap<String, Object>() {{put("semester", newSem);}});
 
+            f.dispose();
+        });
+
+        detailsButton.addActionListener(e -> {
+            MainController.getMainController().renderTemplate("/showWeeks", new HashMap<String, Object>() {{put("semesterId", Integer.parseInt(params.get("id").toString()));}});
             f.dispose();
         });
 
@@ -73,7 +79,7 @@ public class AddDepartmentView extends View{
             f.dispose();
         });
 
-        JLabel mainLabel = new JLabel("Add teacher");
+        JLabel mainLabel = new JLabel("Edit Semester");
         mainLabel.setFont (mainLabel.getFont ().deriveFont (18.0f));
         mainLabel.setFont(mainLabel.getFont ().deriveFont(mainLabel.getFont ().getStyle() | Font.BOLD));
         mainLabel.setHorizontalAlignment(SwingConstants.CENTER);

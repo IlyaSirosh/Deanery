@@ -33,14 +33,9 @@
         }
 
         .header h1{
-            margin-right: 380px;
+            margin-right: 420px;
             font-size: 30px;
             position: absolute;
-        }
-
-        .delete{
-            color: #4f3424;
-            text-decoration: none;
         }
 
         .table-title h3 {
@@ -65,7 +60,7 @@
             text-align: center;
             color: #fdefe7;
             background: #C4584D;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             padding: 15px;
             vertical-align: middle;
@@ -87,14 +82,14 @@
             font-size: 12px;
         }
 
+
         .text-center {
             text-align: center;
         }
 
-        .name{
-            color: #4f3424;
+        div.text-center{
+            padding: 20px;
         }
-
 
 
     </style>
@@ -107,28 +102,17 @@
                 <div class="back"><a href="/index">Back</a></div>
             </td>
             <td>
-                <h1>Departments</h1>
+                <h1>Semesters</h1>
             </td>
             <td>
-                <div><a href="/addDepartment">Create department</a></div>
+                <div><a class=".baack" href="/addSemester">Create semester</a></div>
             </td>
         </tr>
     </table>
 </div>
-<table class="table-fill">
-    <tr>
-
-        <th class="text-center">Name</th>
-        <th class="text-center">Building Number</th>
-        <th class="text-center"></th>
-    </tr>
-    <tbody>
-    <tr pp:foreach="departments" pp:item="department" pp:index="ind">
-        <td class="text-center"><a pp:href="/editDepartment?id=~department.departmentId~" class="name" pp:text="~department.name~"></a></td>
-        <td class="text-center" pp:text="~department.buildingNumber~"></td>
-        <td class="text-center"><a class="delete" pp:href="/deleteDepartment?id=~department.departmentId~">x</a></td>
-    </tr>
-    </tbody>
-</table>
+<div class="text-center">
+    <h3>Semester has been <span pp:text="~action~"></span></h3>
+    <a href="/showSemesters">Back to semesters</a>
+</div>
 </body>
 </html>

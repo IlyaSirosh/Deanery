@@ -38,6 +38,11 @@
             position: absolute;
         }
 
+        .delete{
+            color: #4f3424;
+            text-decoration: none;
+        }
+
         .table-title h3 {
             letter-spacing: 2px;
             color: #333333;
@@ -82,13 +87,12 @@
             font-size: 12px;
         }
 
-
         .text-center {
             text-align: center;
         }
 
-        div.text-center{
-            padding: 20px;
+        .name{
+            color: #4f3424;
         }
 
 
@@ -102,17 +106,34 @@
                 <div class="back"><a href="/index">Back</a></div>
             </td>
             <td>
-                <h1>Classes</h1>
+                <h1>Weeks</h1>
             </td>
             <td>
-                <div><a class=".baack" href="/addClass">Add class</a></div>
+                <div><a href="/addTeacher">Add week</a></div>
             </td>
         </tr>
     </table>
 </div>
-<div class="text-center">
-    <h3>Class has been <span pp:text="~action~"></span></h3>
-    <a href="/showClasses">Back to classes</a>
-</div>
+<table class="table-fill">
+    <tr>
+
+        <th class="text-center">ID</th>
+        <th class="text-center">Number</th>
+        <th class="text-center">Start</th>
+        <th class="text-center">End</th>
+        <th class="text-center">Semester</th>
+        <th class="text-center"></th>
+    </tr>
+    <tbody>
+    <tr pp:foreach="weeks" pp:item="week" pp:index="ind">
+        <td class="text-center"><a pp:href="/editWeek?id=~week.weekId~" class="name" pp:text="~week.weekId~">Управління проектами</a></td>
+        <td class="text-center" pp:text="~week.number~">Проценко Володимир Семенович</td>
+        <td class="text-center" pp:text="~week.start~">Кафедра інформатики</td>
+        <td class="text-center" pp:text="~week.end~">Кафедра інформатики</td>
+        <td class="text-center" pp:text="~week.semester.semester~">Кафедра інформатики</td>
+        <td class="text-center"><a class="delete" pp:href="/deleteWeek?id=~week.weekId~">x</a></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

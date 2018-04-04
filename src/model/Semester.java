@@ -65,4 +65,12 @@ public class Semester {
     public void setSemester(SemesterEnum semester) {
         this.semester = semester;
     }
+
+
+    public Semester() {
+    }
+
+    public Semester(int semesterId) {
+        this.semesterId = semesterId;
+    }
 }
