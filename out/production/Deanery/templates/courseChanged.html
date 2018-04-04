@@ -82,8 +82,13 @@
             font-size: 12px;
         }
 
+
         .text-center {
             text-align: center;
+        }
+
+        div.text-center{
+            padding: 20px;
         }
 
 
@@ -100,12 +105,14 @@
             <h1>Courses</h1>
         </td>
         <td>
-            <div><a href="/addCourse">Create course</a></div>
+            <div><a class=".baack" href="/addCourse">Create course</a></div>
         </td>
     </tr>
 </table>
 </div>
-<h3>Course has been <span pp:text="~action~"></span></h3>
-<a href="/showCourses">Back to courses</a>
+<div class="text-center">
+    <h3>Course has been <span pp:text="~action~"></span></h3>
+    <a href="/showCourses">Back to courses</a>
+</div>
 </body>
 </html>

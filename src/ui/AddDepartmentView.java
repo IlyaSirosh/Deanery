@@ -4,10 +4,8 @@ import controllers.configs.MainController;
 import controllers.configs.ServicesDispatcher;
 import controllers.decorators.RequestPath;
 import controllers.exceptions.UnsatisfiedDependencyException;
-import model.Course;
 import model.Department;
 import model.Teacher;
-import model.enums.CourseConclusion;
 import services.DepartmentService;
 
 import javax.swing.*;
@@ -19,28 +17,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequestPath("/addTeacher")
-public class AddTeacherView extends View{
-
-    private class Item
-    {
-        public Department department;
-
-        public Item(Department department) {
-            this.department = department;
-        }
-
-        public String toString()
-        {
-            return department.getName();
-        }
-    }
-
+@RequestPath("/addDepartment")
+public class AddDepartmentView extends View{
 
     @Override
     public void renderView(Map<String, Object> params) throws UnsatisfiedDependencyException {
-        DepartmentService ds = (DepartmentService) ServicesDispatcher.getServicesDispatcher().getService(DepartmentService.class.getName());
-
         JFrame f = new JFrame();
         f.setSize(400, 250);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -61,49 +42,29 @@ public class AddTeacherView extends View{
         JTextField name = new JTextField();
         JLabel nameLabel = new JLabel("Name: ", JLabel.LEFT);
 
-        JComboBox deps = new JComboBox();
-        JLabel depsLabel = new JLabel("Department: ", JLabel.LEFT);
-        System.out.println(ds);
-        List<Department> departments = ds.getAll();
-        departments.forEach(d -> {
-            deps.addItem(new Item(d));
-        });
-
-        JTextField role = new JTextField();
-        JLabel roleLabel = new JLabel("Role: ", JLabel.LEFT);
+        JSpinner building = new JSpinner(new SpinnerNumberModel(1, 1, 9, 1));
+        JLabel buildingLabel = new JLabel("Building: ", JLabel.LEFT);
 
 
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(nameLabel).addComponent(name))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(depsLabel).addComponent(deps))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(roleLabel).addComponent(role))
-                );
+                        .addComponent(buildingLabel).addComponent(building))
+        );
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(nameLabel).addComponent(depsLabel).addComponent(roleLabel))
+                        .addComponent(nameLabel).addComponent(buildingLabel))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(name).addComponent(deps).addComponent(role)));
+                        .addComponent(name).addComponent(building)));
 
-
-        deps.addActionListener(e -> {
-            JComboBox box = (JComboBox)e.getSource();
-            Item item = (Item)box.getSelectedItem();
-            System.out.println(item.department.getDepartmentId());
-        });
 
         okButton.addActionListener(e -> {
-            Item item = (Item)deps.getSelectedItem();
-            Department d = new Department();
-            d.setDepartmentId(item.department.getDepartmentId());
-            Teacher newTeacher = new Teacher();
-            newTeacher.setName(name.getText());
-            newTeacher.setDepartment(d);
-            newTeacher.setRole(role.getText());
-            MainController.getMainController().renderTemplate("/saveTeacher", new HashMap<String, Object>() {{put("teacher", newTeacher);}});
+            Department newDepartment = new Department();
+            newDepartment.setName(name.getText());
+            newDepartment.setBuildingNumber((Integer) building.getValue());
+            MainController.getMainController().renderTemplate("/saveDepartment", new HashMap<String, Object>() {{put("department", newDepartment);}});
 
             f.dispose();
         });

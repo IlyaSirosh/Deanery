@@ -73,4 +73,11 @@ public class Department {
         this.teachers = teachers;
     }
 
+    public Department(int id){
+        this.departmentId = id;
+    }
+
+    public Department(){
+    }
+
 }

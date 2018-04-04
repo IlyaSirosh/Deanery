@@ -1,15 +1,14 @@
 package controllers.configs;
 
 import controllers.CoursesController;
+import controllers.DepartmentsController;
 import controllers.RealController;
 import controllers.TeachersController;
 import controllers.decorators.RequestParam;
 import controllers.decorators.RequestPath;
 import controllers.exceptions.MappingNotFoundException;
 import controllers.exceptions.UnsatisfiedDependencyException;
-import ui.AddCourseView;
-import ui.EditCourseView;
-import ui.View;
+import ui.*;
 
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
@@ -25,8 +24,8 @@ public class MainController {
     private static MainController MAIN_CONTROLLER;
     private JFrame mainPage;
     private JEditorPane pane;
-    private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class};
-    private View[] views = new View[]{new AddCourseView(), new EditCourseView()};
+    private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class, DepartmentsController.class};
+    private View[] views = new View[]{new AddCourseView(), new EditCourseView(), new AddTeacherView(), new EditTeacherView(), new EditDepartmentView(), new AddDepartmentView()};
     private HashMap<String, Method> linkedPaths;
     private HashMap<String, View> linkedViews;
 

@@ -2,13 +2,10 @@ package ui;
 
 import controllers.configs.MainController;
 import controllers.configs.ServicesDispatcher;
-import controllers.decorators.RequestParam;
 import controllers.decorators.RequestPath;
 import controllers.exceptions.UnsatisfiedDependencyException;
-import model.Course;
 import model.Department;
-import model.enums.Conclusion;
-import model.enums.CourseConclusion;
+import model.Teacher;
 import services.DepartmentService;
 
 import javax.swing.*;
@@ -20,10 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-@RequestPath("/editCourse")
-public class EditCourseView extends View{
-
+@RequestPath("/editTeacher")
+public class EditTeacherView extends View{
     private class Item
     {
         public Department department;
@@ -38,13 +33,13 @@ public class EditCourseView extends View{
         }
     }
 
+
     @Override
     public void renderView(Map<String, Object> params) throws UnsatisfiedDependencyException {
-        params.forEach((s, o) -> System.out.println(s+"--"+o));
         DepartmentService ds = (DepartmentService) ServicesDispatcher.getServicesDispatcher().getService(DepartmentService.class.getName());
 
         JFrame f = new JFrame();
-        f.setSize(400, 350);
+        f.setSize(400, 250);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLayout(new BorderLayout());
 
@@ -71,23 +66,9 @@ public class EditCourseView extends View{
             deps.addItem(new Item(d));
         });
 
-        JComboBox semestr = new JComboBox();
-        JLabel semestrLabel = new JLabel("Semester: ", JLabel.LEFT);
+        JTextField role = new JTextField();
+        JLabel roleLabel = new JLabel("Role: ", JLabel.LEFT);
 
-        JComboBox conclusion = new JComboBox(CourseConclusion.values());
-        JLabel conclusionLabel = new JLabel("Conclusion: ", JLabel.LEFT);
-
-        JSpinner credits = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
-        JLabel creditsLabel = new JLabel("Credits: ", JLabel.LEFT);
-
-        JSpinner lectures = new JSpinner(new SpinnerNumberModel(1, 1, 20, 1));
-        JLabel lecturesLabel = new JLabel("Lectures: ", JLabel.LEFT);
-
-        JSpinner practices = new JSpinner(new SpinnerNumberModel(1, 1, 20, 1));
-        JLabel practicesLabel = new JLabel("Practices: ", JLabel.LEFT);
-
-        JCheckBox mandatory = new JCheckBox("Is Mandatory");
-        mandatory.setSelected(true);
 
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -95,22 +76,14 @@ public class EditCourseView extends View{
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(depsLabel).addComponent(deps))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(semestrLabel).addComponent(semestr))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(conclusionLabel).addComponent(conclusion))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(creditsLabel).addComponent(credits))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(lecturesLabel).addComponent(lectures))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(practicesLabel).addComponent(practices))
-                .addComponent(mandatory));
+                        .addComponent(roleLabel).addComponent(role))
+        );
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(nameLabel).addComponent(depsLabel).addComponent(semestrLabel).addComponent(conclusionLabel).addComponent(creditsLabel).addComponent(lecturesLabel).addComponent(practicesLabel).addComponent(mandatory))
+                        .addComponent(nameLabel).addComponent(depsLabel).addComponent(roleLabel))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(name).addComponent(deps).addComponent(semestr).addComponent(conclusion).addComponent(credits).addComponent(lectures).addComponent(practices)));
+                        .addComponent(name).addComponent(deps).addComponent(role)));
 
 
         deps.addActionListener(e -> {
@@ -123,16 +96,12 @@ public class EditCourseView extends View{
             Item item = (Item)deps.getSelectedItem();
             Department d = new Department();
             d.setDepartmentId(item.department.getDepartmentId());
-            Course newCourse = new Course();
-            newCourse.setCourseId(Integer.parseInt(params.get("id").toString()));
-            newCourse.setName(name.getText());
-            newCourse.setDepartment(d);
-            newCourse.setCredits((Integer) credits.getValue());
-            newCourse.setLections((Integer) lectures.getValue());
-            newCourse.setSeminars((Integer) practices.getValue());
-            newCourse.setConclusion((CourseConclusion) conclusion.getSelectedItem());
-            System.out.println(newCourse.toString());
-            MainController.getMainController().renderTemplate("/updateCourse", new HashMap<String, Object>() {{put("course", newCourse);}});
+            Teacher newTeacher = new Teacher();
+            newTeacher.setTeacherId(Integer.parseInt(params.get("id").toString()));
+            newTeacher.setName(name.getText());
+            newTeacher.setDepartment(d);
+            newTeacher.setRole(role.getText());
+            MainController.getMainController().renderTemplate("/updateTeacher", new HashMap<String, Object>() {{put("teacher", newTeacher);}});
 
             f.dispose();
         });
@@ -141,7 +110,7 @@ public class EditCourseView extends View{
             f.dispose();
         });
 
-        JLabel mainLabel = new JLabel("Edit course");
+        JLabel mainLabel = new JLabel("Add teacher");
         mainLabel.setFont (mainLabel.getFont ().deriveFont (18.0f));
         mainLabel.setFont(mainLabel.getFont ().deriveFont(mainLabel.getFont ().getStyle() | Font.BOLD));
         mainLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -154,5 +123,4 @@ public class EditCourseView extends View{
         f.add(panelDown, BorderLayout.SOUTH);
         f.setVisible(true);
     }
-
 }

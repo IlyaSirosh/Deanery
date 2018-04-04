@@ -33,9 +33,14 @@
         }
 
         .header h1{
-            margin-right: 420px;
+            margin-right: 380px;
             font-size: 30px;
             position: absolute;
+        }
+
+        .delete{
+            color: #4f3424;
+            text-decoration: none;
         }
 
         .table-title h3 {
@@ -60,7 +65,7 @@
             text-align: center;
             color: #fdefe7;
             background: #C4584D;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             padding: 15px;
             vertical-align: middle;
@@ -82,37 +87,48 @@
             font-size: 12px;
         }
 
-
         .text-center {
             text-align: center;
         }
 
-        div.text-center{
-            padding: 20px;
+        .name{
+            color: #4f3424;
         }
+
 
 
     </style>
 </head>
 <body>
 <div class="header">
-<table>
+    <table>
+        <tr>
+            <td>
+                <div class="back"><a href="/index">Back</a></div>
+            </td>
+            <td>
+                <h1>Departments</h1>
+            </td>
+            <td>
+                <div><a href="/addDepartment">Create department</a></div>
+            </td>
+        </tr>
+    </table>
+</div>
+<table class="table-fill">
     <tr>
-        <td>
-            <div class="back"><a href="/index">Back</a></div>
-        </td>
-        <td>
-            <h1>Courses</h1>
-        </td>
-        <td>
-            <div><a class=".baack" href="/addCourse">Create course</a></div>
-        </td>
+
+        <th class="text-center">Name</th>
+        <th class="text-center">Building Number</th>
+        <th class="text-center"></th>
     </tr>
+    <tbody>
+    <tr pp:foreach="departments" pp:item="department" pp:index="ind">
+        <td class="text-center"><a pp:href="/editDepartment?id=~department.departmentId~" class="name" pp:text="~department.name~"></a></td>
+        <td class="text-center" pp:text="~department.buildingNumber~"></td>
+        <td class="text-center"><a class="delete" pp:href="/deleteDepartment?id=~department.departmentId~">x</a></td>
+    </tr>
+    </tbody>
 </table>
-</div>
-<div class="text-center">
-    <h3>Course has been <span pp:text="~action~"></span></h3>
-    <a href="/showCourses">Back to courses</a>
-</div>
 </body>
 </html>

@@ -91,6 +91,10 @@
             text-align: center;
         }
 
+        .name{
+            color: #4f3424;
+        }
+
 
     </style>
 </head>
@@ -105,7 +109,7 @@
                 <h1>Teachers</h1>
             </td>
             <td>
-                <div><a href="/addCourse">Add teacher</a></div>
+                <div><a href="/addTeacher">Add teacher</a></div>
             </td>
         </tr>
     </table>
@@ -120,10 +124,10 @@
     </tr>
     <tbody>
     <tr pp:foreach="teachers" pp:item="teacher" pp:index="ind">
-        <td class="text-center" pp:text="~teacher.name~">Управління проектами</td>
+        <td class="text-center"><a pp:href="/editTeacher?id=~teacher.teacherId~" class="name" pp:text="~teacher.name~">Управління проектами</a></td>
         <td class="text-center" pp:text="~teacher.department.name~">Проценко Володимир Семенович</td>
         <td class="text-center" pp:text="~teacher.role~">Кафедра інформатики</td>
-        <td class="text-center"><a class="delete" pp:href="/deleteCourse?id=~course.courseId~">x</a></td>
+        <td class="text-center"><a class="delete" pp:href="/deleteTeacher?id=~teacher.teacherId~">x</a></td>
     </tr>
     </tbody>
 </table>
