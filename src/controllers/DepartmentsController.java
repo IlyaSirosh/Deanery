@@ -48,6 +48,8 @@ public class DepartmentsController {
     @RequestPath("/detailsDepartment")
     public String deleteDepartment(Model m, @RequestParam("department") Department department){
         m.addParam("department", department);
+        department.getTeachers().forEach(System.out::println);
+        m.addParam("teachers", department.getTeachers());
         return "detailsDepartment";
     }
 }

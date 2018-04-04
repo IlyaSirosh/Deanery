@@ -7,6 +7,7 @@ import controllers.exceptions.UnsatisfiedDependencyException;
 import model.*;
 import model.enums.LessonType;
 import services.CourseService;
+import services.DeaneryService;
 import services.DepartmentService;
 import services.TeacherService;
 
@@ -21,17 +22,17 @@ import java.util.Map;
 
 @RequestPath("/editLesson")
 public class EditLessonView extends View{
-    private class DepItem
+    private class SemItem
     {
-        public Department department;
+        public Semester semester;
 
-        public DepItem(Department department) {
-            this.department = department;
+        public SemItem(Semester semester) {
+            this.semester = semester;
         }
 
         public String toString()
         {
-            return department.getName();
+            return semester.getSemester() + " " + semester.getYear();
         }
     }
 
@@ -62,10 +63,9 @@ public class EditLessonView extends View{
 
     @Override
     public void renderView(Map<String, Object> params) throws UnsatisfiedDependencyException {
-        DepartmentService ds = (DepartmentService) ServicesDispatcher.getServicesDispatcher().getService(DepartmentService.class.getName());
         TeacherService ts = (TeacherService) ServicesDispatcher.getServicesDispatcher().getService(TeacherService.class.getName());
         CourseService cs = (CourseService) ServicesDispatcher.getServicesDispatcher().getService(CourseService.class.getName());
-
+        DeaneryService ss = (DeaneryService) ServicesDispatcher.getServicesDispatcher().getService(DeaneryService.class.getName());
 
         JFrame f = new JFrame();
         f.setSize(400, 350);
@@ -87,15 +87,18 @@ public class EditLessonView extends View{
         JSpinner name = new JSpinner(new SpinnerNumberModel(1, 1, 20, 1));
         JLabel nameLabel = new JLabel("Group №: ", JLabel.LEFT);
 
-        JSpinner semester = new JSpinner(new SpinnerNumberModel(1, 1, 9, 1));
-        JLabel semesterLabel = new JLabel("Group №: ", JLabel.LEFT);
+        JComboBox semester = new JComboBox();
+        JLabel semesterLabel = new JLabel("Semester: ", JLabel.LEFT);
+        java.util.List<Semester> semesters = ss.getAllSemesters();
+        semesters.forEach(d -> {
+            semester.addItem(new SemItem(d));
+        });
 
         JComboBox type = new JComboBox(LessonType.values());
         JLabel typeLabel = new JLabel("Type: ", JLabel.LEFT);
 
         JComboBox teacher = new JComboBox();
         JLabel teacherLabel = new JLabel("Teacher: ", JLabel.LEFT);
-        System.out.println(ds);
         java.util.List<Teacher> teachers = ts.getAll();
         teachers.forEach(d -> {
             teacher.addItem(new TeacherItem(d));
@@ -139,13 +142,17 @@ public class EditLessonView extends View{
             Course c = new Course();
             c.setCourseId(citem.course.getCourseId());
 
+            SemItem sitem = (SemItem)semester.getSelectedItem();
+            Semester s = new Semester();
+            s.setSemesterId(sitem.semester.getSemesterId());
+
             Lesson newLesson = new Lesson();
             newLesson.setLessonId(Integer.parseInt(params.get("id").toString()));
             newLesson.setType((LessonType) type.getSelectedItem());
             newLesson.setGroupNumber((Integer)name.getValue());
             newLesson.setTeacher(t);
             newLesson.setCourse(c);
-            newLesson.setSemester(new Semester((Integer)semester.getValue()));
+            newLesson.setSemester(s);
             System.out.println(newLesson.toString());
             MainController.getMainController().renderTemplate("/updateLesson", new HashMap<String, Object>() {{put("lesson", newLesson);}});
 

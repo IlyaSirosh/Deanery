@@ -72,7 +72,9 @@ public class EditDepartmentView extends View{
         });
 
         detailsButton.addActionListener(e -> {
+            System.out.println(params.get("id").toString());
             Department d = ds.findById(new Department(Integer.parseInt(params.get("id").toString())));
+            System.out.println(d);
             MainController.getMainController().renderTemplate("/detailsDepartment", new HashMap<String, Object>() {{put("department", d);}});
         });
 

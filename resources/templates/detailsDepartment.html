@@ -123,7 +123,7 @@
         <th class="text-center"></th>
     </tr>
     <tbody>
-    <tr pp:foreach="department.teachers" pp:item="teacher" pp:index="ind">
+    <tr pp:foreach="teachers" pp:item="teacher" pp:index="ind">
         <td class="text-center"><a pp:href="/editTeacher?id=~teacher.teacherId~" class="name" pp:text="~teacher.name~">Управління проектами</a></td>
         <td class="text-center" pp:text="~teacher.department.name~">Проценко Володимир Семенович</td>
         <td class="text-center" pp:text="~teacher.role~">Кафедра інформатики</td>
