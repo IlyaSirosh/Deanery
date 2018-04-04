@@ -1,3 +1,4 @@
+
 package dao.impl;
 
 import dao.DaoFactory;
@@ -6,7 +7,10 @@ import dao.Interfaces.*;
 import dao.SemesterDao;
 import model.*;
 import model.Class;
-import model.enums.*;
+import model.enums.CourseConclusion;
+import model.enums.Day;
+import model.enums.LessonType;
+import model.enums.SemesterEnum;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,10 +20,12 @@ import java.sql.SQLException;
  */
 public class EntityRetriever {
 
-    private static IWeekDao weekDao;
-    private static IClassDao classDao;
-    private static ILessonDao lessonDao;
-    private static IScheduleDao scheduleDao;
+    private static IWeekDao weekDao = JDBCDaoFactory.getInstance().createWeekDao();
+    private static IClassDao classDao = JDBCDaoFactory.getInstance().createClassDao();
+    private static ILessonDao lessonDao = JDBCDaoFactory.getInstance().createLessonDao();
+    private static IScheduleDao scheduleDao = JDBCDaoFactory.getInstance().createScheduleDao();
+    private static IStudentDao studentDao = JDBCDaoFactory.getInstance().createStudentDao();
+
 
 
     public static Course retrieveCourse(ResultSet rs) throws SQLException {
@@ -37,7 +43,6 @@ public class EntityRetriever {
         course.setObligatory(rs.getBoolean("obligatory"));
         return course;
     }
-
     public static Student retrieveStudent(ResultSet rs) throws SQLException{
         Student student = new Student();
         student.setStudentId(rs.getInt("student_id"));
@@ -134,7 +139,6 @@ public class EntityRetriever {
         schedule.setLessonNumber((rs.getInt("lesson_number")));
         Week week = new Week();
         week.setWeekId(rs.getInt("week_id"));
-        IWeekDao weekDao = DaoFactory.getInstance().createWeekDao();
         week = weekDao.findById(week.getWeekId());
         schedule.setWeek(week);
         return schedule;
@@ -164,6 +168,25 @@ public class EntityRetriever {
         scheduleUnit.setLesson(lessonDao.findById(rs.getInt("lesson_id")));
         scheduleUnit.setLessonClass(classDao.findById(rs.getInt("class_id")));
         return scheduleUnit;
+    }
+
+    public static GroupExam retrieveGroupExam(ResultSet rs) throws SQLException{
+        GroupExam exam = new GroupExam();
+
+        exam.setDate(rs.getDate("date"));
+        exam.setLesson(lessonDao.findById(rs.getInt("group_id")));
+        exam.setExamClass(classDao.findById(rs.getInt("class_id")));
+
+        return exam;
+    }
+
+    public static GroupStudent retrieveGroupStudent(ResultSet rs) throws SQLException{
+        GroupStudent groupStudent = new GroupStudent();
+        groupStudent.setGrade(rs.getInt("grade"));
+        groupStudent.setStudent(studentDao.findById(rs.getInt("student_id")));
+        groupStudent.setLesson(lessonDao.findById(rs.getInt("group_id")));
+
+        return groupStudent;
     }
 
 }
