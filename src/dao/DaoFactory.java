@@ -1,8 +1,7 @@
 package dao;
 
 import dao.impl.Config;
-import model.Department;
-import model.Schedule;
+
 
 /**
  * Created by PANNA on 02.04.2018.
@@ -17,6 +16,8 @@ import model.Schedule;
         public abstract TeacherDao createTeacherDao();
         public abstract LessonDao createLessonDao();
         public abstract ScheduleDao createScheduleDao();
+        public abstract ExamGroupDao createExamGroupDao();
+
 
     public static DaoFactory getInstance() {
         String className = Config.getInstance().getFactoryClassName();
@@ -29,3 +30,4 @@ import model.Schedule;
         return factory;
     }
 }
+

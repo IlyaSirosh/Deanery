@@ -1,8 +1,7 @@
 package model;
 
-import model.enums.CourseEnum;
+import model.enums.CourseConclusion;
 
-import java.util.List;
 /**
  * Created by PANNA on 02.04.2018.
  */
@@ -12,7 +11,7 @@ public class Course {
     private String name;
     private int lections;
     private int seminars;
-    private CourseEnum conclusion;
+    private CourseConclusion conclusion;
     private int credits;
     private boolean obligatory;
 
@@ -60,7 +59,7 @@ public class Course {
         this.seminars = seminars;
     }
 
-    public void setConclusion(CourseEnum conclusion) {
+    public void setConclusion(CourseConclusion conclusion) {
         this.conclusion = conclusion;
     }
 
@@ -108,7 +107,7 @@ public class Course {
         return result;
     }
 
-    public CourseEnum getConclusion(){
+    public CourseConclusion getConclusion(){
         return conclusion;
     }
 
@@ -128,4 +127,12 @@ public class Course {
         this.obligatory = obligatory;
     }
 
+    public Course(int id){
+        this.courseId = id;
+    }
+
+    public Course(){
+    }
+
 }
+
