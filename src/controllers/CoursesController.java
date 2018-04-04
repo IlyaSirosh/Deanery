@@ -22,6 +22,15 @@ public class CoursesController {
         return "courses";
     }
 
+    @RequestPath("/showCourse")
+    public String showCourse(Model m, @RequestParam("id") int id, @RequestParam("name") String name){
+        Course course = new Course();
+        course.setCourseId(id);
+        course.setName(name);
+        m.addParam("course", course);
+        return "course";
+    }
+
     @RequestPath("/saveCourse")
     public String saveCourse(Model m, @RequestParam("course") Course course){
         courseService.create(course);

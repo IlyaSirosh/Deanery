@@ -2,9 +2,9 @@ package ui;
 
 import controllers.configs.MainController;
 import controllers.configs.ServicesDispatcher;
+import controllers.decorators.RequestParam;
 import controllers.decorators.RequestPath;
 import controllers.exceptions.UnsatisfiedDependencyException;
-import javafx.scene.control.ComboBox;
 import model.Course;
 import model.Department;
 import model.enums.Conclusion;
@@ -15,13 +15,13 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@RequestPath("/addCourse")
-public class AddCourseView extends View{
+
+@RequestPath("/viewCourse")
+public class EditCourseView extends View{
+
     private class Item
     {
         public Department department;
@@ -88,7 +88,7 @@ public class AddCourseView extends View{
 
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameLabel).addComponent(name))
+                        .addComponent(nameLabel).addComponent(name))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(depsLabel).addComponent(deps))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -127,9 +127,8 @@ public class AddCourseView extends View{
             newCourse.setLections((Integer) lectures.getValue());
             newCourse.setSeminars((Integer) practices.getValue());
             newCourse.setConclusion(conclusion.getSelectedItem().toString());
-            newCourse.setObligatory(mandatory.isSelected());
             System.out.println(newCourse.toString());
-            MainController.getMainController().renderTemplate("/saveCourse", new HashMap<String, Object>() {{put("course", newCourse);}});
+            MainController.getMainController().renderTemplate("/updateCourse", new HashMap<String, Object>() {{put("course", newCourse);}});
 
             f.dispose();
         });
@@ -138,7 +137,7 @@ public class AddCourseView extends View{
             f.dispose();
         });
 
-        JLabel mainLabel = new JLabel("Create course");
+        JLabel mainLabel = new JLabel("Edit course");
         mainLabel.setFont (mainLabel.getFont ().deriveFont (18.0f));
         mainLabel.setFont(mainLabel.getFont ().deriveFont(mainLabel.getFont ().getStyle() | Font.BOLD));
         mainLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -151,4 +150,5 @@ public class AddCourseView extends View{
         f.add(panelDown, BorderLayout.SOUTH);
         f.setVisible(true);
     }
+
 }
