@@ -23,10 +23,15 @@ public class MainController {
     private static MainController MAIN_CONTROLLER;
     private JFrame mainPage;
 
+<<<<<<< HEAD
 
     private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class, DepartmentsController.class, ClassesController.class, LessonsController.class, SemestersController.class, StudentsController.class, WeekController.class};
     private View[] views = new View[]{new AddCourseView(), new EditCourseView(), new AddTeacherView(), new EditTeacherView(), new EditDepartmentView(), new AddDepartmentView(), new AddClassView(), new EditClassView(), new AddLessonView(), new EditLessonView(), new AddSemesterView(), new EditSemesterView(), new AddStudentView(), new EditStudentView()};
 
+=======
+    private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class, DepartmentsController.class, ClassesController.class, LessonsController.class, SemestersController.class, StudentsController.class, WeekController.class, ScheduleController.class};
+    private View[] views = new View[]{new AddCourseView(), new EditCourseView(), new AddTeacherView(), new EditTeacherView(), new EditDepartmentView(), new AddDepartmentView(), new AddClassView(), new EditClassView(), new AddLessonView()};
+>>>>>>> Oleksii
     private JScrollPane pane;
     JEditorPane editorPane;
 
@@ -95,8 +100,10 @@ public class MainController {
                             methodParams.add(Long.parseLong(params.get(name).toString()));
                         }else if(param.getType().equals(double.class)||param.getType().equals(Double.class)){
                             methodParams.add(Double.parseDouble(params.get(name).toString()));
-                        }else if(param.getType().equals(float.class)||param.getType().equals(Float.class)){
+                        }else if(param.getType().equals(float.class)||param.getType().equals(Float.class)) {
                             methodParams.add(Float.parseFloat(params.get(name).toString()));
+                        }else if(param.getType().equals(Enum.class)){
+                            methodParams.add(Enum.valueOf((Class<Enum>) param.getType(), params.get(name).toString()));
                         }else {
                             methodParams.add(param.getType().cast(params.get(name)));
                         }
