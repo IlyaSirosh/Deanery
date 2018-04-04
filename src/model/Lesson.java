@@ -122,4 +122,12 @@ public class Lesson {
         this.groupNumber = groupNumber;
     }
 
+    public Lesson(){
+
+    }
+
+    public Lesson(int id){
+        this.lessonId = id;
+    }
+
 }

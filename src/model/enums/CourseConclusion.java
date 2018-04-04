@@ -2,7 +2,7 @@ package model.enums;
 
 public enum CourseConclusion {
 
-    EXAM(1), TEST(2);
+    EXAM(0), TEST(1);
 
     int i;
 
