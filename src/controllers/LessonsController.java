@@ -20,8 +20,8 @@ public class LessonsController {
 
     @RequestPath("/showLessons")
     public String renderView(Model m){
-        m.addParam("courses", lessonService.getList());
-        return "courses";
+        m.addParam("lessons", lessonService.getList());
+        return "lessons";
     }
 
     @RequestPath("/saveLesson")

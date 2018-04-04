@@ -107,10 +107,10 @@
                 <div class="back"><a href="/index">Back</a></div>
             </td>
             <td>
-                <h1>Classes</h1>
+                <h1>Lessons</h1>
             </td>
             <td>
-                <div><a href="/addClass">Create class</a></div>
+                <div><a href="/addLesson">Create lesson</a></div>
             </td>
         </tr>
     </table>
@@ -128,8 +128,8 @@
     <tr pp:foreach="lessons" pp:item="lesson" pp:index="ind">
         <td class="text-center"><a pp:href="/editLesson?id=~lesson.lessonId~" class="name" pp:text="~lesson.type~"></a></td>
         <td class="text-center" pp:text="~lesson.teacher.name~">Проценко Володимир Семенович</td>
-        <td class="text-center" pp:text="~class.course.name~">Кафедра інформатики</td>
-        <td class="text-center" pp:text="~class.group.grade~">Кафедра інформатики</td>
+        <td class="text-center" pp:text="~lesson.course.name~">Кафедра інформатики</td>
+        <td class="text-center" pp:text="~lesson.group.grade~">Кафедра інформатики</td>
         <td class="text-center"><a class="delete" pp:href="/deleteLesson?id=~lesson.lessonId~">x</a></td>
     </tr>
     </tbody>
