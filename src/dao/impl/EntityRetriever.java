@@ -6,6 +6,7 @@ import dao.Interfaces.*;
 import dao.SemesterDao;
 import model.*;
 import model.Class;
+import model.enums.CourseEnum;
 import model.enums.Day;
 import model.enums.LessonType;
 import model.enums.SemesterEnum;
@@ -34,7 +35,7 @@ public class EntityRetriever {
         course.setName(rs.getString("name"));
         course.setLections(rs.getInt("lections"));
         course.setSeminars(rs.getInt("seminars"));
-        course.setConclusion(rs.getString("conclusion"));
+        course.setConclusion(CourseEnum.values()[rs.getInt("conclusion")]);
         course.setCredits(rs.getInt("credits"));
         course.setObligatory(rs.getBoolean("obligatory"));
         return course;
