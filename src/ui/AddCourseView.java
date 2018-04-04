@@ -7,8 +7,10 @@ import controllers.exceptions.UnsatisfiedDependencyException;
 import javafx.scene.control.ComboBox;
 import model.Course;
 import model.Department;
+import model.Semester;
 import model.enums.Conclusion;
 import model.enums.CourseConclusion;
+import services.DeaneryService;
 import services.DepartmentService;
 
 import javax.swing.*;
@@ -23,6 +25,20 @@ import java.util.Map;
 
 @RequestPath("/addCourse")
 public class AddCourseView extends View{
+    private class SemItem
+    {
+        public Semester semester;
+
+        public SemItem(Semester semester) {
+            this.semester = semester;
+        }
+
+        public String toString()
+        {
+            return semester.getSemester() + " " + semester.getYear();
+        }
+    }
+
     private class Item
     {
         public Department department;
@@ -40,6 +56,7 @@ public class AddCourseView extends View{
     @Override
     public void renderView(Map<String, Object> params) throws UnsatisfiedDependencyException {
         DepartmentService ds = (DepartmentService) ServicesDispatcher.getServicesDispatcher().getService(DepartmentService.class.getName());
+        DeaneryService ss = (DeaneryService) ServicesDispatcher.getServicesDispatcher().getService(DeaneryService.class.getName());
 
         JFrame f = new JFrame();
         f.setSize(400, 350);
@@ -69,8 +86,12 @@ public class AddCourseView extends View{
             deps.addItem(new Item(d));
         });
 
-        JComboBox semestr = new JComboBox();
-        JLabel semestrLabel = new JLabel("Semester: ", JLabel.LEFT);
+        JComboBox semester = new JComboBox();
+        JLabel semesterLabel = new JLabel("Semester: ", JLabel.LEFT);
+        java.util.List<Semester> semesters = ss.getAllSemesters();
+        semesters.forEach(d -> {
+            semester.addItem(new SemItem(d));
+        });
 
         JComboBox conclusion = new JComboBox(CourseConclusion.values());
         JLabel conclusionLabel = new JLabel("Conclusion: ", JLabel.LEFT);
@@ -93,7 +114,7 @@ public class AddCourseView extends View{
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(depsLabel).addComponent(deps))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(semestrLabel).addComponent(semestr))
+                        .addComponent(semesterLabel).addComponent(semester))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(conclusionLabel).addComponent(conclusion))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -106,9 +127,9 @@ public class AddCourseView extends View{
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(nameLabel).addComponent(depsLabel).addComponent(semestrLabel).addComponent(conclusionLabel).addComponent(creditsLabel).addComponent(lecturesLabel).addComponent(practicesLabel).addComponent(mandatory))
+                        .addComponent(nameLabel).addComponent(depsLabel).addComponent(semesterLabel).addComponent(conclusionLabel).addComponent(creditsLabel).addComponent(lecturesLabel).addComponent(practicesLabel).addComponent(mandatory))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(name).addComponent(deps).addComponent(semestr).addComponent(conclusion).addComponent(credits).addComponent(lectures).addComponent(practices)));
+                        .addComponent(name).addComponent(deps).addComponent(semester).addComponent(conclusion).addComponent(credits).addComponent(lectures).addComponent(practices)));
 
 
         deps.addActionListener(e -> {
@@ -118,6 +139,9 @@ public class AddCourseView extends View{
         });
 
         okButton.addActionListener(e -> {
+            SemItem sitem = (SemItem)semester.getSelectedItem();
+            Semester s = new Semester();
+            s.setSemesterId(sitem.semester.getSemesterId());
             Item item = (Item)deps.getSelectedItem();
             Department d = new Department();
             d.setDepartmentId(item.department.getDepartmentId());
