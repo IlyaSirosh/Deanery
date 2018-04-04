@@ -47,15 +47,11 @@ public class DepartmentServiceImpl implements DepartmentService{
     @Override
     public boolean updateTeachers(Department department, List<Teacher> teachers) {
 
-        List<Teacher> getTeachers = teacherDao.findByDepartment(department.getDepartmentId());
 
-        for(Teacher teacher: getTeachers) {
-            for (Teacher teacher2 : teachers) {
-                if (teacher2.equals(teacher)) {
-                    teacherDao.update(teacher2);
-                }
-            }
-        }
+            for (Teacher teacher : teachers)
+                addTeacher(department, teacher);
+
+
         return true;
     }
 

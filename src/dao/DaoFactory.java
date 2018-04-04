@@ -16,6 +16,7 @@ import dao.impl.Config;
         public abstract TeacherDao createTeacherDao();
         public abstract LessonDao createLessonDao();
         public abstract ScheduleDao createScheduleDao();
+        public abstract ExamGroupDao createExamGroupDao();
 
 
     public static DaoFactory getInstance() {

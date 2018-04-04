@@ -6,11 +6,10 @@ import java.util.List;
 
 public interface ExamService {
 
-    List<Schedule> getScheduleByLesson(Lesson group);
-    List<Schedule> getScheduleByDepartment(Department department);
-    List<Schedule> getScheduleByTeacher(Teacher teacher);
+    List<GroupExam> getScheduleByCourse(Course course);
+    List<GroupExam> getScheduleByDepartment(Department department);
+    List<GroupExam> getScheduleByTeacher(Teacher teacher);
 
-    void print(List<Schedule> schedule);
 
     GroupExam getGroupExam(Lesson lesson);
     boolean createGroupExam(GroupExam exam);

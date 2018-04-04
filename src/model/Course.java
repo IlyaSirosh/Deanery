@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.CourseConclusion;
+
 import java.util.List;
 
 /**
@@ -11,7 +13,7 @@ public class Course {
     private String name;
     private int lections;
     private int seminars;
-    private String conclusion;
+    private CourseConclusion conclusion;
     private int credits;
     private boolean obligatory;
 
@@ -103,11 +105,11 @@ public class Course {
         this.seminars = seminars;
     }
 
-    public String getConclusion() {
+    public CourseConclusion getConclusion() {
         return conclusion;
     }
 
-    public void setConclusion(String conclusion) {
+    public void setConclusion(CourseConclusion conclusion) {
         this.conclusion = conclusion;
     }
 
