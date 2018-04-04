@@ -89,5 +89,10 @@ public class Week {
         this.semester = semester;
     }
 
+    public Week(int weekId) {
+        this.weekId = weekId;
+    }
 
+    public Week() {
+    }
 }
