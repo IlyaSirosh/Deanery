@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`course` (
   `name` VARCHAR(45) NOT NULL,
   `lections` INT NOT NULL,
   `seminars` INT NOT NULL,
-  `conclusion` VARCHAR(200) NOT NULL,
+  `conclusion` TINYINT NOT NULL,
   `credits` INT NOT NULL,
   `obligatory` TINYINT NOT NULL,
   PRIMARY KEY (`course_id`, `department_id`),
