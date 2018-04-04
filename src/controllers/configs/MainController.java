@@ -1,9 +1,6 @@
 package controllers.configs;
 
-import controllers.CoursesController;
-import controllers.DepartmentsController;
-import controllers.RealController;
-import controllers.TeachersController;
+import controllers.*;
 import controllers.decorators.RequestParam;
 import controllers.decorators.RequestPath;
 import controllers.exceptions.MappingNotFoundException;
@@ -24,8 +21,8 @@ public class MainController {
     private static MainController MAIN_CONTROLLER;
     private JFrame mainPage;
     private JEditorPane pane;
-    private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class, DepartmentsController.class};
-    private View[] views = new View[]{new AddCourseView(), new EditCourseView(), new AddTeacherView(), new EditTeacherView(), new EditDepartmentView(), new AddDepartmentView()};
+    private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class, DepartmentsController.class, ClassesController.class};
+    private View[] views = new View[]{new AddCourseView(), new EditCourseView(), new AddTeacherView(), new EditTeacherView(), new EditDepartmentView(), new AddDepartmentView(), new AddClassView(), new EditClassView()};
     private HashMap<String, Method> linkedPaths;
     private HashMap<String, View> linkedViews;
 

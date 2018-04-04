@@ -32,7 +32,7 @@ public class DepartmentsController {
     }
 
     @RequestPath("/updateDepartment")
-    public String updateDepartment(Model m, @RequestParam("teacher") Department department){
+    public String updateDepartment(Model m, @RequestParam("department") Department department){
         departmentService.update(department);
         m.addParam("action", "update");
         return "departmentChanged";
