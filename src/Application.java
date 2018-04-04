@@ -15,6 +15,9 @@ import static model.enums.SemesterEnum.Autumn;
  */
 public class Application {
     public static void main(String[] args) {
-
+            ICourseDao courseDao = DaoFactory.getInstance().createCourseDao();
+            Course course= new Course();
+            course=courseDao.findById(1);
+            courseDao.create(course);
     }
 }

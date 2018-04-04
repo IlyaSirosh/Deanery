@@ -3,6 +3,7 @@ import dao.Interfaces.ICourseDao;
 import dao.impl.EntityRetriever;
 import model.Course;
 import model.Lesson;
+import model.enums.CourseConclusion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -103,7 +104,7 @@ public class CourseDao implements ICourseDao {
             statement.setString(2, course.getName());
             statement.setInt(3, course.getLections());
             statement.setInt(4, course.getSeminars());
-            statement.setInt(5, course.getConclusion().getValue());
+            statement.setInt(5, ((CourseConclusion.valueOf(course.getConclusion().toString()).ordinal())));
             statement.setInt(6, course.getCredits());
             statement.setBoolean(7, course.isObligatory());
             statement.execute();
@@ -122,7 +123,7 @@ public class CourseDao implements ICourseDao {
             statement.setString(2, infoForUpdate.getName());
             statement.setInt(3,infoForUpdate.getLections());
             statement.setInt(4, infoForUpdate.getSeminars());
-            statement.setInt(5, infoForUpdate.getConclusion().getValue());
+            statement.setInt(5, ((CourseConclusion.valueOf(infoForUpdate.getConclusion().toString()).ordinal())));
             statement.setInt(6, infoForUpdate.getCredits());
             statement.setBoolean(7, infoForUpdate.isObligatory());
             statement.setInt(8, infoForUpdate.getCourseId());
