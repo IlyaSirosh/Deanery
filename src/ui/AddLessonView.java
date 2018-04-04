@@ -101,7 +101,6 @@ public class AddLessonView extends View{
 
         JComboBox teacher = new JComboBox();
         JLabel teacherLabel = new JLabel("Teacher: ", JLabel.LEFT);
-        System.out.println(ds);
         List<Teacher> teachers = ts.getAll();
         teachers.forEach(d -> {
             teacher.addItem(new TeacherItem(d));
