@@ -18,4 +18,3 @@ public interface DepartmentService {
     boolean addTeacher(Department department, Teacher teacher);
 
 }
-

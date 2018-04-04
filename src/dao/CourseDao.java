@@ -1,5 +1,4 @@
 package dao;
-
 import dao.Interfaces.ICourseDao;
 import dao.impl.EntityRetriever;
 import model.Course;
@@ -168,3 +167,4 @@ public class CourseDao implements ICourseDao {
     }
 
 }
+

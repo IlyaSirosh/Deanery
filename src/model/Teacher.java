@@ -74,5 +74,10 @@ public class Teacher {
         this.role = role;
     }
 
+    public Teacher(int teacherId) {
+        this.teacherId = teacherId;
+    }
 
+    public Teacher() {
+    }
 }

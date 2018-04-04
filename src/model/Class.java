@@ -78,4 +78,11 @@ public class Class {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+
+    public Class(){
+    }
+
+    public Class(int id){
+        this.classId = id;
+    }
 }

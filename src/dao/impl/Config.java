@@ -9,7 +9,7 @@ public class Config {
 
     private String url = "jdbc:mysql://localhost:3306/mydb";
     private String user = "root";
-    private String pass= "12345";
+    private String pass= "1234";
     private String factoryClassName = JDBCDaoFactory.class.getName();
 
     private static class Holder{

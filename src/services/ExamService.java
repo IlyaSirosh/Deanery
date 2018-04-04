@@ -22,3 +22,4 @@ public interface ExamService {
     boolean updateStudentResult(GroupStudent result);
     boolean deleteStudentResult(GroupStudent result);
 }
+

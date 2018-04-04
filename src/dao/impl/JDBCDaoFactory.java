@@ -1,4 +1,3 @@
-
 package dao.impl;
 import dao.*;
 import dao.impl.Config;
@@ -16,7 +15,7 @@ public class JDBCDaoFactory extends DaoFactory {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             if(connection == null)
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "12345");
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/mydb?useSSL=false", "root", "1234");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

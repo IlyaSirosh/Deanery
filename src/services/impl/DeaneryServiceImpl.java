@@ -101,7 +101,7 @@ public class DeaneryServiceImpl implements DeaneryService {
 
     @Override
     public boolean createClass(Class c) {
-        return classDao.update(c);
+        return classDao.create(c);
     }
 
     @Override
