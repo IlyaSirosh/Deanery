@@ -8,6 +8,7 @@ import controllers.decorators.RequestPath;
 import controllers.exceptions.MappingNotFoundException;
 import controllers.exceptions.UnsatisfiedDependencyException;
 import ui.AddCourseView;
+import ui.EditCourseView;
 import ui.View;
 
 import javax.swing.*;
@@ -25,7 +26,7 @@ public class MainController {
     private JFrame mainPage;
     private JEditorPane pane;
     private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class};
-    private View[] views = new View[]{new AddCourseView()};
+    private View[] views = new View[]{new AddCourseView(), new EditCourseView()};
     private HashMap<String, Method> linkedPaths;
     private HashMap<String, View> linkedViews;
 
@@ -72,7 +73,7 @@ public class MainController {
             if(!linkedPaths.containsKey(path)){
                 if(!linkedViews.containsKey(path)) throw new MappingNotFoundException(path);
                 View view = linkedViews.get(path);
-                view.renderView();
+                view.renderView(params);
             } else {
                 if(pane!=null) mainPage.remove(pane);
                 Method m = linkedPaths.get(path);
