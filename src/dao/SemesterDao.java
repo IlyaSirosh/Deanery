@@ -4,6 +4,7 @@ import dao.Interfaces.ISemesterDao;
 import dao.impl.EntityRetriever;
 import model.Semester;
 import model.Week;
+import model.enums.SemesterEnum;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,8 +22,8 @@ public class SemesterDao implements ISemesterDao {
     private static final String CREATE = "INSERT INTO semester (year, semester)\n" +
             "VALUES (?,?);";
     private static final String UPDATE = "UPDATE semester SET " +
-            "year = ?"+
-            "semester = ?" +
+            "year = ?,"+
+            "semester = ? " +
             "WHERE semester_id = ?";
     private static final String DELETE ="DELETE FROM semester WHERE semester_id=?";
 
@@ -67,7 +68,7 @@ public class SemesterDao implements ISemesterDao {
         try (PreparedStatement statement
                      = connection.prepareStatement(CREATE)) {
             statement.setInt(1, semester.getYear());
-            statement.setInt(2, semester.getSemesterId());
+            statement.setInt(2, (SemesterEnum.valueOf(semester.getSemester().toString()).ordinal()));
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,11 +78,12 @@ public class SemesterDao implements ISemesterDao {
 
     @Override
     public boolean update(Semester infoForUpdate) {
-        Semester current = findById(infoForUpdate.getSemesterId());
+        Semester current = infoForUpdate;
         try (PreparedStatement statement
                      = connection.prepareStatement(UPDATE)){
             statement.setInt(1, current.getYear());
-            statement.setInt(2, current.getSemesterId());
+            statement.setInt(2, (SemesterEnum.valueOf(current.getSemester().toString()).ordinal()));
+            statement.setInt(3,current.getSemesterId());
             statement.execute();
 
         } catch (SQLException e) {
