@@ -5,41 +5,42 @@ import controllers.decorators.Controller;
 import controllers.decorators.RequestParam;
 import controllers.decorators.RequestPath;
 import model.Lesson;
-import services.LessonService;
+import model.Student;
+import services.DeaneryService;
 
 @Controller
 public class StudentsController {
-    private final LessonService lessonService;
+    private final DeaneryService deaneryService;
 
-    public StudentsController(LessonService lessonService) {
-        this.lessonService = lessonService;
+    public StudentsController(DeaneryService deaneryService) {
+        this.deaneryService = deaneryService;
     }
 
 
-    @RequestPath("/showLessons")
+    @RequestPath("/showStudents")
     public String renderView(Model m){
-        m.addParam("lessons", lessonService.getList());
-        return "lessons";
+        m.addParam("students", deaneryService.getAllStudents());
+        return "students";
     }
 
-    @RequestPath("/saveLesson")
-    public String saveLesson(Model m, @RequestParam("lesson") Lesson lesson){
-        lessonService.create(lesson);
+    @RequestPath("/saveStudent")
+    public String saveLesson(Model m, @RequestParam("student") Student student){
+        deaneryService.createStudent(student);
         m.addParam("action", "persist");
-        return "lessonChanged";
+        return "studentChanged";
     }
 
-    @RequestPath("/updateLesson")
-    public String updateLesson(Model m, @RequestParam("lesson") Lesson lesson){
-        lessonService.update(lesson);
+    @RequestPath("/updateStudent")
+    public String updateLesson(Model m, @RequestParam("student") Student student){
+        deaneryService.updateStudent(student);
         m.addParam("action", "update");
-        return "lessonChanged";
+        return "studentChanged";
     }
 
-    @RequestPath("/deleteLesson")
-    public String deleteLesson(Model m, @RequestParam("id") int lessonId){
-        lessonService.delete(new Lesson(lessonId));
+    @RequestPath("/deleteStudent")
+    public String deleteLesson(Model m, @RequestParam("id") int studentId){
+        deaneryService.deleteStudent(new Student(studentId));
         m.addParam("action", "delete");
-        return "lessonChanged";
+        return "studentChanged";
     }
 }

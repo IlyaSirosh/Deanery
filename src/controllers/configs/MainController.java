@@ -23,7 +23,7 @@ public class MainController {
     private static MainController MAIN_CONTROLLER;
     private JFrame mainPage;
 
-    private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class, DepartmentsController.class, ClassesController.class, LessonsController.class, SemestersController.class};
+    private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class, DepartmentsController.class, ClassesController.class, LessonsController.class, SemestersController.class, StudentsController.class};
     private View[] views = new View[]{new AddCourseView(), new EditCourseView(), new AddTeacherView(), new EditTeacherView(), new EditDepartmentView(), new AddDepartmentView(), new AddClassView(), new EditClassView(), new AddLessonView()};
     private JScrollPane pane;
     JEditorPane editorPane;
@@ -112,6 +112,7 @@ public class MainController {
                 editorPane.addHyperlinkListener(this::hyperlinkUpdate);
                 pane=new JScrollPane(editorPane);
                 pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+                pane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 mainPage.add(pane, BorderLayout.CENTER);
                 mainPage.setVisible(true);
             }
