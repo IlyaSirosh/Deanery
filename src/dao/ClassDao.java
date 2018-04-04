@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by PANNA on 03.04.2018.
  */
-public class ClassDao implements IClassDao {
+public class ClassDao implements IClassDao, AutoCloseable {
     private static final String SELECT_ALL = "SELECT * FROM class";
     private static final String SELECT_BY_ID = "SELECT * FROM class WHERE class_id = ?";
     private static final String CREATE = "INSERT INTO class (building, number, capacity)\n" +
@@ -109,5 +109,10 @@ public class ClassDao implements IClassDao {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void close() throws Exception {
+        connection.close();
     }
 }
