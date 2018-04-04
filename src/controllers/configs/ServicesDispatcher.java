@@ -15,7 +15,7 @@ public class ServicesDispatcher {
         String currentClass = "";
         try {
             serviceInstances = new HashMap<>();
-            Class[] services = new Class[]{CourseServiceImpl.class, DeaneryServiceImpl.class, LessonServiceImpl.class, ScheduleServiceImpl.class, DepartmentServiceImpl.class};
+            Class[] services = new Class[]{CourseServiceImpl.class, DeaneryServiceImpl.class, LessonServiceImpl.class, ScheduleServiceImpl.class, DepartmentServiceImpl.class, TeacherServiceImpl.class};
             for (Class service : services) {
                 currentClass = service.getName();
                 serviceInstances.put(service.getInterfaces()[0].getName().toLowerCase(), service.newInstance());
