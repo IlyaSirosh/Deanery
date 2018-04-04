@@ -8,6 +8,7 @@ import controllers.exceptions.UnsatisfiedDependencyException;
 import model.Course;
 import model.Department;
 import model.enums.Conclusion;
+import model.enums.CourseConclusion;
 import services.DepartmentService;
 
 import javax.swing.*;
@@ -71,7 +72,7 @@ public class EditCourseView extends View{
         JComboBox semestr = new JComboBox();
         JLabel semestrLabel = new JLabel("Semester: ", JLabel.LEFT);
 
-        JComboBox conclusion = new JComboBox(Conclusion.values());
+        JComboBox conclusion = new JComboBox(CourseConclusion.values());
         JLabel conclusionLabel = new JLabel("Conclusion: ", JLabel.LEFT);
 
         JSpinner credits = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
@@ -126,7 +127,7 @@ public class EditCourseView extends View{
             newCourse.setCredits((Integer) credits.getValue());
             newCourse.setLections((Integer) lectures.getValue());
             newCourse.setSeminars((Integer) practices.getValue());
-            newCourse.setConclusion(conclusion.getSelectedItem().toString());
+            newCourse.setConclusion((CourseConclusion) conclusion.getSelectedItem());
             System.out.println(newCourse.toString());
             MainController.getMainController().renderTemplate("/updateCourse", new HashMap<String, Object>() {{put("course", newCourse);}});
 
