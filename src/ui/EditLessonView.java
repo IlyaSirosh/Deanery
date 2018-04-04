@@ -5,7 +5,6 @@ import controllers.configs.ServicesDispatcher;
 import controllers.decorators.RequestPath;
 import controllers.exceptions.UnsatisfiedDependencyException;
 import model.*;
-import model.enums.CourseConclusion;
 import model.enums.LessonType;
 import services.CourseService;
 import services.DepartmentService;
@@ -20,8 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequestPath("/addLesson")
-public class AddLessonView extends View{
+@RequestPath("/editLesson")
+public class EditLessonView extends View{
     private class DepItem
     {
         public Department department;
@@ -41,24 +40,24 @@ public class AddLessonView extends View{
         public Teacher teacher;
 
         public TeacherItem(Teacher teacher) {
-        this.teacher = teacher;
-    }
+            this.teacher = teacher;
+        }
         public String toString() {
             return teacher.getName();
         }
     }
 
-        private class CourseItem {
-            public Course course;
+    private class CourseItem {
+        public Course course;
 
-            public CourseItem(Course course) {
-                this.course = course;
-            }
-
-            public String toString() {
-                return course.getName();
-            }
+        public CourseItem(Course course) {
+            this.course = course;
         }
+
+        public String toString() {
+            return course.getName();
+        }
+    }
 
 
     @Override
@@ -97,7 +96,7 @@ public class AddLessonView extends View{
         JComboBox teacher = new JComboBox();
         JLabel teacherLabel = new JLabel("Teacher: ", JLabel.LEFT);
         System.out.println(ds);
-        List<Teacher> teachers = ts.getAll();
+        java.util.List<Teacher> teachers = ts.getAll();
         teachers.forEach(d -> {
             teacher.addItem(new TeacherItem(d));
         });
@@ -116,13 +115,13 @@ public class AddLessonView extends View{
                         .addComponent(nameLabel).addComponent(name))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(typeLabel).addComponent(type))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(semesterLabel).addComponent(semester))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(semesterLabel).addComponent(semester))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(teacherLabel).addComponent(teacher))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(courseLabel).addComponent(course))
-                );
+        );
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -141,13 +140,14 @@ public class AddLessonView extends View{
             c.setCourseId(citem.course.getCourseId());
 
             Lesson newLesson = new Lesson();
+            newLesson.setLessonId(Integer.parseInt(params.get("id").toString()));
             newLesson.setType((LessonType) type.getSelectedItem());
             newLesson.setGroupNumber((Integer)name.getValue());
             newLesson.setTeacher(t);
             newLesson.setCourse(c);
             newLesson.setSemester(new Semester((Integer)semester.getValue()));
             System.out.println(newLesson.toString());
-            MainController.getMainController().renderTemplate("/saveLesson", new HashMap<String, Object>() {{put("lesson", newLesson);}});
+            MainController.getMainController().renderTemplate("/updateLesson", new HashMap<String, Object>() {{put("lesson", newLesson);}});
 
             f.dispose();
         });

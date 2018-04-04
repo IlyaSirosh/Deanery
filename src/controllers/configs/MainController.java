@@ -24,7 +24,7 @@ public class MainController {
     private JFrame mainPage;
 
     private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class, DepartmentsController.class, ClassesController.class, LessonsController.class};
-    private View[] views = new View[]{new AddCourseView(), new EditCourseView(), new AddTeacherView(), new EditTeacherView(), new EditDepartmentView(), new AddDepartmentView(), new AddClassView(), new EditClassView(), new AddLessonView()};
+    private View[] views = new View[]{new AddCourseView(), new EditCourseView(), new AddTeacherView(), new EditTeacherView(), new EditDepartmentView(), new AddDepartmentView(), new AddClassView(), new EditClassView(), new AddLessonView(), new EditLessonView()};
     private JScrollPane pane;
     JEditorPane editorPane;
 

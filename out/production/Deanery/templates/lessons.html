@@ -117,7 +117,7 @@
 </div>
 <table class="table-fill">
     <tr>
-
+        <th class="text-center">Id</th>
         <th class="text-center">Type</th>
         <th class="text-center">Teacher</th>
         <th class="text-center">Course</th>
@@ -126,7 +126,8 @@
     </tr>
     <tbody>
     <tr pp:foreach="lessons" pp:item="lesson" pp:index="ind">
-        <td class="text-center"><a pp:href="/editLesson?id=~lesson.lessonId~" class="name" pp:text="~lesson.type~"></a></td>
+        <td class="text-center"><a pp:href="/editLesson?id=~lesson.lessonId~" pp:text="~lesson.lessonId~" class="name"></a></td>
+        <td class="text-center" pp:text="~lesson.type~">Проценко Володимир Семенович</td>
         <td class="text-center" pp:text="~lesson.teacher.name~">Проценко Володимир Семенович</td>
         <td class="text-center" pp:text="~lesson.course.name~">Кафедра інформатики</td>
         <td class="text-center" pp:text="~lesson.groupNumber~">Кафедра інформатики</td>

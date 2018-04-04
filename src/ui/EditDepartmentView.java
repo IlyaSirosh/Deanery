@@ -72,7 +72,8 @@ public class EditDepartmentView extends View{
         });
 
         detailsButton.addActionListener(e -> {
-            MainController.getMainController().renderTemplate("/detailsDepartment", new HashMap<String, Object>() {{put("department", params.get("department"));}});
+            Department d = ds.findById(new Department(Integer.parseInt(params.get("id").toString())));
+            MainController.getMainController().renderTemplate("/detailsDepartment", new HashMap<String, Object>() {{put("department", d);}});
         });
 
         cancelButton.addActionListener(e -> {
