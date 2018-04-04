@@ -23,14 +23,10 @@ public class MainController {
     private static MainController MAIN_CONTROLLER;
     private JFrame mainPage;
 
-<<<<<<< HEAD
-    private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class, DepartmentsController.class, ClassesController.class, LessonsController.class, SemestersController.class, StudentsController.class};
+
+    private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class, DepartmentsController.class, ClassesController.class, LessonsController.class, SemestersController.class, StudentsController.class, WeekController.class};
     private View[] views = new View[]{new AddCourseView(), new EditCourseView(), new AddTeacherView(), new EditTeacherView(), new EditDepartmentView(), new AddDepartmentView(), new AddClassView(), new EditClassView(), new AddLessonView(), new EditLessonView(), new AddSemesterView(), new EditSemesterView(), new AddStudentView(), new EditStudentView()};
 
-=======
-    private Class[] controllers = new Class[]{RealController.class, CoursesController.class, TeachersController.class, DepartmentsController.class, ClassesController.class, LessonsController.class, SemestersController.class, StudentsController.class, WeekController.class};
-    private View[] views = new View[]{new AddCourseView(), new EditCourseView(), new AddTeacherView(), new EditTeacherView(), new EditDepartmentView(), new AddDepartmentView(), new AddClassView(), new EditClassView(), new AddLessonView()};
->>>>>>> Oleksii
     private JScrollPane pane;
     JEditorPane editorPane;
 

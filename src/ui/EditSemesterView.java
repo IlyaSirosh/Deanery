@@ -35,6 +35,8 @@ public class EditSemesterView extends View{
         panelDown.add(okButton);
         JButton cancelButton = new JButton("Cancel");
         panelDown.add(cancelButton);
+        JButton detailsButton = new JButton("See Semester's Weeks");
+        panelDown.add(detailsButton);
 
         JComboBox sem = new JComboBox(SemesterEnum.values());
         JLabel semLabel = new JLabel("Season: ", JLabel.LEFT);
@@ -65,6 +67,11 @@ public class EditSemesterView extends View{
             newSem.setYear((Integer) year.getValue());
             MainController.getMainController().renderTemplate("/updateSemester", new HashMap<String, Object>() {{put("semester", newSem);}});
 
+            f.dispose();
+        });
+
+        detailsButton.addActionListener(e -> {
+            MainController.getMainController().renderTemplate("/showWeeks", new HashMap<String, Object>() {{put("semesterId", Integer.parseInt(params.get("id").toString()));}});
             f.dispose();
         });
 
