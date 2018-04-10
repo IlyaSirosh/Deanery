@@ -125,7 +125,7 @@
         <th class="text-center"></th>
     </tr>
     <tbody>
-    <tr pp:foreach="weeks" pp:item="week" pp:index="ind">
+    <tr pp:foreach="~weeks~" pp:item="week" pp:index="ind">
         <td class="text-center"><a pp:href="/editWeek?id=~week.weekId~" class="name" pp:text="~week.weekId~">Управління проектами</a></td>
         <td class="text-center" pp:text="~week.number~">Проценко Володимир Семенович</td>
         <td class="text-center" pp:text="~week.start~">Кафедра інформатики</td>

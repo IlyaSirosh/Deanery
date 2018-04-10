@@ -123,7 +123,7 @@
         <th class="text-center"></th>
     </tr>
     <tbody>
-    <tr pp:foreach="departments" pp:item="department" pp:index="ind">
+    <tr pp:foreach="~departments~" pp:item="department" pp:index="ind">
         <td class="text-center"><a pp:href="/editDepartment?id=~department.departmentId~" class="name" pp:text="~department.name~"></a></td>
         <td class="text-center" pp:text="~department.buildingNumber~"></td>
         <td class="text-center"><a class="delete" pp:href="/deleteDepartment?id=~department.departmentId~">x</a></td>

@@ -126,12 +126,26 @@
         <th class="text-center"></th>
     </tr>
     <tbody>
-    <tr pp:foreach="schedule" pp:item="item" pp:index="ind">
+    <tr pp:foreach="~schedule~" pp:item="item" pp:index="ind">
         <td class="text-center"><a class="name" pp:text="~item.scheduleId~">Управління проектами</a></td>
         <td class="text-center" pp:text="~item.day~">Проценко Володимир Семенович</td>
         <td class="text-center" pp:text="~item.lessonNumber~">Кафедра інформатики</td>
         <td class="text-center" pp:text="~item.week.number~">Кафедра інформатики</td>
-        <td class="text-center"><a class="delete" pp:href="/deleteScheduleItem?id=~week.weekId~">x</a></td>
+        <td pp:if="~item.lessons~">
+            <table>
+                <tr pp:foreach="~item.lessons~" pp:item="lesson" pp:index="ind2">
+                    <td pp:text="~lesson.lesson.lessonId~"></td>
+                </tr>
+            </table>
+        </td>
+        <td pp:if="~item.lessons~">
+            <table>
+                <tr pp:foreach="~item.lessons~" pp:item="lesson" pp:index="ind2">
+                    <td pp:text="~lesson.lessonClass.building~"></td>
+                </tr>
+            </table>
+        </td>
+        <td class="text-center"><a class="delete" pp:href="/deleteScheduleItem?id=~item.scheduleId~">x</a></td>
     </tr>
     </tbody>
 </table>

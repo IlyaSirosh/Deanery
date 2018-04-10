@@ -127,7 +127,7 @@
         <th class="text-center"></th>
     </tr>
     <tbody>
-    <tr pp:foreach="students" pp:item="student" pp:index="ind">
+    <tr pp:foreach="~students~" pp:item="student" pp:index="ind">
         <td class="text-center"><a pp:href="/editStudent?id=~student.studentId~" class="name" pp:text="~student.surname~"></a></td>
         <td class="text-center" pp:text="~student.speciality~">Проценко Володимир Семенович</td>
         <td class="text-center" pp:text="~student.startdate~">Кафедра інформатики</td>
