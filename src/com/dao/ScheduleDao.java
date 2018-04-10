@@ -32,9 +32,9 @@ public class ScheduleDao implements IScheduleDao{
             "week_id = ? "+
             "WHERE schedule_id = ?";
     private static final String DELETE = "DELETE FROM schedule WHERE schedule_id=?";
-    private static final String SELECT_DEPARTMENT_SCHEDULE_UNITS = "SELECT lesson_id, class_id FROM lesson_has_schedule WHERE lesson_id IN (SELECT lesson_id FROM lesson WHERE course_ID IN (SELECT course_id FROM course WHERE department_id=?))))";
+    private static final String SELECT_DEPARTMENT_SCHEDULE_UNITS = "SELECT lesson_id, class_id FROM lesson_has_schedule WHERE lesson_id IN (SELECT lesson_id FROM lesson WHERE course_ID IN (SELECT course_id FROM course WHERE department_id=?))";
     private static final String SELECT_LESSON_SCHEDULE_UNITS = "SELECT lesson_id, class_id FROM lesson_has_schedule WHERE lesson_id=?";
-    private static final String SELECT_TEACHER_SCHEDULE_UNITS = "SELECT lesson_id, class_id FROM lesson_has_schedule WHERE lesson_id IN (SELECT lesson_id FROM lesson WHERE teacher_id=?))";
+    private static final String SELECT_TEACHER_SCHEDULE_UNITS = "SELECT lesson_id, class_id FROM lesson_has_schedule WHERE lesson_id IN (SELECT lesson_id FROM lesson WHERE teacher_id=?)";
     private static final String INSERT_UNIT = "INSERT INTO lesson_has_schedule (schedule_id, lesson_id, class_id) VALUES (?,?,?)";
     private static final String DELETE_UNIT  = "DELETE lesson_has_schedule WHERE schedule_id=? AND lesson_id=? AND class_id=?";
 
