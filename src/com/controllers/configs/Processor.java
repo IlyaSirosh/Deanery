@@ -19,7 +19,7 @@ import java.util.Map;
 public class Processor {
     private Map<String, Object> parameters;
     private enum CustomTags{
-        FOR_EACH("pp:foreach", true), IF("pp:if", true), VALUE("pp:value",true, "value"), TEXT("pp:text",true), HREF("pp:href",true, "href"),
+        FOR_EACH("pp:foreach", true), IF("pp:if", true), UNLESS("pp:unless", true), VALUE("pp:value",true, "value"), TEXT("pp:text",true), HREF("pp:href",true, "href"),
         ITEM("pp:item",false), INDEX("pp:index",false);
         String code, attrName;
         boolean coreTag;
@@ -109,6 +109,9 @@ public class Processor {
             case IF:
                 processIf(element);
                 break;
+            case UNLESS:
+                processUnless(element);
+                break;
             default:
                 processAttribute(element, tag);
                 break;
@@ -120,13 +123,21 @@ public class Processor {
             NamedNodeMap attributes = originalNode.getAttributes();
             if (attributes != null) {
                 if(processExpression(attributes.getNamedItem(CustomTags.IF.code).getNodeValue())==null) originalNode.getParentNode().removeChild(originalNode);
-                else return;
             }
         }catch (EvaluatingExpression e){
             System.out.println("while processing pp:text on tag "+originalNode.getNodeName());
         }
     }
-
+    private void processUnless(Node originalNode){
+        try {
+            NamedNodeMap attributes = originalNode.getAttributes();
+            if (attributes != null) {
+                if(processExpression(attributes.getNamedItem(CustomTags.IF.code).getNodeValue())!=null) originalNode.getParentNode().removeChild(originalNode);
+            }
+        }catch (EvaluatingExpression e){
+            System.out.println("while processing pp:text on tag "+originalNode.getNodeName());
+        }
+    }
     private void processText(Node originalNode){
         try {
             NamedNodeMap attributes = originalNode.getAttributes();
