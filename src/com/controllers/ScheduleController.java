@@ -21,15 +21,11 @@ public class ScheduleController {
     @RequestPath("/showScheduleUnits")
     public String renderView(Model m, @RequestParam("orderObj") Object orderItem){
         if(orderItem instanceof Department)
-<<<<<<< HEAD
-                m.addParam("schedule", scheduleService.getByDepartment((Department) orderItem).get(0).getLessons());
-        else if(orderItem instanceof Lesson)
-                m.addParam("schedule", scheduleService.getByLesson((Lesson) orderItem).get(0).getLessons());
-=======
+
                 m.addParam("schedule", scheduleService.getByDepartment((Department) orderItem).get(0));
         else if(orderItem instanceof Lesson)
                 m.addParam("schedule", scheduleService.getByLesson((Lesson) orderItem).get(0));
->>>>>>> ui
+
         else if(orderItem instanceof Teacher)
                 m.addParam("schedule", scheduleService.getByTeacher((Teacher) orderItem).get(0));
         return "scheduleUnit";
