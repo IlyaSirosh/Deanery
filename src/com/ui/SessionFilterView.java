@@ -2,11 +2,14 @@ package com.ui;
 
 import com.controllers.configs.MainController;
 import com.controllers.decorators.RequestPath;
+import com.controllers.decorators.View;
 import com.controllers.exceptions.UnsatisfiedDependencyException;
+import com.model.Course;
 import com.model.Department;
 import com.model.Lesson;
 import com.model.Teacher;
 import com.resources.BeansDispatcher;
+import com.services.CourseService;
 import com.services.DepartmentService;
 import com.services.LessonService;
 import com.services.TeacherService;
@@ -20,10 +23,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@com.controllers.decorators.View
-@RequestPath("/changeScheduleFilter")
-public class FilterView extends View{
-    String[] types = {"Department", "Teacher", "Group"};
+@View
+@RequestPath("/changeSessionFilter")
+public class SessionFilterView extends com.ui.View{
+    String[] types = {"Department", "Teacher", "Course"};
     String dep = "dep";
 
     private class DepItem
@@ -40,17 +43,17 @@ public class FilterView extends View{
         }
     }
 
-    private class LesItem
+    private class CouItem
     {
-        public Lesson lesson;
+        public Course course;
 
-        public LesItem(Lesson lesson) {
-            this.lesson = lesson;
+        public CouItem(Course course) {
+            this.course = course;
         }
 
         public String toString()
         {
-            return lesson.getThreadName() + " " + lesson.getGroupNumber();
+            return course.getName();
         }
     }
 
@@ -71,7 +74,7 @@ public class FilterView extends View{
     @Override
     public void renderView(Map<String, Object> params) throws UnsatisfiedDependencyException {
         DepartmentService ds = (DepartmentService) BeansDispatcher.getBean(DepartmentService.class);
-        LessonService ls = (LessonService) BeansDispatcher.getBean(LessonService.class);
+        CourseService ls = (CourseService) BeansDispatcher.getBean(CourseService.class);
         TeacherService ts = (TeacherService) BeansDispatcher.getBean(TeacherService.class);
 
 
@@ -97,7 +100,7 @@ public class FilterView extends View{
 
         JComboBox item = new JComboBox();
         JLabel itemLabel = new JLabel("Item: ", JLabel.LEFT);
-        List<Department> deps = ds.getAll();
+        java.util.List<Department> deps = ds.getAll();
         deps.forEach(d -> {
             item.addItem(new DepItem(d));
         });
@@ -105,29 +108,29 @@ public class FilterView extends View{
         type.addActionListener(e -> {
             JComboBox box = (JComboBox)e.getSource();
             String ite = box.getSelectedItem().toString();
-             switch (ite){
-                 case "Department": item.removeAllItems();
-                     List<Department> departments = ds.getAll();
-                     departments.forEach(d -> {
-                         item.addItem(new DepItem(d));
-                     });
-                     dep = "dep";
-                     break;
-                 case "Teacher": item.removeAllItems();
-                     List<Teacher> teachers = ts.getAll();
-                     teachers.forEach(d -> {
-                         item.addItem(new TItem(d));
-                     });
-                     dep = "tea";
-                     break;
-                 case "Group": item.removeAllItems();
-                     List<Lesson> lesson = ls.getList();
-                     lesson.forEach(d -> {
-                         item.addItem(new LesItem(d));
-                     });
-                     dep = "les";
-                     break;
-             }
+            switch (ite){
+                case "Department": item.removeAllItems();
+                    java.util.List<Department> departments = ds.getAll();
+                    departments.forEach(d -> {
+                        item.addItem(new DepItem(d));
+                    });
+                    dep = "dep";
+                    break;
+                case "Teacher": item.removeAllItems();
+                    java.util.List<Teacher> teachers = ts.getAll();
+                    teachers.forEach(d -> {
+                        item.addItem(new TItem(d));
+                    });
+                    dep = "tea";
+                    break;
+                case "Course": item.removeAllItems();
+                    List<Course> course = ls.getAllCourses();
+                    course.forEach(d -> {
+                        item.addItem(new CouItem(d));
+                    });
+                    dep = "les";
+                    break;
+            }
         });
 
 
@@ -148,15 +151,15 @@ public class FilterView extends View{
         okButton.addActionListener(e -> {
             if(dep == "dep"){
                 DepItem ite = (DepItem)item.getSelectedItem();
-                MainController.getMainController().renderTemplate("/showScheduleUnits", new HashMap<String, Object>() {{put("orderObj", ite.department);}});
+                MainController.getMainController().renderTemplate("/showSession", new HashMap<String, Object>() {{put("orderObj", ite.department);}});
             } else if (dep == "tea")
             {
                 TItem ite = (TItem)item.getSelectedItem();
-                MainController.getMainController().renderTemplate("/showScheduleUnits", new HashMap<String, Object>() {{put("orderObj", ite.teacher);}});
+                MainController.getMainController().renderTemplate("/showSession", new HashMap<String, Object>() {{put("orderObj", ite.teacher);}});
 
             } else{
-                LesItem ite = (LesItem) item.getSelectedItem();
-                MainController.getMainController().renderTemplate("/showScheduleUnits", new HashMap<String, Object>() {{put("orderObj", ite.lesson);}});
+                CouItem ite = (CouItem) item.getSelectedItem();
+                MainController.getMainController().renderTemplate("/showSession", new HashMap<String, Object>() {{put("orderObj", ite.course);}});
             }
 
 
@@ -167,7 +170,7 @@ public class FilterView extends View{
             f.dispose();
         });
 
-        JLabel mainLabel = new JLabel("Filter Schedule");
+        JLabel mainLabel = new JLabel("Filter Session");
         mainLabel.setFont (mainLabel.getFont ().deriveFont (18.0f));
         mainLabel.setFont(mainLabel.getFont ().deriveFont(mainLabel.getFont ().getStyle() | Font.BOLD));
         mainLabel.setHorizontalAlignment(SwingConstants.CENTER);

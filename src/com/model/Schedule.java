@@ -96,4 +96,11 @@ public class Schedule {
     public void setLessons(List<ScheduleUnit> lessons) {
         this.lessons= lessons;
     }
+
+    public Schedule (int id){
+        this.scheduleId = id;
+    }
+
+    public Schedule (){
+    }
 }

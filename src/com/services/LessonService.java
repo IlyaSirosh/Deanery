@@ -21,6 +21,7 @@ public interface LessonService {
     List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week, Day day);
     List<Lesson>  getListBy(Department department, Course course, Teacher teacher, Semester semester, Week week, Day day, Integer lessonNumber);
 
+    Lesson getById(int id);
     List<Student> getGroup(Lesson lesson);
     Map<Lesson, List<Student>> getThread(Lesson lesson);
 

@@ -33,7 +33,7 @@
         }
 
         .header h1{
-            margin-right: 320px;
+            margin-right: 250px;
             font-size: 30px;
             position: absolute;
         }
@@ -106,13 +106,16 @@
                 <div class="back"><a href="/index">Back</a></div>
             </td>
             <td>
-                <h1>Schedule</h1>
+                <h1>Results</h1>
             </td>
             <td>
-                <div><a href="/addSchedule">Add schedule</a></div>
+                <div><a href="/addSession">Add exam</a></div>
             </td>
             <td>
-                <div><a href="/changeScheduleFilter">Change filter</a></div>
+                <div><a href="/showSession?orderObj=null">Reset filter</a></div>
+            </td>
+            <td>
+                <div><a href="/changeResultsFilter">Change filter</a></div>
             </td>
         </tr>
     </table>
@@ -120,19 +123,19 @@
 <table class="table-fill">
     <tr>
 
-        <th class="text-center">ID</th>
-        <th class="text-center">Day</th>
-        <th class="text-center">Lesson number</th>
-        <th class="text-center">Week</th>
-        <th class="text-center"></th>
+        <th class="text-center">Student</th>
+        <th class="text-center">Speciality</th>
+        <th class="text-center">Course</th>
+        <th class="text-center">Teacher</th>
+        <th class="text-center">Grade</th>
     </tr>
     <tbody>
-    <tr pp:foreach="~schedule~" pp:item="item" pp:index="ind">
-        <td class="text-center"><a class="name" pp:text="~item.scheduleId~" pp:href="/editSchedule?id=~item.scheduleId~">Управління проектами</a></td>
-        <td class="text-center" pp:text="~item.day~">Проценко Володимир Семенович</td>
-        <td class="text-center" pp:text="~item.lessonNumber~">Кафедра інформатики</td>
-        <td class="text-center" pp:text="~item.week.number~">Кафедра інформатики</td>
-        <td class="text-center"><a class="delete" pp:href="/deleteScheduleItem?id=~item.scheduleId~">x</a></td>
+    <tr pp:foreach="~session~" pp:item="item" pp:index="ind">
+        <td class="text-center"><a pp:text="~item.student.surname~">Управління проектами</a></td>
+        <td class="text-center"><a pp:text="~item.student.speciality~">Управління проектами</a></td>
+        <td class="text-center"><a pp:text="~item.lesson.course.name~">Управління проектами</a></td>
+        <td class="text-center" pp:text="~item.lesson.teacher.name~">Проценко Володимир Семенович</td>
+        <td class="text-center"><a pp:text="~item.grade~" class="name" pp:href="/editStudentResult?sId=~item.student.studentId~&amp;lId=~item.lesson.lessonId~">Проценко Володимир Семенович</a></td>
     </tr>
     </tbody>
 </table>

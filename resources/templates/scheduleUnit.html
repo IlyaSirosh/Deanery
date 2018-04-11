@@ -109,7 +109,7 @@
                 <h1>Schedule</h1>
             </td>
             <td>
-                <div><a href="/addSchedule">Add schedule</a></div>
+                <div><a href="/showSchedule">Reset filter</a></div>
             </td>
             <td>
                 <div><a href="/changeScheduleFilter">Change filter</a></div>
@@ -120,19 +120,19 @@
 <table class="table-fill">
     <tr>
 
-        <th class="text-center">ID</th>
-        <th class="text-center">Day</th>
-        <th class="text-center">Lesson number</th>
-        <th class="text-center">Week</th>
-        <th class="text-center"></th>
+        <th class="text-center">Course</th>
+        <th class="text-center">Type</th>
+        <th class="text-center">Teacher</th>
+        <th class="text-center">Group</th>
+        <th class="text-center">Class</th>
     </tr>
     <tbody>
-    <tr pp:foreach="~schedule~" pp:item="item" pp:index="ind">
-        <td class="text-center"><a class="name" pp:text="~item.scheduleId~" pp:href="/editSchedule?id=~item.scheduleId~">Управління проектами</a></td>
-        <td class="text-center" pp:text="~item.day~">Проценко Володимир Семенович</td>
-        <td class="text-center" pp:text="~item.lessonNumber~">Кафедра інформатики</td>
-        <td class="text-center" pp:text="~item.week.number~">Кафедра інформатики</td>
-        <td class="text-center"><a class="delete" pp:href="/deleteScheduleItem?id=~item.scheduleId~">x</a></td>
+    <tr pp:foreach="~schedule.lessons~" pp:item="item" pp:index="ind">
+        <td class="text-center"><a pp:text="~item.lesson.course.name~">Управління проектами</a></td>
+        <td class="text-center" pp:text="~item.lesson.type~">Проценко Володимир Семенович</td>
+        <td class="text-center" pp:text="~item.lesson.teacher.name~">Кафедра інформатики</td>
+        <td class="text-center"><a pp:text="~item.lesson.threadName~ ~item.lesson.groupNumber~" class="name" pp:href="/showStudentsByGroup?id=~item.lesson.lessonId~">Кафедра інформатики</a></td>
+        <td class="text-center" pp:text="~item.lessonClass.building~-~item.lessonClass.number~">Кафедра інформатики</td>
     </tr>
     </tbody>
 </table>
