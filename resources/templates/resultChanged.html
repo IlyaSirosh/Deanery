@@ -33,14 +33,9 @@
         }
 
         .header h1{
-            margin-right: 320px;
+            margin-right: 420px;
             font-size: 30px;
             position: absolute;
-        }
-
-        .delete{
-            color: #4f3424;
-            text-decoration: none;
         }
 
         .table-title h3 {
@@ -87,12 +82,13 @@
             font-size: 12px;
         }
 
+
         .text-center {
             text-align: center;
         }
 
-        .name{
-            color: #4f3424;
+        div.text-center{
+            padding: 20px;
         }
 
 
@@ -103,38 +99,17 @@
     <table>
         <tr>
             <td>
-                <div class="back"><a href="/index">Back</a></div>
+                <div class="back"><a href="/showResults?orderObj=null">Back</a></div>
             </td>
             <td>
-                <h1>Schedule</h1>
-            </td>
-            <td>
-                <div><a href="/addSchedule">Add schedule</a></div>
-            </td>
-            <td>
-                <div><a href="/changeScheduleFilter">Change filter</a></div>
+                <h1>Results</h1>
             </td>
         </tr>
     </table>
 </div>
-<table class="table-fill">
-    <tr>
-
-        <th class="text-center">ID</th>
-        <th class="text-center">Day</th>
-        <th class="text-center">Lesson number</th>
-        <th class="text-center">Week</th>
-        <th class="text-center"></th>
-    </tr>
-    <tbody>
-    <tr pp:foreach="~schedule~" pp:item="item" pp:index="ind">
-        <td class="text-center"><a class="name" pp:text="~item.scheduleId~" pp:href="/editSchedule?id=~item.scheduleId~">Управління проектами</a></td>
-        <td class="text-center" pp:text="~item.day~">Проценко Володимир Семенович</td>
-        <td class="text-center" pp:text="~item.lessonNumber~">Кафедра інформатики</td>
-        <td class="text-center" pp:text="~item.week.number~">Кафедра інформатики</td>
-        <td class="text-center"><a class="delete" pp:href="/deleteScheduleItem?id=~item.scheduleId~">x</a></td>
-    </tr>
-    </tbody>
-</table>
+<div class="text-center">
+    <h3>Result has been <span pp:text="~action~"></span></h3>
+    <a href="/showResults?orderObj=null">Back to results</a>
+</div>
 </body>
 </html>

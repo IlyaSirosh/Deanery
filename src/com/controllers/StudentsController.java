@@ -6,19 +6,28 @@ import com.controllers.decorators.RequestParam;
 import com.controllers.decorators.RequestPath;
 import com.model.Student;
 import com.services.DeaneryService;
+import com.services.LessonService;
 
 @Controller
 public class StudentsController {
     private final DeaneryService deaneryService;
+    private final LessonService lessonService;
 
-    public StudentsController(DeaneryService deaneryService) {
+    public StudentsController(DeaneryService deaneryService, LessonService lessonService) {
         this.deaneryService = deaneryService;
+        this.lessonService = lessonService;
     }
 
 
     @RequestPath("/showStudents")
     public String renderView(Model m){
         m.addParam("students", deaneryService.getAllStudents());
+        return "students";
+    }
+
+    @RequestPath("/showStudentsByGroup")
+    public String byGroup(Model m, @RequestParam("id") int groupId){
+        m.addParam("students", lessonService.getGroup(lessonService.getById(groupId)));
         return "students";
     }
 

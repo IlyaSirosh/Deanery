@@ -126,6 +126,12 @@ public class LessonServiceImpl implements LessonService {
         return studentDao.findStudentByLesson(lesson.getLessonId());
     }
 
+
+    @Override
+    public  Lesson getById(int id){
+        return lessonDao.findById(id);
+    }
+
     @Override
     public Map<Lesson, List<Student>> getThread(Lesson lesson) {
         List<Lesson> seminars = lessonDao.getSeminars(lesson);

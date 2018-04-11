@@ -2,6 +2,7 @@ package com.ui;
 
 import com.controllers.configs.MainController;
 import com.controllers.decorators.RequestPath;
+import com.controllers.decorators.View;
 import com.controllers.exceptions.UnsatisfiedDependencyException;
 import com.model.Department;
 import com.model.Lesson;
@@ -20,9 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@com.controllers.decorators.View
-@RequestPath("/changeScheduleFilter")
-public class FilterView extends View{
+@View
+@RequestPath("/changeResultsFilter")
+public class SessionResultView extends com.ui.View{
     String[] types = {"Department", "Teacher", "Group"};
     String dep = "dep";
 
@@ -97,7 +98,7 @@ public class FilterView extends View{
 
         JComboBox item = new JComboBox();
         JLabel itemLabel = new JLabel("Item: ", JLabel.LEFT);
-        List<Department> deps = ds.getAll();
+        java.util.List<Department> deps = ds.getAll();
         deps.forEach(d -> {
             item.addItem(new DepItem(d));
         });
@@ -105,29 +106,29 @@ public class FilterView extends View{
         type.addActionListener(e -> {
             JComboBox box = (JComboBox)e.getSource();
             String ite = box.getSelectedItem().toString();
-             switch (ite){
-                 case "Department": item.removeAllItems();
-                     List<Department> departments = ds.getAll();
-                     departments.forEach(d -> {
-                         item.addItem(new DepItem(d));
-                     });
-                     dep = "dep";
-                     break;
-                 case "Teacher": item.removeAllItems();
-                     List<Teacher> teachers = ts.getAll();
-                     teachers.forEach(d -> {
-                         item.addItem(new TItem(d));
-                     });
-                     dep = "tea";
-                     break;
-                 case "Group": item.removeAllItems();
-                     List<Lesson> lesson = ls.getList();
-                     lesson.forEach(d -> {
-                         item.addItem(new LesItem(d));
-                     });
-                     dep = "les";
-                     break;
-             }
+            switch (ite){
+                case "Department": item.removeAllItems();
+                    java.util.List<Department> departments = ds.getAll();
+                    departments.forEach(d -> {
+                        item.addItem(new DepItem(d));
+                    });
+                    dep = "dep";
+                    break;
+                case "Teacher": item.removeAllItems();
+                    java.util.List<Teacher> teachers = ts.getAll();
+                    teachers.forEach(d -> {
+                        item.addItem(new TItem(d));
+                    });
+                    dep = "tea";
+                    break;
+                case "Group": item.removeAllItems();
+                    List<Lesson> lesson = ls.getList();
+                    lesson.forEach(d -> {
+                        item.addItem(new LesItem(d));
+                    });
+                    dep = "les";
+                    break;
+            }
         });
 
 
@@ -148,15 +149,15 @@ public class FilterView extends View{
         okButton.addActionListener(e -> {
             if(dep == "dep"){
                 DepItem ite = (DepItem)item.getSelectedItem();
-                MainController.getMainController().renderTemplate("/showScheduleUnits", new HashMap<String, Object>() {{put("orderObj", ite.department);}});
+                MainController.getMainController().renderTemplate("/showResults", new HashMap<String, Object>() {{put("orderObj", ite.department);}});
             } else if (dep == "tea")
             {
                 TItem ite = (TItem)item.getSelectedItem();
-                MainController.getMainController().renderTemplate("/showScheduleUnits", new HashMap<String, Object>() {{put("orderObj", ite.teacher);}});
+                MainController.getMainController().renderTemplate("/showResults", new HashMap<String, Object>() {{put("orderObj", ite.teacher);}});
 
             } else{
                 LesItem ite = (LesItem) item.getSelectedItem();
-                MainController.getMainController().renderTemplate("/showScheduleUnits", new HashMap<String, Object>() {{put("orderObj", ite.lesson);}});
+                MainController.getMainController().renderTemplate("/showResults", new HashMap<String, Object>() {{put("orderObj", ite.lesson);}});
             }
 
 
@@ -167,7 +168,7 @@ public class FilterView extends View{
             f.dispose();
         });
 
-        JLabel mainLabel = new JLabel("Filter Schedule");
+        JLabel mainLabel = new JLabel("Filter Results");
         mainLabel.setFont (mainLabel.getFont ().deriveFont (18.0f));
         mainLabel.setFont(mainLabel.getFont ().deriveFont(mainLabel.getFont ().getStyle() | Font.BOLD));
         mainLabel.setHorizontalAlignment(SwingConstants.CENTER);

@@ -60,4 +60,6 @@ public class GroupExam {
                 ", date=" + date +
                 '}';
     }
+
+    public GroupExam(){}
 }
